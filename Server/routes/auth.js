@@ -10,6 +10,25 @@ const bcrpyt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
+/*
+
+Email verification system
+
+NOTE: Not working as google prevents users from signing in on 3rd party software, find new email SMTP Server or create one
+
+*/
+const nodemailer = require('nodemailer');
+const emailPWD = process.env.emailPassword;
+const transporter = nodemailer.createTransport({
+    port: 465,               // true for 465, false for other ports
+    host: "smtp.gmail.com",
+       auth: {
+            user: 'tutorhubverify@gmail.com',
+            pass: emailPWD,
+         },
+    secure: true,
+    });
+
 const router = express.Router();
 const User = require('../models/User');
 
@@ -23,7 +42,10 @@ const registerValidate = [
         .withMessage('Please provide a valid email'),
     check('password')
         .isLength({min: 8})
-        .withMessage('Password must be at least eight characters')
+        .withMessage('Password must be at least eight characters'),
+    check('profileType')
+        .exists()
+        .withMessage('profileType required')
 ]
 const loginValidate = [
     check('email')
@@ -56,15 +78,33 @@ router.post('/register',registerValidate, async (req, res) => {
         fullName: req.body.fullName,
         password: hashPassword,
         email: req.body.email,
-        balance: 1,
+        balance: 0,
         validated: false,
         profileURL: "",
         profileType: req.body.profileType
     })
 
+    //Email verification
+    //Refer to top transporter comment, currently not working
+    const verifyHash = await bcrpyt.hash(req.body.email, "emailSalt");
+    const mailData = {
+          from: 'tutorhubverify@gmail.com',
+          to: req.body.email,
+          subject: 'Tutor Hub Verification Email',
+          html: `<button type="button" href="http://70.177.34.147/verify/${verifyHash}">Verify Here</button>`,
+        };
+
+        transporter.sendMail(mailData, function (err, info) {
+            if(err)
+            console.log(err)
+          else
+            console.log(info);
+         });
+
     try{
         const savedUser = await user.save();
         res.send({id: savedUser._id, fullName: savedUser.fullName, email: savedUser.email});
+
     }catch (error){
         res.status(400).send(error);
     }
@@ -89,10 +129,18 @@ router.post('/login',loginValidate, async (req, res) => {
 
     //Create a login token for user and add it to to the header
     //TODO create date in token for time validation, I.E 1 hour, token will be invalid in 1 hour.
-    const secret = process.env.secret;
+    const secret = process.env.SECRET;
     const token = jwt.sign({_id: user.id, email: user.email}, secret)
     res.header('auth-token', token).send({message: 'Logged in successfully', token});
 
 })
+
+//TODO
+/*
+
+    Create resend email verification
+    Create successful verification route
+
+*/
 
 module.exports = router;
