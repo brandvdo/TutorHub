@@ -8,6 +8,7 @@ const express = require('express');
 const {check, validationResult, body} = require('express-validator');
 const bcrpyt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const router = express.Router();
 const User = require('../models/User');

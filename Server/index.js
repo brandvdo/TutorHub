@@ -5,7 +5,7 @@ Author: Brandon
 This is the main script for the backend of Tutor Hub
 
 */
-
+require('dotenv').config();
 const express = require('express');
 const { default: mongoose } = require('mongoose');
 
@@ -30,7 +30,6 @@ app.get('/api/user/profile', verifyToken, (req,res) =>{
 //Create a use case for the users database, allowing request and post to the user database
 app.use('/api/users', authRoutes);
 
-require('dotenv').config();
 
 //Setting the port of the server
 const port = process.env.PORT || 3000;
