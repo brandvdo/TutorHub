@@ -20,7 +20,7 @@ module.exports = function(req, res, next){
 
     //Verify the token
     try{
-        const secret = process.env.secret;
+        const secret = process.env.SECRET;
         const verified = jwt.verify(token, secret)
         req.user = verified;
         next();
