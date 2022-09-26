@@ -11,8 +11,6 @@ const jwt = require("jsonwebtoken");
 Check if user token exist and is valid before going to any route.
 Import this file and use it before any protected route
 
-TODO: Add time verification
-
 */
 module.exports = function(req, res, next){
     const token = req.header('auth-token')
