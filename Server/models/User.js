@@ -8,11 +8,10 @@
 
 const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema({
-  name:  {type:String, required: true},
+const userSchema = new mongoose.Schema({
+  fullName:  {type:String, required: true},
   password: {type:String, required: true},
   email: {type:String, required: true},
-  ID: {type:Number, required: true},
   balance: {type:Number},
   friendsList: [Number],
   validated: {type:Boolean},
@@ -22,5 +21,5 @@ const UserSchema = new mongoose.Schema({
   dateCreated: { type: Date, default: Date.now }
 })
 
-module.exports = mongoose.model('User',UserSchema);
+module.exports = mongoose.model('User',userSchema);
 //Add Plaid Info
