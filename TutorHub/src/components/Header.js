@@ -1,11 +1,12 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Image, Text} from 'react-native';
 
 const Header = () => {
 
     return(
         <View style={styles.header}>
-            <Text style={styles.headerTitle}>Tutor Hub</Text>
+            <Text style={styles.headerTitle}>Welcome to TutorHub
+            </Text>
         </View>
     );
 
@@ -13,14 +14,16 @@ const Header = () => {
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: '#f2f2f2f2',
+        backgroundColor: '#179296',
         padding: 15
     },
     headerTitle: {
-        margin: 40,
+        fontWeight: 'bold',
+        color: 'white',
+        margin: 10,
         textAlign: 'center',
         fontSize: 20
-    }
+    },
 });
 
 export default Header;
