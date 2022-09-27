@@ -138,7 +138,7 @@ router.post('/login',loginValidate, async (req, res) => {
     //Create a login token for user and add it to to the header
     //This token is valid for 30 minutes
     const secret = process.env.SECRET;
-    const token = jwt.sign({_id: user.id, email: user.email}, secret, {expiresIn: '1800ms'});
+    const token = jwt.sign({_id: user.id, email: user.email}, secret, {expiresIn: '30m'});
     res.header('auth-token', token).send({message: 'Logged in successfully', token});
 
 })
