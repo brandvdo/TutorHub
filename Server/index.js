@@ -9,7 +9,7 @@ require('dotenv').config();
 const express = require('express');
 const { default: mongoose } = require('mongoose');
 
-const authRoutes = require('./routes/auth');
+const authRoutes = require('./routes/users');
 const verifyToken = require('./routes/verifyToken');
 
 const app = express()

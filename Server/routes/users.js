@@ -8,7 +8,7 @@ const express = require('express');
 const {check, validationResult, body} = require('express-validator');
 const bcrpyt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
+const verifyToken = require('./verifyToken');
 
 //Email dependencies
 var sesTransport = require('nodemailer-ses-transport');
@@ -51,7 +51,7 @@ const loginValidate = [
         .withMessage('Please provide a valid email'),
     check('password')
         .isLength({min: 8})
-        .withMessage('Password must be at least eight characters')
+        .withMessage('Password must be at least eight characters'),
 ]
 
 //Register route to create a new user
@@ -132,8 +132,8 @@ router.post('/login',loginValidate, async (req, res) => {
     const user = await User.findOne({email: req.body.email});
     const validPassword = await bcrpyt.compare(req.body.password, user.password)
 
-    if(!user) return res.status(404).send('Invalid email or password1');
-    if(!validPassword) return res.status(404).send('Invalid email or password2');
+    if(!user) return res.status(404).send('Invalid email or password');
+    if(!validPassword) return res.status(404).send('Invalid email or password');
 
     //Create a login token for user and add it to to the header
     //This token is valid for 30 minutes
@@ -142,6 +142,22 @@ router.post('/login',loginValidate, async (req, res) => {
     res.header('auth-token', token).send({message: 'Logged in successfully', token});
 
 })
+
+
+router.get('/getUserInfo/:id', verifyToken, (req,res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(422).json({errors: errors.array()});
+    }
+    if(req.params.id.length < 24) return res.status(400).send('Invalid ID');
+    User.findById(req.params.id)
+        .then(user => {
+            res.send({fullName: user.fullName, profileType: user.profileType});
+        })
+        .catch(err => console.group(err))
+
+})
+
 
 //TODO
 /*
