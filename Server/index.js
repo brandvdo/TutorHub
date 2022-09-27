@@ -9,7 +9,7 @@ require('dotenv').config();
 const express = require('express');
 const { default: mongoose } = require('mongoose');
 
-const authRoutes = require('./routes/auth');
+const authRoutes = require('./routes/users');
 const verifyToken = require('./routes/verifyToken');
 
 const app = express()
@@ -24,7 +24,7 @@ app.get('/', (req,res) =>{
 //Test case for verification system
 //TODO: DELETED/EDIT
 app.get('/api/user/profile', verifyToken, (req,res) =>{
-    res.send('Welcome to the User API');
+    res.send("User Profile");
 })
 
 //Create a use case for the users database, allowing request and post to the user database
