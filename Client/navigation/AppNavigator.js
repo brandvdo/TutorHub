@@ -6,6 +6,7 @@ Author: Brandon
 
 */
 
+
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -56,6 +57,10 @@ function StackNavigator(){
                     headerShown: false
             }}
             />
+            <Stack.Screen>
+                name = "LoginScreen"
+                component={}
+            </Stack.Screen>
         </Tab.Navigator>
     );
 }
@@ -88,6 +93,13 @@ function AppNavigator(){
                     headerShown: false
             }}
             />
+            <Stack.Screen
+                name="LoginScreen"
+                component={UserLoginScreen}
+                options={{
+                    headerShown: false
+                }}
+            ></Stack.Screen>
         </Tab.Navigator>
         </NavigationContainer>
     );
