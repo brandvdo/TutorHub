@@ -144,7 +144,7 @@ router.post('/login',loginValidate, async (req, res) => {
 })
 
 
-router.get('/getUserInfo/:id', verifyToken, (req,res) => {
+router.get('/getUserInfo/:id', (req,res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(422).json({errors: errors.array()});

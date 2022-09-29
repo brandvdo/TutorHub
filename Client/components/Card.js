@@ -1,29 +1,53 @@
 import React from 'react';
 import {StyleSheet, View, Text, ImageBackground, TouchableOpacity} from 'react-native';
+import axios from 'axios';
 
-const Card = props => {
+class Card extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      userFullName: null,
+    };
+  }
+
+  componentDidMount(){
+    axios.get('http://70.177.34.147:3000/api/user/profile', {
+    headers: {
+      'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzMzNWQ3ODcxMTBiMmQ2NzlkNDVjY2IiLCJlbWFpbCI6ImJyYW5kdmRvQGdtYWlsLmNvbSIsImlhdCI6MTY2NDQ4NTExOSwiZXhwIjoxNjY0NDg2OTE5fQ.we-TBAoW1hkNbbIos5YmyVMT0_Ad-L67PyIFsadu7uE',
+    }
+    })
+    .then((res) => {
+      this.setState({ userFullName: res.data })
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+  }
+  
+
+  render(){
+    const { userFullName } = this.state;
     return(
         <TouchableOpacity
             onPress={() => props.navigation.navigate('UserDetails')}
+            style={{paddingTop:60}}
         >
             <View style={styles.card}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Modern 3-bedroom flat</Text>
+                    <Text style={styles.title}>{userFullName}</Text>
                 </View>
                 <View style={styles.imageContainer}>
                     <ImageBackground source={require('../assets/images/defaultProfileImage.png')} style={styles.image}>
-                        <Text style={styles.price}>$200,000</Text>
-                        <View style={styles.year}>
-                            <Text style={styles.yearText}>2020</Text>
-                        </View>
                     </ImageBackground>
                 </View>
                 <View style={styles.description}>
-                    <Text style={styles.descriptionText}>This is the description</Text>
+                    <Text style={styles.descriptionText}>This is the description of a tutor post</Text>
                 </View>
             </View>
         </TouchableOpacity>
     );
+  }
 }
 
 const styles = StyleSheet.create({

@@ -9,6 +9,8 @@ require('dotenv').config();
 const express = require('express');
 const { default: mongoose } = require('mongoose');
 
+const jwt = require("jsonwebtoken");
+
 const authRoutes = require('./routes/users');
 const verifyToken = require('./routes/verifyToken');
 
@@ -18,7 +20,8 @@ app.use(express.json());
 
 //This will simply display a message when connecting to the api via a web broswer
 app.get('/', (req,res) =>{
-    res.send('Welcome to the User API');
+    let token = req.header('auth-token');
+    return (jwt.decode(token, process.env.SECRET));
 })
 
 //Test case for verification system
