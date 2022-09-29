@@ -33,8 +33,8 @@ const Tab = createBottomTabNavigator();
 //TODO Remove Create User Later
 function StackNavigator(){
     return(
-        <Tab.Navigator>
-            <Stack.Screen
+        <Tab.Navigator >
+            <Stack.Screen 
                 name="Home"
                 component={UserHomeScreen}
                 options={{
@@ -65,34 +65,30 @@ Bug -> Icons not showing for some reason
 function AppNavigator(){
     return(
         <NavigationContainer>
-            <Tab.Navigator
-                screenOptions={(route) => ({
-                    tabBarIcon: () =>{
-                        let iconName;
-                        if(route.name=="User") {
-                           iconName = "user"
-                        }if(route.name=="About") {
-                            iconName = "info"
-                        }
-                        return <Feather name={iconName} size={24} color="black" />
-                    },
-                    showIcon: true ,
-                    headerShown: false,
-                    headerBackTitleVisible: true
-                })}  
-            >
-                <Tab.Screen
-                    name="User"
-                    component={StackNavigator}
-                />
-                <Tab.Screen
-                    name="About"
-                    component={AboutScreen}
-                    options={{
-                        headerShown: false,
-                    }}
-                />
-            </Tab.Navigator>
+             <Tab.Navigator >
+            <Stack.Screen 
+                name="Home"
+                component={UserHomeScreen}
+                options={{
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="UserProfile"
+                component={UserProfileScreen}
+                options={{
+                    headerShown: false
+            }}
+            />
+            
+            <Stack.Screen
+                name="AddUser"
+                component={CreateUserScreen}
+                options={{
+                    headerShown: false
+            }}
+            />
+        </Tab.Navigator>
         </NavigationContainer>
     );
 }
