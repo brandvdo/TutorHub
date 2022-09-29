@@ -6,11 +6,12 @@
 
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
+import Card from '../components/Card';
 
 const UserHomeScreen = () =>{
     return(
         <View>
-            <Text>User Home Screen</Text>
+            <Card/>
         </View>
     );
 
