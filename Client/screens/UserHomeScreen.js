@@ -26,12 +26,13 @@ const styles = StyleSheet.create({
 
     headline: {
         fontWeight: 'bold',
-        fontSize: 18,
+        fontSize: 22,
         marginTop: 0,
         width: 200,
         height: 80,
         textAlign: 'center',
         paddingTop: 30,
+        color:'white'
     },
 });
 
