@@ -11,14 +11,15 @@ class Card extends React.Component {
     };
   }
 
+  //Pull Request example using axios
   componentDidMount(){
-    axios.get('http://70.177.34.147:3000/api/user/profile', {
+    axios.get('http://70.177.34.147:3000/api/users/getUserInfo/63335d787110b2d679d45ccb', {
     headers: {
-      'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzMzNWQ3ODcxMTBiMmQ2NzlkNDVjY2IiLCJlbWFpbCI6ImJyYW5kdmRvQGdtYWlsLmNvbSIsImlhdCI6MTY2NDQ4NTExOSwiZXhwIjoxNjY0NDg2OTE5fQ.we-TBAoW1hkNbbIos5YmyVMT0_Ad-L67PyIFsadu7uE',
+      'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzMzNWQ3ODcxMTBiMmQ2NzlkNDVjY2IiLCJlbWFpbCI6ImJyYW5kdmRvQGdtYWlsLmNvbSIsImlhdCI6MTY2NDUxMzQyOSwiZXhwIjoxNjY0NTE1MjI5fQ.9CGIfYoRuFZ1URY0MBEyAn43krjOAN9Ke9alz8E_mdU',
     }
     })
     .then((res) => {
-      this.setState({ userFullName: res.data })
+      this.setState({ userFullName: res.data.fullName })
     })
     .catch((error) => {
       console.error(error)
