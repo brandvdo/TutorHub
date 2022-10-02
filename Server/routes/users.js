@@ -18,17 +18,15 @@ const aws = require("aws-sdk");
 require('dotenv').config();
 
 /*
-
 Email verification system
-
-NOTE: Not working as google prevents users from signing in on 3rd party software, find new email SMTP Server or create one
-
+Using Amazon IAM server, only emails that are on the verified list will be sent
+while in sandbox mode, must request production mode later
 */
 
 
 const router = express.Router();
 const User = require('../models/User');
-const { ProductionAccessNotGrantedException } = require('@aws-sdk/client-ses');
+//const { ProductionAccessNotGrantedException } = require('@aws-sdk/client-ses');
 
 // Validation checks for registration and login
 const registerValidate = [

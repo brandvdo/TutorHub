@@ -12,6 +12,7 @@ const { default: mongoose } = require('mongoose');
 const jwt = require("jsonwebtoken");
 
 const authRoutes = require('./routes/users');
+const postRoutes = require('./routes/post');
 const verifyToken = require('./routes/verifyToken');
 
 const app = express()
@@ -26,12 +27,13 @@ app.get('/', (req,res) =>{
 
 //Test case for verification system
 //TODO: DELETED/EDIT
-app.get('/api/user/profile', verifyToken, (req,res) =>{
+app.get('/api/users/profile', verifyToken, (req,res) =>{
     res.send("User Profile");
 })
 
 //Create a use case for the users database, allowing request and post to the user database
 app.use('/api/users', authRoutes);
+app.use('/api/userpost', postRoutes);
 
 
 //Setting the port of the server

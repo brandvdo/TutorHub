@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema({
   email: {type:String, required: true},
   balance: {type:Number},
   friendsList: [String],
-  userPost: [Object],
   validated: {type:Boolean},
   profileURL: {type: String},
   profileType: {type:Number, required: true},
