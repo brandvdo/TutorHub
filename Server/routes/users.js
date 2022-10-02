@@ -13,7 +13,7 @@ const verifyToken = require('./verifyToken');
 //Email dependencies
 var sesTransport = require('nodemailer-ses-transport');
 const nodemailer = require('nodemailer');
-const aws = require("aws-sdk");
+const jwtDecode = require('jwt-decode');
 
 require('dotenv').config();
 
@@ -26,7 +26,6 @@ while in sandbox mode, must request production mode later
 
 const router = express.Router();
 const User = require('../models/User');
-//const { ProductionAccessNotGrantedException } = require('@aws-sdk/client-ses');
 
 // Validation checks for registration and login
 const registerValidate = [
@@ -156,6 +155,35 @@ router.get('/getUserInfo/:id', (req,res) => {
 
 })
 
+router.get('/getUserInfo/:id', verifyToken, (req,res) => {
+    if(req.params.id.length < 24) return res.status(400).send('Invalid ID');
+    User.findById(req.params.id)
+        .then(user => {
+            res.send({fullName: user.fullName, profileType: user.profileType, friendsList: user.friendsList});
+        })
+        .catch(err => console.group(err))
+
+})
+
+router.put('/addFriend/:id',verifyToken, (req,res) => {
+    if(req.params.id.length < 24) return res.status(400).send('Invalid ID');
+    const decodedToken = jwtDecode(req.header('auth-token'));
+    try{
+        User.findById(decodedToken._id)
+        .then(user => {
+            if(user.friendsList.includes(req.params.id)){
+                res.status(400).send("Users are already friends");
+            }else{
+                user.friendsList.push(req.params.id);
+                res.send({friendID: req.params.id});
+                return user.save();
+            }
+        })
+    }catch(error){
+        res.status(400).send(error);
+    }
+
+})
 
 //TODO
 /*
