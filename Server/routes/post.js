@@ -2,7 +2,6 @@ const express = require('express');
 const {check, validationResult, body} = require('express-validator');
 const jwtDecode = require('jwt-decode');
 const verifyToken = require('./verifyToken');
-const User = require('../models/User');
 
 require('dotenv').config();
 
