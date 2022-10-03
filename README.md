@@ -31,3 +31,38 @@ System Requirements
 <p>
 LSU courses, especially the courses required for a student's major, can be challenging to understand, comprehend, and succeed in. Even though professors are there to help out their students, they usually do not understand the students perspective of learning and their thought process. To get hands on help with their schoolwork students will usually seek out tutors and people who have already taken the subject who can use their personal experiences of the course to help the student succeed in the course. The problem with getting a tutor is first navigating through a site that helps students and tutors reach out to one another. The second problem is the finding the availability and preferences of both student and tutor.
 Tutorhub can be the first solution for tutors and students to easily access a site and quickly find help from tutors only at LSU. Tutorhub can be used on Iphones or computers and will have many options of tutors located in different categories of our system. Students would just have to login, browse through the system for the specific tutor and schedule a time to meet up via online or in person. But not only will Tutorhub just be for locating tutors but also a site that provides handwritten notes from the tutors that took the class so that students can be given former-student notes.</p>
+
+<br/><br/>
+
+<h2>API Routes</h2>
+
+<h3>POST /api/users/register</h3>
+
+<ul>
+  Requires
+  <li>String fullName</li>
+  <li>String email</li>
+  <li>String password</li>
+  <li>Int profileType</li>
+</ul>
+
+<h3>POST /api/users/login</h3>
+<ul>
+  Requires
+  <li>String email</li>
+  <li>String password</li>
+</ul>
+
+<h3>GET /api/getUserInfo/:id</h3>
+<ul>
+  Requires
+  <li>Valid auth-token</li>
+</ul>
+
+<h3>PUT /api/users/addFriend/:id</h3>
+<ul>
+  Requires
+  <li>Valid auth-token</li>
+</ul>
+
+
