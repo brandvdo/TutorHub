@@ -159,7 +159,10 @@ router.get('/getUserInfo/:id', (req,res) => {
     if(req.params.id.length < 24) return res.status(400).send('Invalid ID');
     User.findById(req.params.id)
         .then(user => {
-            res.send({fullName: user.fullName, profileType: user.profileType});
+            //Send all public information
+            res.send({fullName: user.fullName,email: user.email,friendsList: user.friendsList,
+                    userPost: user.userPost, validated: user.validated,tutorSubjects: user.tutorSubjects, 
+                    studySubjects: user.studySubjects, profileType: user.profileType,dateCreate: user.dateCreated});
         })
         .catch(err => console.group(err))
 

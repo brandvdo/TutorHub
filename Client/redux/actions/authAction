@@ -6,7 +6,7 @@ export const LOGIN_USER_FAIL = 'LOGIN_USER_FAIL';
 const BASE_URL = 'http://70.177.34.147:3000';
 
 export const registerUser = (authData) => {
-    const {fullName, email, password} = authData;
+    const {fullName, email, password,profileType} = authData;
 
     return async dispatch => {
 
