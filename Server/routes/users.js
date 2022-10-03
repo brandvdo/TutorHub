@@ -70,6 +70,11 @@ router.post('/register',registerValidate, async (req, res) => {
     const salt = await bcrpyt.genSalt();
     const hashPassword = await bcrpyt.hash(req.body.password, salt);
 
+    let tutorSubjects = [];
+    if(req.body.tutorSubjects != null) tutorSubjects = req.body.tutorSubjects;
+    let studySubjects = [];
+    if(req.body.studySubjects != null) studySubjects = req.body.studySubjects;
+
     //Using the schema from server/models/User.js create new user data and attempt to save it to the database
     const user = new User({
         fullName: req.body.fullName,
@@ -78,6 +83,9 @@ router.post('/register',registerValidate, async (req, res) => {
         balance: 0,
         validated: false,
         profileURL: "",
+        school: req.body.school,
+        tutorSubjects: tutorSubjects,
+        studySubjects: studySubjects,
         profileType: req.body.profileType
     })
 

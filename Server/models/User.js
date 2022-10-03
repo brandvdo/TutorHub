@@ -18,6 +18,8 @@ const userSchema = new mongoose.Schema({
   profileURL: {type: String},
   profileType: {type:Number, required: true},
   tutorSubjects: [String],
+  studySubjects: [String],
+  school: {type: String},
   dateCreated: { type: Date, default: Date.now }
 })
 
