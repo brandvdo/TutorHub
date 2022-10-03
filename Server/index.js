@@ -13,6 +13,7 @@ const jwt = require("jsonwebtoken");
 
 const authRoutes = require('./routes/users');
 const postRoutes = require('./routes/post');
+const homePageRoutes = require('./routes/homeActions');
 const verifyToken = require('./routes/verifyToken');
 
 const app = express()
@@ -34,6 +35,7 @@ app.get('/api/users/profile', verifyToken, (req,res) =>{
 //Create a use case for the users database, allowing request and post to the user database
 app.use('/api/users', authRoutes);
 app.use('/api/userpost', postRoutes);
+app.use('/api/home', homePageRoutes);
 
 
 //Setting the port of the server

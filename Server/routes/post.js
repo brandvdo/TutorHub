@@ -1,3 +1,11 @@
+/*
+
+Author: Brandon
+
+user post route
+
+*/
+
 const express = require('express');
 const {check, validationResult, body} = require('express-validator');
 const jwtDecode = require('jwt-decode');
@@ -5,27 +13,21 @@ const verifyToken = require('./verifyToken');
 
 require('dotenv').config();
 
-/*
-
-Email verification system
-
-NOTE: Not working as google prevents users from signing in on 3rd party software, find new email SMTP Server or create one
-
-*/
-
 
 const router = express.Router();
 const UserPost = require('../models/UserPost');
 
 const postValidate = [
     check('message')
-        .isLength({min: 30})
+        .isLength({min: 15})
         .withMessage('A post requires at least 30 characters'),
     check('tags')
         .isArray({min: 1})
         .withMessage('At least one tag is required for a post'),
 ]
 
+//Allows user's to create a new post
+//      /api/userpost/newPost
 router.post('/newPost',postValidate,verifyToken, async (req, res) => {
     
     const errors = validationResult(req);
@@ -54,6 +56,18 @@ router.post('/newPost',postValidate,verifyToken, async (req, res) => {
         res.status(400).send(error);
     }
 
+})
+
+
+//Get a message by its message ID
+// /api/userpost/getMessage/:id
+router.get('/getMessage/:id', verifyToken, (req, res) =>{
+    if(req.params.id.length < 24) return res.status(400).send('Invalid ID');
+    UserPost.findById(req.params.id)
+    .then(post => {
+        res.send(post);
+    })
+    .catch(err => res.status(400).send('ID not found'));
 })
 
 module.exports = router;
