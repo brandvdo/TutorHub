@@ -37,61 +37,60 @@ Tutorhub can be the first solution for tutors and students to easily access a si
 <h2>API Routes</h2>
 
 <h3>POST /api/users/register</h3>
-
-<ul>
 Requires
+<ul>
   <li>String fullName</li>
   <li>String email</li>
   <li>String password</li>
   <li>Int profileType</li>
-  Registers new user
 </ul>
+Registers new user
 
 <h3>POST /api/users/login</h3>
-<ul>
 Requires
+<ul>
   <li>String email</li>
   <li>String password</li>
-  Gives user valid auth-token
 </ul>
+Gives user valid auth-token
 
 <h3>GET /api/users/getUserInfo/:id</h3>
-<ul>
 Requires
+<ul>
   <li>Valid auth-token</li>
-  Outputs: fullName, profileType
 </ul>
+Outputs: fullName, profileType
 
 <h3>PUT /api/users/addFriend/:id</h3>
-<ul>
 Requires
+<ul>
   <li>Valid auth-token</li>
-  Add's given user ID to token user's ID
 </ul>
+Add's given user ID to token user's ID
 
 <h3>POST /api/userpost/newPost</h3>
-<ul>
 Requires
+<ul>
   <li>Valid auth-token</li>
   <li>String message</li>
   <li>String[] tags</li>
   Not Required
   <li>Int Price</li>
-  Creates a new post
 </ul>
+Creates a new post
 
 <h3>GET /api/userpost/getMessage/:id</h3>
-<ul>
 Requires
+<ul>
   <li>Valid auth-token</li>
-  Outputs message information
 </ul>
+Outputs message information
 
 
 <h3>GET /api/home/newsFeed/messages</h3>
-<ul>
 Requires
+<ul>
   <li>Valid auth-token</li>
-  Currently, outputs array of all friends' post
 </ul>
+Currently, outputs array of all friends' post
 
