@@ -44,6 +44,7 @@ Tutorhub can be the first solution for tutors and students to easily access a si
   <li>String email</li>
   <li>String password</li>
   <li>Int profileType</li>
+  Registers new user
 </ul>
 
 <h3>POST /api/users/login</h3>
@@ -51,18 +52,46 @@ Tutorhub can be the first solution for tutors and students to easily access a si
   Requires
   <li>String email</li>
   <li>String password</li>
+  Gives user valid auth-token
 </ul>
 
-<h3>GET /api/getUserInfo/:id</h3>
+<h3>GET /api/users/getUserInfo/:id</h3>
 <ul>
   Requires
   <li>Valid auth-token</li>
+  Outputs: fullName, profileType
 </ul>
 
 <h3>PUT /api/users/addFriend/:id</h3>
 <ul>
   Requires
   <li>Valid auth-token</li>
+  Add's given user ID to token user's ID
 </ul>
 
+<h3>POST /api/userpost/newPost</h3>
+<ul>
+  Requires
+  <li>Valid auth-token</li>
+  <li>String message</li>
+  <li>String[] tags</li>
+  Not Required
+  <li>Int Price</li>
+  Creates a new post
+</ul>
+
+<h3>GET /api/userpost/getMessage/:id</h3>
+<ul>
+  Requires
+  <li>Valid auth-token</li>
+  Outputs message information
+</ul>
+
+
+<h3>GET /api/home/newsFeed/messages</h3>
+<ul>
+  Requires
+  <li>Valid auth-token</li>
+  Currently, outputs array of all friends' post
+</ul>
 
