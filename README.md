@@ -34,6 +34,8 @@ Tutorhub can be the first solution for tutors and students to easily access a si
 
 <br/><br/>
 
+<h2>Database Schema</h2>
+
 <h2>API Routes</h2>
 
 <h3>POST /api/users/register</h3>
@@ -43,8 +45,13 @@ Requires
   <li>String email</li>
   <li>String password</li>
   <li>Int profileType</li>
+  Not Required
+  <li>String school</li>
+  <li>String[] tutorSubjects</li>
+  <li>String[] studySubjects</li>
 </ul>
-Registers new user
+Registers new user, will send verification email
+IAM server will currently only send emails to registered email list
 
 <h3>POST /api/users/login</h3>
 Requires
