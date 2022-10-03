@@ -52,6 +52,8 @@ const loginValidate = [
 ]
 
 //Register route to create a new user
+
+// /api/users/register
 router.post('/register',registerValidate, async (req, res) => {
 
     //Check validation results
@@ -150,16 +152,6 @@ router.get('/getUserInfo/:id', (req,res) => {
     User.findById(req.params.id)
         .then(user => {
             res.send({fullName: user.fullName, profileType: user.profileType});
-        })
-        .catch(err => console.group(err))
-
-})
-
-router.get('/getUserInfo/:id', verifyToken, (req,res) => {
-    if(req.params.id.length < 24) return res.status(400).send('Invalid ID');
-    User.findById(req.params.id)
-        .then(user => {
-            res.send({fullName: user.fullName, profileType: user.profileType, friendsList: user.friendsList});
         })
         .catch(err => console.group(err))
 
