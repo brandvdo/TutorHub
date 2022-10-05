@@ -100,6 +100,7 @@ function AppNavigator(){
                     headerShown: false
                 }}
             ></Stack.Screen>
+            
         </Tab.Navigator>
         </NavigationContainer>
     );
