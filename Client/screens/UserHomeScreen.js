@@ -14,7 +14,7 @@ import SearchBar from './features/SearchBar/SearchBar';
 
 const styles = StyleSheet.create({
     homeHeader: {
-        paddingTop: 30,
+        paddingTop: 40,
         backgroundColor: '#05998c',
     }
 });

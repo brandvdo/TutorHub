@@ -14,7 +14,7 @@ import AppNavigator from './navigation/AppNavigator'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#05998c',
     alignItems: 'center',
     justifyContent: 'center',
   },
