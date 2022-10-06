@@ -30,12 +30,17 @@ const style =StyleSheet.create({
     }
 });
 
+/*
+TODO: change navbar color to match header 
+*/
+
 const AppNavigator = () => {
     return(
         <NavigationContainer>
             <Tab.Navigator 
-                tabBarOptions={{
+                screenOptions={{
                     showLabel: false, 
+                    title: '',
                     style: {
                         position: 'absolute',
                         bototm: 25,
@@ -55,7 +60,7 @@ const AppNavigator = () => {
                         tabBarIcon: ({focused}) => (
                             <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
                                 <Image
-                                    source={require('../assets/adaptive-icon.png')}
+                                    source={require('../assets/home.png')}
                                     resizeMode='contain'
                                     style={{
                                         width: 25,
@@ -76,7 +81,7 @@ const AppNavigator = () => {
                         tabBarIcon: ({focused}) => (
                             <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
                                 <Image
-                                    source={require('../assets/adaptive-icon.png')}
+                                    source={require('../assets/comment-alt.png')}
                                     resizeMode='contain'
                                     style={{
                                         width: 25,
@@ -97,7 +102,7 @@ const AppNavigator = () => {
                         tabBarIcon: ({focused}) => (
                             <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
                                 <Image
-                                    source={require('../assets/adaptive-icon.png')}
+                                    source={require('../assets/user.png')}
                                     resizeMode='contain'
                                     style={{
                                         width: 25,
