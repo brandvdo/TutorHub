@@ -69,7 +69,7 @@ const AppNavigator = () => {
                                 />
                                 <Text
                                     style={{color: focused ? '#e32f45' : '#748c94', fontsize: 12}}>
-                                    HOME
+                                    Home
                                 </Text>
                             </View>
                         )
