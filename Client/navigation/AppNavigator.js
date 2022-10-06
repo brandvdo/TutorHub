@@ -1,105 +1,122 @@
 /*
 
-Author: Brandon
+Author: Brandon & Tyler
 
     This uses React and Expo to create a navigation bar allowing users to go to the different screens in the screens folder
 
 */
 
-
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import { Feather } from '@expo/vector-icons';
+import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 
-/*
-
-    Add All Screens Here
-
-*/
-
-import AboutScreen from '../screens/AboutScreen';
 import UserHomeScreen from '../screens/UserHomeScreen';
-import UserLoginScreen from '../screens/UserLoginScreen';
 import UserProfileScreen from '../screens/UserProfileScreen';
-//TODO Remove Later
 import CreateUserScreen from '../screens/CreateUserScreen';
 
-
-const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const style =StyleSheet.create({
+    shadow: {
+        shadowColor: '#7F5DF0',
+        shadowOffset: {
+            width: 0,
+            height: 10,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.5,
+        elevation: 5
+    }
+});
 
-//TODO Remove Create User Later
-function StackNavigator(){
-    return(
-        <Tab.Navigator >
-            <Stack.Screen 
-                name="Home"
-                component={UserHomeScreen}
-                options={{
-                    headerShown: false
-                }}
-            />
-            <Stack.Screen
-                name="UserProfile"
-                component={UserProfileScreen}
-                options={{
-                    headerShown: false
-            }}
-            />
-            
-            <Stack.Screen
-                name="AddUser"
-                component={CreateUserScreen}
-                options={{
-                    headerShown: false
-            }}
-            />
-            <Stack.Screen>
-                name = "LoginScreen"
-                component={}
-            </Stack.Screen>
-        </Tab.Navigator>
-    );
-}
 /*
-Bug -> Icons not showing for some reason
+TODO: change navbar color to match header 
 */
-function AppNavigator(){
+
+const AppNavigator = () => {
     return(
         <NavigationContainer>
-             <Tab.Navigator >
-            <Stack.Screen 
-                name="Home"
-                component={UserHomeScreen}
-                options={{
-                    headerShown: false
-                }}
-            />
-            <Stack.Screen
-                name="UserProfile"
-                component={UserProfileScreen}
-                options={{
-                    headerShown: false
+            <Tab.Navigator 
+                screenOptions={{
+                    showLabel: false, 
+                    title: '',
+                    style: {
+                        position: 'absolute',
+                        bototm: 25,
+                        left: 20,
+                        right: 20, 
+                        elevation: 0,
+                        backgroundColor: '#05998c',
+                        borderRadius: 15,
+                        height: 90,
+                        ...style.shadow
+                }
             }}
-            />
-            
-            <Stack.Screen
-                name="AddUser"
-                component={CreateUserScreen}
-                options={{
-                    headerShown: false
-            }}
-            />
-            <Stack.Screen
-                name="LoginScreen"
-                component={UserLoginScreen}
-                options={{
-                    headerShown: false
-                }}
-            ></Stack.Screen>
+        >
+                <Tab.Screen name="Home" component={UserHomeScreen}
+                    options={{
+                        headerShown: false,
+                        tabBarIcon: ({focused}) => (
+                            <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+                                <Image
+                                    source={require('../assets/home.png')}
+                                    resizeMode='contain'
+                                    style={{
+                                        width: 25,
+                                        height: 25,
+                                        tintColor: focused ? '#e32f45' : '#748c94', fontsize: 12}}
+                                />
+                                <Text
+                                    style={{color: focused ? '#e32f45' : '#748c94', fontsize: 12}}>
+                                    Home
+                                </Text>
+                            </View>
+                        )
+                    }}
+                />
+                <Tab.Screen name="AddUser" component={CreateUserScreen}
+                     options={{
+                        headerShown: false,
+                        tabBarIcon: ({focused}) => (
+                            <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+                                <Image
+                                    source={require('../assets/comment-alt.png')}
+                                    resizeMode='contain'
+                                    style={{
+                                        width: 25,
+                                        height: 25,
+                                        tintColor: focused ? '#e32f45' : '#748c94', fontsize: 12}}
+                                />
+                                <Text
+                                    style={{color: focused ? '#e32f45' : '#748c94', fontsize: 12}}>
+                                    Chat
+                                </Text>
+                            </View>
+                        )
+                    }}
+                />
+                <Tab.Screen name="UserProfile" component={UserProfileScreen}
+                     options={{
+                        headerShown: false,
+                        tabBarIcon: ({focused}) => (
+                            <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+                                <Image
+                                    source={require('../assets/user.png')}
+                                    resizeMode='contain'
+                                    style={{
+                                        width: 25,
+                                        height: 25,
+                                        tintColor: focused ? '#e32f45' : '#748c94', fontsize: 12}}
+                                />
+                                <Text
+                                    style={{color: focused ? '#e32f45' : '#748c94', fontsize: 12}}>
+                                    Profile
+                                </Text>
+                            </View>
+                        )
+                    }}
+                />
         </Tab.Navigator>
         </NavigationContainer>
     );

@@ -1,38 +1,58 @@
 /*
 
-    May rename, but this will be the home screen of the app after login
+  Author: Tyler
+
+  This is the main screen with chat feed 
 
 */
 
-import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text } from "react-native";
+import List from './features/SearchBar/List';
+import SearchBar from './features/SearchBar/SearchBar';
 
-const UserHomeScreen = () =>{
-    return(
-        <View style={styles.homeContainer}>
-            <Text style={styles.headline}>TutorHub</Text>
+
+const styles = StyleSheet.create({
+    homeHeader: {
+        paddingTop: 40,
+        backgroundColor: '#05998c',
+    }
+});
+
+const UserHomeScreen = () => {
+
+    const [searchPhrase, setSearchPhrase] = useState("");
+    const [clicked, setClicked] = useState(false);
+    const [fakeData, setFakeData] = useState();
+
+    // get data from the fake api endpoint
+    useEffect(() => {
+        const getData = async () => {
+            const apiResponse = await fetch(
+                "https://my-json-server.typicode.com/kevintomas1995/logRocket_searchBar/languages"
+            );
+            const data = await apiResponse.json();
+            setFakeData(data);
+        };
+        getData();
+    }, []);
+
+    return (
+        <View>
+            <View style={styles.homeHeader}>
+                <SearchBar
+                    searchPhrase={searchPhrase}
+                    setSearchPhrase={setSearchPhrase}
+                    clicked={clicked}
+                    setClicked={setClicked}
+                />
+            </View>
+            <View>
+                <Text>testing</Text>
+            </View>
         </View>
     );
 
 }
-
-const styles = StyleSheet.create({
-    homeContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop: 30,
-        backgroundColor: '#05998c',
-      },
-
-    headline: {
-        fontWeight: 'bold',
-        fontSize: 18,
-        marginTop: 0,
-        width: 200,
-        height: 80,
-        textAlign: 'center',
-        paddingTop: 30,
-    },
-});
 
 export default UserHomeScreen;

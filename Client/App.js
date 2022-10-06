@@ -1,16 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+/*
 
+  Author: Tyler
+
+  Search Bar for main screen
+
+*/
+import React from 'react';
 import AppNavigator from './navigation/AppNavigator'
 
-export default function App() {
+const App = () => {
   return (
-      <AppNavigator/>
+    <AppNavigator/>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop:30,
-  },
-});
+export default App;
