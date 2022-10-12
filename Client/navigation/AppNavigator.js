@@ -7,7 +7,6 @@ Author: Brandon & Tyler
 */
 
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 
@@ -36,22 +35,21 @@ TODO: change navbar color to match header
 
 const AppNavigator = () => {
     return(
-        <NavigationContainer>
             <Tab.Navigator 
                 screenOptions={{
-                    showLabel: false, 
-                    title: '',
-                    style: {
+                    tabBarShowLabel: false, 
+                    tabBarStyle: {
                         position: 'absolute',
-                        bototm: 25,
-                        left: 20,
-                        right: 20, 
-                        elevation: 0,
+                        bottom: 30,
+                        left: 40,
+                        right: 40,
+                        borderRadius: 35,
+                        height: '9%',
                         backgroundColor: '#05998c',
-                        borderRadius: 15,
-                        height: 90,
-                        ...style.shadow
-                }
+                        elevation: 50,
+                        borderTopWidth: 0, 
+                        }
+                    
             }}
         >
                 <Tab.Screen name="Home" component={UserHomeScreen}
@@ -65,10 +63,10 @@ const AppNavigator = () => {
                                     style={{
                                         width: 25,
                                         height: 25,
-                                        tintColor: focused ? '#e32f45' : '#748c94', fontsize: 12}}
+                                        tintColor: focused ? '#FFFFFF' : '#000000', fontsize: 12}}
                                 />
                                 <Text
-                                    style={{color: focused ? '#e32f45' : '#748c94', fontsize: 12}}>
+                                    style={{color: focused ? '#FFFFFF' : '#000000', fontsize: 12}}>
                                     Home
                                 </Text>
                             </View>
@@ -86,10 +84,10 @@ const AppNavigator = () => {
                                     style={{
                                         width: 25,
                                         height: 25,
-                                        tintColor: focused ? '#e32f45' : '#748c94', fontsize: 12}}
+                                        tintColor: focused ? '#FFFFFF' : '#000000', fontsize: 12}}
                                 />
                                 <Text
-                                    style={{color: focused ? '#e32f45' : '#748c94', fontsize: 12}}>
+                                    style={{color: focused ? '#FFFFFF' : '#000000', fontsize: 12}}>
                                     Chat
                                 </Text>
                             </View>
@@ -107,10 +105,10 @@ const AppNavigator = () => {
                                     style={{
                                         width: 25,
                                         height: 25,
-                                        tintColor: focused ? '#e32f45' : '#748c94', fontsize: 12}}
+                                        tintColor: focused ? '#FFFFFF' : '#000000', fontsize: 12}}
                                 />
                                 <Text
-                                    style={{color: focused ? '#e32f45' : '#748c94', fontsize: 12}}>
+                                    style={{color: focused ? '#FFFFFF' : '#000000', fontsize: 12}}>
                                     Profile
                                 </Text>
                             </View>
@@ -118,7 +116,6 @@ const AppNavigator = () => {
                     }}
                 />
         </Tab.Navigator>
-        </NavigationContainer>
     );
 }
 

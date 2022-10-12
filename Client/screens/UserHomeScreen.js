@@ -8,6 +8,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text } from "react-native";
+import AppNavigator from '../navigation/AppNavigator';
 import List from './features/SearchBar/List';
 import SearchBar from './features/SearchBar/SearchBar';
 
