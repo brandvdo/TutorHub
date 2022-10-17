@@ -5,7 +5,7 @@
   This is the schema for user accounts
 
 */
-
+//TODO: Add Plaid Info
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -13,13 +13,14 @@ const userSchema = new mongoose.Schema({
   password: {type:String, required: true},
   email: {type:String, required: true},
   balance: {type:Number},
-  friendsList: [Number],
+  friendsList: [String],
   validated: {type:Boolean},
   profileURL: {type: String},
   profileType: {type:Number, required: true},
   tutorSubjects: [String],
+  studySubjects: [String],
+  school: {type: String},
   dateCreated: { type: Date, default: Date.now }
 })
 
 module.exports = mongoose.model('User',userSchema);
-//Add Plaid Info

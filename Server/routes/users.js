@@ -13,22 +13,19 @@ const verifyToken = require('./verifyToken');
 //Email dependencies
 var sesTransport = require('nodemailer-ses-transport');
 const nodemailer = require('nodemailer');
-const aws = require("aws-sdk");
+const jwtDecode = require('jwt-decode');
 
 require('dotenv').config();
 
 /*
-
 Email verification system
-
-NOTE: Not working as google prevents users from signing in on 3rd party software, find new email SMTP Server or create one
-
+Using Amazon IAM server, only emails that are on the verified list will be sent
+while in sandbox mode, must request production mode later
 */
 
 
 const router = express.Router();
 const User = require('../models/User');
-const { ProductionAccessNotGrantedException } = require('@aws-sdk/client-ses');
 
 // Validation checks for registration and login
 const registerValidate = [
@@ -55,6 +52,8 @@ const loginValidate = [
 ]
 
 //Register route to create a new user
+
+// /api/users/register
 router.post('/register',registerValidate, async (req, res) => {
 
     //Check validation results
@@ -71,6 +70,11 @@ router.post('/register',registerValidate, async (req, res) => {
     const salt = await bcrpyt.genSalt();
     const hashPassword = await bcrpyt.hash(req.body.password, salt);
 
+    let tutorSubjects = [];
+    if(req.body.tutorSubjects != null) tutorSubjects = req.body.tutorSubjects;
+    let studySubjects = [];
+    if(req.body.studySubjects != null) studySubjects = req.body.studySubjects;
+
     //Using the schema from server/models/User.js create new user data and attempt to save it to the database
     const user = new User({
         fullName: req.body.fullName,
@@ -79,6 +83,9 @@ router.post('/register',registerValidate, async (req, res) => {
         balance: 0,
         validated: false,
         profileURL: "",
+        school: req.body.school,
+        tutorSubjects: tutorSubjects,
+        studySubjects: studySubjects,
         profileType: req.body.profileType
     })
 
@@ -144,7 +151,7 @@ router.post('/login',loginValidate, async (req, res) => {
 })
 
 
-router.get('/getUserInfo/:id', verifyToken, (req,res) => {
+router.get('/getUserInfo/:id', (req,res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(422).json({errors: errors.array()});
@@ -152,12 +159,34 @@ router.get('/getUserInfo/:id', verifyToken, (req,res) => {
     if(req.params.id.length < 24) return res.status(400).send('Invalid ID');
     User.findById(req.params.id)
         .then(user => {
-            res.send({fullName: user.fullName, profileType: user.profileType});
+            //Send all public information
+            res.send({fullName: user.fullName,email: user.email,friendsList: user.friendsList,
+                    userPost: user.userPost, validated: user.validated,tutorSubjects: user.tutorSubjects, 
+                    studySubjects: user.studySubjects, profileType: user.profileType,dateCreate: user.dateCreated});
         })
         .catch(err => console.group(err))
 
 })
 
+router.put('/addFriend/:id',verifyToken, (req,res) => {
+    if(req.params.id.length < 24) return res.status(400).send('Invalid ID');
+    const decodedToken = jwtDecode(req.header('auth-token'));
+    try{
+        User.findById(decodedToken._id)
+        .then(user => {
+            if(user.friendsList.includes(req.params.id)){
+                res.status(400).send("Users are already friends");
+            }else{
+                user.friendsList.push(req.params.id);
+                res.send({friendID: req.params.id});
+                return user.save();
+            }
+        })
+    }catch(error){
+        res.status(400).send(error);
+    }
+
+})
 
 //TODO
 /*
