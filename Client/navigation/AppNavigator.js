@@ -23,8 +23,7 @@ import AboutScreen from '../screens/AboutScreen';
 import UserHomeScreen from '../screens/UserHomeScreen';
 import UserLoginScreen from '../screens/UserLoginScreen';
 import UserProfileScreen from '../screens/UserProfileScreen';
-//TODO Remove Later
-import CreateUserScreen from '../screens/CreateUserScreen';
+
 
 
 const Stack = createStackNavigator();
@@ -49,14 +48,7 @@ function StackNavigator(){
                     headerShown: false
             }}
             />
-            
-            <Stack.Screen
-                name="AddUser"
-                component={CreateUserScreen}
-                options={{
-                    headerShown: false
-            }}
-            />
+        
             <Stack.Screen>
                 name = "LoginScreen"
                 component={}
