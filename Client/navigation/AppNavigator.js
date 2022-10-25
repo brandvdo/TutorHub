@@ -23,8 +23,9 @@ import AboutScreen from '../screens/AboutScreen';
 import UserHomeScreen from '../screens/UserHomeScreen';
 import UserLoginScreen from '../screens/UserLoginScreen';
 import UserProfileScreen from '../screens/UserProfileScreen';
-//TODO Remove Later
-import CreateUserScreen from '../screens/CreateUserScreen';
+import SignupScreen from '../screens/SignupScreen';
+
+// import CreateUserScreen from '../screens/CreateUserScreen';
 
 
 const Stack = createStackNavigator();
@@ -57,10 +58,15 @@ function StackNavigator(){
                     headerShown: false
             }}
             />
-            <Stack.Screen>
+            <Stack.Screen
                 name = "LoginScreen"
-                component={}
-            </Stack.Screen>
+                component={UserLoginScreen}
+            />
+
+            <Stack.Screen
+                name = "SignUp"
+                component={SignupScreen}
+            />
         </Tab.Navigator>
     );
 }
@@ -86,13 +92,13 @@ function AppNavigator(){
             }}
             />
             
-            <Stack.Screen
+            {/* <Stack.Screen
                 name="AddUser"
                 component={CreateUserScreen}
                 options={{
                     headerShown: false
             }}
-            />
+            /> */}
             <Stack.Screen
                 name="LoginScreen"
                 component={UserLoginScreen}
@@ -100,7 +106,13 @@ function AppNavigator(){
                     headerShown: false
                 }}
             ></Stack.Screen>
-            
+            <Stack.Screen
+                name = "SignUp"
+                component = {SignupScreen}                
+                options={{
+                    headerShown: false
+                }}
+            ></Stack.Screen>
         </Tab.Navigator>
         </NavigationContainer>
     );

@@ -1,44 +1,49 @@
 /*
 
-    User Login Screen
+Signup Screen
 
 */
 
-import React, {useState} from 'react';
-import { StatusBar } from "expo-status-bar";
+import React from 'react';
+import {StatusBar} from "expo-status-bar";
 import {StyleSheet, View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
 
-const UserLoginScreen = () =>{
-
-
+const SignupScreen = () =>{
     return(
         <View style={[styles.container]}>
             <Image 
                 source={require('../assets/TutorHub.png')}
                 style={{alignSelf: 'center', width:120, height:120, marginTop:180}}
             ></Image>
-            <Text style ={styles.headline}>Welcome to TutorHub</Text>
-            <StatusBar style="auto" />
-            <View style={styles.inputView}>
+            <Text style = {styles.headline}>Welcome to TutorHub</Text>
+        <StatusBar style= "auto" />
+        <View style={styles.inputView}>
+                <TextInput
+                style={styles.TextInput}
+                placeholder="Create a Username"
+                placeholderTextColor="#003f5c"
+                onChangeText={(email) => setEmail(email)}
+                />
+        </View>
+        <View style={styles.inputView}>
                 <TextInput
                 style={styles.TextInput}
                 placeholder="Enter LSU Email"
                 placeholderTextColor="#003f5c"
                 onChangeText={(email) => setEmail(email)}
                 />
-            </View>
-
-            <View style={styles.inputView}>
+        </View>
+        <View style={styles.inputView}>
             <TextInput
             style={styles.TextInput}
-            placeholder="Enter Password"
+            placeholder="Enter LSU Password"
             placeholderTextColor="#003f5c"
             secureTextEntry={true}
             onChangeText={(password) => setPassword(password)}
             />
             </View>
             <TouchableOpacity>
-                <Text style={styles.forgot_button}>Forgot Password?</Text>
+                <Text style={styles.forgot_button}>Already have an account?</Text>
                 </TouchableOpacity>
             
                 <TouchableOpacity style={styles.loginBtn}>
@@ -46,13 +51,16 @@ const UserLoginScreen = () =>{
             </TouchableOpacity>
         </View>
     );
+    
 };
+
 const styles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor: '#05998c',
         alignItems: "center",
     },
+
     inputView: {
         backgroundColor: "#c3f7e3",
         borderRadius: 30,
@@ -63,17 +71,16 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
 
+    selectedLabel: {
+        color: "white",
+    },
+
     headline: {
         fontWeight: 'bold',
         fontSize: 22,
         textAlign: 'center',
         padding: 10,
         color:'white'
-    },
-
-
-    selectedLabel: {
-        color: "white",
     },
 
     TextInput: {
@@ -99,5 +106,4 @@ const styles = StyleSheet.create({
       },
 });
 
-
-export default UserLoginScreen;
+export default SignupScreen;
