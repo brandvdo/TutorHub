@@ -5,22 +5,22 @@
   This is the schema for user accounts
 
 */
-
+//TODO: Add Plaid Info
 const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema({
-  name:  {type:String, required: true},
+const userSchema = new mongoose.Schema({
+  fullName:  {type:String, required: true},
   password: {type:String, required: true},
   email: {type:String, required: true},
-  ID: {type:Number, required: true},
   balance: {type:Number},
-  friendsList: [Number],
+  friendsList: [String],
   validated: {type:Boolean},
   profileURL: {type: String},
   profileType: {type:Number, required: true},
   tutorSubjects: [String],
+  studySubjects: [String],
+  school: {type: String},
   dateCreated: { type: Date, default: Date.now }
 })
 
-module.exports = mongoose.model('User',UserSchema);
-//Add Plaid Info
+module.exports = mongoose.model('User',userSchema);

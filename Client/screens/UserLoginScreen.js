@@ -40,6 +40,7 @@ const UserLoginScreen = () =>(
         </TouchableOpacity>
     </View>
 );
+
 const styles = StyleSheet.create({
     container:{
         flex:1,
@@ -63,15 +64,18 @@ const styles = StyleSheet.create({
         padding: 10,
         color:'white'
     },
+
     selectedLabel: {
         color: "white",
     },
+
     TextInput: {
         height: 50,
         flex: 1,
         padding: 10,
         marginLeft: 20,
       },
+
       forgot_button: {
         height: 30,
         marginBottom: 30,
@@ -87,4 +91,5 @@ const styles = StyleSheet.create({
         backgroundColor: "#c3f7e3",
       },
 });
+
 export default UserLoginScreen;
