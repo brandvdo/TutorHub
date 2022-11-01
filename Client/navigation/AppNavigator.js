@@ -12,7 +12,9 @@ import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 
 import UserHomeScreen from '../screens/UserHomeScreen';
 import UserProfileScreen from '../screens/UserProfileScreen';
-import CreateUserScreen from '../screens/CreateUserScreen';
+import ChatScreen from '../screens/ChatScreen';
+import SignupScreen from '../screens/SignupScreen';
+import UserLoginScreen from '../screens/UserLoginScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,7 +23,13 @@ const style =StyleSheet.create({
         shadowColor: '#7F5DF0',
         shadowOffset: {
             width: 0,
-            height: 10,
+            _height: 10,
+            get height() {
+                return this._height;
+            },
+            set height(value) {
+                this._height = value;
+            },
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.5,
@@ -73,7 +81,7 @@ const AppNavigator = () => {
                         )
                     }}
                 />
-                <Tab.Screen name="AddUser" component={CreateUserScreen}
+                <Tab.Screen name="AddUser" component={ChatScreen}
                      options={{
                         headerShown: false,
                         tabBarIcon: ({focused}) => (
@@ -110,6 +118,48 @@ const AppNavigator = () => {
                                 <Text
                                     style={{color: focused ? '#FFFFFF' : '#000000', fontsize: 12}}>
                                     Profile
+                                </Text>
+                            </View>
+                        )
+                    }}
+                />
+                <Tab.Screen name="Signup" component={SignupScreen}
+                     options={{
+                        headerShown: false,
+                        tabBarIcon: ({focused}) => (
+                            <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+                                <Image
+                                    source={require('../assets/user.png')}
+                                    resizeMode='contain'
+                                    style={{
+                                        width: 25,
+                                        height: 25,
+                                        tintColor: focused ? '#FFFFFF' : '#000000', fontsize: 12}}
+                                />
+                                <Text
+                                    style={{color: focused ? '#FFFFFF' : '#000000', fontsize: 12}}>
+                                    Signup
+                                </Text>
+                            </View>
+                        )
+                    }}
+                />
+                  <Tab.Screen name="Login" component={UserLoginScreen}
+                     options={{
+                        headerShown: false,
+                        tabBarIcon: ({focused}) => (
+                            <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+                                <Image
+                                    source={require('../assets/user.png')}
+                                    resizeMode='contain'
+                                    style={{
+                                        width: 25,
+                                        height: 25,
+                                        tintColor: focused ? '#FFFFFF' : '#000000', fontsize: 12}}
+                                />
+                                <Text
+                                    style={{color: focused ? '#FFFFFF' : '#000000', fontsize: 12}}>
+                                    Login
                                 </Text>
                             </View>
                         )
