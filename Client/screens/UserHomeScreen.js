@@ -11,7 +11,7 @@ import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text } from "react-n
 import AppNavigator from '../navigation/AppNavigator';
 import List from './features/SearchBar/List';
 import SearchBar from './features/SearchBar/SearchBar';
-
+import MainFeed from './mainFeed/MainFeed';
 
 
 const styles = StyleSheet.create({
@@ -56,9 +56,7 @@ const UserHomeScreen = () => {
                 />
             </View>
             <View>
-                <Text>
-                    test
-                </Text>
+                <MainFeed/>
             </View>
         </View>
     );
