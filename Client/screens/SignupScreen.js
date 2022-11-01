@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
         height: 50,
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 40,
         backgroundColor: "#c3f7e3",
       },
 });
