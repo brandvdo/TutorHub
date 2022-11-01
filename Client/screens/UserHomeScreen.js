@@ -44,7 +44,7 @@ const UserHomeScreen = () => {
         };
         getData();
     }, []);
-  
+
     return (
         <View>
             <View style={styles.homeHeader}>
