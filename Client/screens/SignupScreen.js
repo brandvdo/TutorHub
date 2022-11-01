@@ -1,14 +1,14 @@
 /*
 
-    User Login Screen
+Signup Screen
 
 */
 
-import React, {useState} from 'react';
-import { StatusBar } from "expo-status-bar";
+import React from 'react';
+import {StatusBar} from "expo-status-bar";
 import {StyleSheet, View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
 
-const UserLoginScreen = () =>(
+const SignupScreen = () =>(
     <View style={[styles.container]}>
         <Image
             source={require('../assets/TutorHub.png')}
@@ -16,6 +16,13 @@ const UserLoginScreen = () =>(
         ></Image>
         <Text style={styles.headline}>Welcome to TutorHub</Text>
         <StatusBar style="auto" />
+        <View style={styles.inputView}>
+            <TextInput
+                style={styles.TextInput}
+                placeholder="Create a Username"
+                placeholderTextColor="#003f5c"
+                onChangeText={(email) => setEmail(email)} />
+        </View>
         <View style={styles.inputView}>
             <TextInput
                 style={styles.TextInput}
@@ -32,7 +39,7 @@ const UserLoginScreen = () =>(
                 onChangeText={(password) => setPassword(password)} />
         </View>
         <TouchableOpacity>
-            <Text style={styles.forgot_button}>Forgot Password?</Text>
+            <Text style={styles.forgot_button}>Already have an account?</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.loginBtn}>
@@ -40,12 +47,14 @@ const UserLoginScreen = () =>(
         </TouchableOpacity>
     </View>
 );
+
 const styles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor: '#05998c',
         alignItems: "center",
     },
+
     inputView: {
         backgroundColor: "#c3f7e3",
         borderRadius: 30,
@@ -56,6 +65,10 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
 
+    selectedLabel: {
+        color: "white",
+    },
+
     headline: {
         fontWeight: 'bold',
         fontSize: 22,
@@ -63,15 +76,14 @@ const styles = StyleSheet.create({
         padding: 10,
         color:'white'
     },
-    selectedLabel: {
-        color: "white",
-    },
+
     TextInput: {
         height: 50,
         flex: 1,
         padding: 10,
         marginLeft: 20,
       },
+
       forgot_button: {
         height: 30,
         marginBottom: 30,
@@ -87,4 +99,5 @@ const styles = StyleSheet.create({
         backgroundColor: "#c3f7e3",
       },
 });
-export default UserLoginScreen;
+
+export default SignupScreen;
