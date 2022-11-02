@@ -1,9 +1,8 @@
 /*
 
-    User Profile Screen
+This is for testing only remove later
 
 */
-
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 
@@ -14,7 +13,7 @@ const styles = StyleSheet.create({
     }
 });
 
-const UserProfileScreen = () =>{
+const ChatScreen = () =>{
     return(
         <View>
             <View style={styles.Header}/>
@@ -28,4 +27,4 @@ const UserProfileScreen = () =>{
 
 }
 
-export default UserProfileScreen;
+export default ChatScreen;

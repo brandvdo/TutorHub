@@ -11,11 +11,18 @@ import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text } from "react-n
 import AppNavigator from '../navigation/AppNavigator';
 import List from './features/SearchBar/List';
 import SearchBar from './features/SearchBar/SearchBar';
+import MainFeed from './mainFeed/MainFeed';
 
 
 const styles = StyleSheet.create({
     homeHeader: {
-        paddingTop: 40,
+        _paddingTop: 40,
+        get paddingTop() {
+            return this._paddingTop;
+        },
+        set paddingTop(value) {
+            this._paddingTop = value;
+        },
         backgroundColor: '#05998c',
     }
 });
@@ -49,7 +56,7 @@ const UserHomeScreen = () => {
                 />
             </View>
             <View>
-                <Text>testing</Text>
+                <MainFeed/>
             </View>
         </View>
     );

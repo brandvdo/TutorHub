@@ -241,4 +241,27 @@ server.get("/search", async (request, response) => {
 
 */
 
+/*
+
+    /api/users/id
+
+    This is the put request to change user information
+    TODO: Add validation for user information to remove invalid entries
+
+*/
+å
+router.put('/:id', (req, res) => {
+    const userID = req.params.id;
+
+    User.findById(userID)
+        .then(user => {
+            //Add edit function and validation
+        })
+        .then(result => {
+            res.send(result)
+        })
+        .catch(err => console.log(err))
+});
+
 module.exports = router;
+
