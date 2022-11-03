@@ -7,12 +7,9 @@
 */
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text } from "react-native";
-import AppNavigator from '../navigation/AppNavigator';
-import List from './features/SearchBar/List';
+import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text, Function } from "react-native";
 import SearchBar from './features/SearchBar/SearchBar';
 import MainFeed from './mainFeed/MainFeed';
-
 
 const styles = StyleSheet.create({
     homeHeader: {

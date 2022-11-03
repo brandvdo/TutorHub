@@ -1,5 +1,7 @@
 /*
 
+    Author: Troy & Tyler
+
     User Login Screen
 
 */
@@ -8,38 +10,11 @@ import React, {useState} from 'react';
 import { StatusBar } from "expo-status-bar";
 import {StyleSheet, View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
 
-const UserLoginScreen = () =>(
-    <View style={[styles.container]}>
-        <Image
-            source={require('../assets/TutorHub.png')}
-            style={{ alignSelf: 'center', width: 120, height: 120, marginTop: 180 }}
-        ></Image>
-        <Text style={styles.headline}>Welcome to TutorHub</Text>
-        <StatusBar style="auto" />
-        <View style={styles.inputView}>
-            <TextInput
-                style={styles.TextInput}
-                placeholder="Enter Email"
-                placeholderTextColor="#003f5c"
-                onChangeText={(email) => setEmail(email)} />
-        </View>
-        <View style={styles.inputView}>
-            <TextInput
-                style={styles.TextInput}
-                placeholder="Enter Password"
-                placeholderTextColor="#003f5c"
-                secureTextEntry={true}
-                onChangeText={(password) => setPassword(password)} />
-        </View>
-        <TouchableOpacity>
-            <Text style={styles.forgot_button}>Forgot Password?</Text>
-        </TouchableOpacity>
+const UserLoginScreen = ({navigation}) =>{
 
-        <TouchableOpacity style={styles.loginBtn}>
-            <Text style={styles.loginText}>LOGIN</Text>
-        </TouchableOpacity>
-    </View>
-);
+// States for registration
+const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
 
 const styles = StyleSheet.create({
     container:{
@@ -81,6 +56,11 @@ const styles = StyleSheet.create({
         marginBottom: 30,
       },
 
+      forgot_buttonUpdated: {
+        height: 30,
+        marginTop: 30,
+      },
+
       loginBtn: {
         width: "80%",
         borderRadius: 25,
@@ -90,5 +70,42 @@ const styles = StyleSheet.create({
         backgroundColor: "#c3f7e3",
       },
 });
+
+return (
+    <View style={[styles.container]}>
+    <Image
+        source={require('../assets/TutorHub.png')}
+        style={{ alignSelf: 'center', width: 120, height: 120, marginTop: 180 }}
+    ></Image>
+    <Text style={styles.headline}>Welcome to TutorHub</Text>
+    <StatusBar style="auto" />
+    <View style={styles.inputView}>
+        <TextInput
+            style={styles.TextInput}
+            placeholder="Enter Email"
+            placeholderTextColor="#003f5c"
+            onChangeText={(email) => setEmail(email)} />
+    </View>
+    <View style={styles.inputView}>
+        <TextInput
+            style={styles.TextInput}
+            placeholder="Enter Password"
+            placeholderTextColor="#003f5c"
+            secureTextEntry={true}
+            onChangeText={(password) => setPassword(password)} />
+    </View>
+    <TouchableOpacity>
+        <Text style={styles.forgot_button}>Forgot Password?</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity style={styles.loginBtn}>
+        <Text style={styles.loginText}>LOGIN</Text>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+        <Text style={styles.forgot_buttonUpdated}>Don't have an account? Sign up now.</Text>
+    </TouchableOpacity>
+</View>
+    );
+}
 
 export default UserLoginScreen;
