@@ -34,7 +34,7 @@ const UserHomeScreen = () => {
     useEffect(() => {
         const getData = async () => {
             const apiResponse = await fetch(
-                "https://my-json-server.typicode.com/kevintomas1995/logRocket_searchBar/languages"
+                "http://70.177.34.147:3000/api/getUserInfo/"
             );
             const data = await apiResponse.json();
             setFakeData(data);

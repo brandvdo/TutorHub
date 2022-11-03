@@ -8,50 +8,39 @@
 
 import React, {useState} from 'react';
 import { StatusBar } from "expo-status-bar";
-import {StyleSheet, View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, Image, TextInput, TouchableOpacity, Button} from 'react-native';
+
+function login(userEmail, userPassword){
+    fetch("http://70.177.34.147:3000/api/users/login", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'auth-token': 'jwtToken'
+        },
+        body: JSON.stringify({
+            email: userEmail,
+            password: userPassword
+        })
+    })
+
+        .then((response) => response.json())
+        .then((responseData) => {
+            console.log(
+                "POST Response",
+                "Response Body -> " + JSON.stringify(responseData)
+            )
+            //const user_Token = sessionStorage.setItem('jwtToken',JSON.stringify(responseData.token));
+           // console.log(user_Token);
+        })
+        .done();
+}
 
 const UserLoginScreen = ({navigation}) =>{
 
 // States for registration
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
-
-  // Showing success message
-  const successMessage = () => {
-    return (
-      <div
-        className="success"
-        style={{
-          display: submitted ? '' : 'none',
-        }}>
-        <h1>User {username} successfully registered!!</h1>
-      </div>
-    );
-  };
- 
-  // Showing error message if error is true
-  const errorMessage = () => {
-    return (
-      <div
-        className="error"
-        style={{
-          display: error ? '' : 'none',
-        }}>
-        <h1>Please enter all the fields</h1>
-      </div>
-    );
-  };
-
- // Handling the form submission
- const handleSubmit = (e) => {
-    e.preventDefault();
-    if (email === '' || password === '') {
-      setError(true);
-    } else {
-      setSubmitted(true);
-      setError(false);
-    }
-  };
 
 const styles = StyleSheet.create({
     container:{
@@ -105,6 +94,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#c3f7e3",
+        marginTop: 50
       },
 });
 
@@ -135,7 +125,7 @@ return (
         <Text style={styles.forgot_button}>Forgot Password?</Text>
     </TouchableOpacity>
 
-    <TouchableOpacity style={styles.loginBtn}  onPress={() => handleSubmit && navigation.navigate('Home')}>
+    <TouchableOpacity onPress={login(email,password)} style={styles.loginBtn}>
         <Text style={styles.loginText}>LOGIN</Text>
     </TouchableOpacity>
     <TouchableOpacity onPress={() => navigation.navigate('Signup')}>

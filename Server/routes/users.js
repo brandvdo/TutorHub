@@ -26,6 +26,7 @@ while in sandbox mode, must request production mode later
 
 const router = express.Router();
 const User = require('../models/User');
+const { response } = require('express');
 
 // Validation checks for registration and login
 const registerValidate = [
@@ -187,6 +188,50 @@ router.put('/addFriend/:id',verifyToken, (req,res) => {
     }
 
 })
+//Not working
+router.get('/search', async (req, res) => {
+    try{
+        let result = await User.aggregate([{
+            "$search": {
+                "autocomplete":{
+                    "query": `${req.query.query}`,
+                    "path": "fullName",
+                    "fuzzy": {
+                        "maxEdits": 2,
+                        "prefixLength": 3
+                    }
+                }
+            }
+        }])
+        res.send(result);
+    }catch(err){
+        res.status(500).send({message: err.message});
+    }
+})
+
+/*
+server.get("/search", async (request, response) => {
+    try {
+        let result = await collection.aggregate([
+            {
+                "$search": {
+                    "autocomplete": {
+                        "query": `${request.query.query}`,
+                        "path": "name",
+                        "fuzzy": {
+                            "maxEdits": 2,
+                            "prefixLength": 3
+                        }
+                    }
+                }
+            }
+        ]).toArray();
+        response.send(result);
+    } catch (e) {
+        response.status(500).send({ message: e.message });
+    }
+});
+*/
 
 //TODO
 /*
