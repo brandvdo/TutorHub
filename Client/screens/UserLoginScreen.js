@@ -8,7 +8,33 @@
 
 import React, {useState} from 'react';
 import { StatusBar } from "expo-status-bar";
-import {StyleSheet, View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, Image, TextInput, TouchableOpacity, Button} from 'react-native';
+
+function login(userEmail, userPassword){
+    fetch("http://70.177.34.147:3000/api/users/login", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'auth-token': 'jwtToken'
+        },
+        body: JSON.stringify({
+            email: userEmail,
+            password: userPassword
+        })
+    })
+
+        .then((response) => response.json())
+        .then((responseData) => {
+            console.log(
+                "POST Response",
+                "Response Body -> " + JSON.stringify(responseData)
+            )
+            //const user_Token = sessionStorage.setItem('jwtToken',JSON.stringify(responseData.token));
+           // console.log(user_Token);
+        })
+        .done();
+}
 
 const UserLoginScreen = ({navigation}) =>{
 
@@ -68,6 +94,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#c3f7e3",
+        marginTop: 50
       },
 });
 
@@ -98,7 +125,7 @@ return (
         <Text style={styles.forgot_button}>Forgot Password?</Text>
     </TouchableOpacity>
 
-    <TouchableOpacity style={styles.loginBtn}>
+    <TouchableOpacity onPress={login(email,password)} style={styles.loginBtn}>
         <Text style={styles.loginText}>LOGIN</Text>
     </TouchableOpacity>
     <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
