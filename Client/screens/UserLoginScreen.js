@@ -16,6 +16,43 @@ const UserLoginScreen = ({navigation}) =>{
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 
+  // Showing success message
+  const successMessage = () => {
+    return (
+      <div
+        className="success"
+        style={{
+          display: submitted ? '' : 'none',
+        }}>
+        <h1>User {username} successfully registered!!</h1>
+      </div>
+    );
+  };
+ 
+  // Showing error message if error is true
+  const errorMessage = () => {
+    return (
+      <div
+        className="error"
+        style={{
+          display: error ? '' : 'none',
+        }}>
+        <h1>Please enter all the fields</h1>
+      </div>
+    );
+  };
+
+ // Handling the form submission
+ const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email === '' || password === '') {
+      setError(true);
+    } else {
+      setSubmitted(true);
+      setError(false);
+    }
+  };
+
 const styles = StyleSheet.create({
     container:{
         flex:1,
@@ -98,7 +135,7 @@ return (
         <Text style={styles.forgot_button}>Forgot Password?</Text>
     </TouchableOpacity>
 
-    <TouchableOpacity style={styles.loginBtn}>
+    <TouchableOpacity style={styles.loginBtn}  onPress={() => handleSubmit && navigation.navigate('Home')}>
         <Text style={styles.loginText}>LOGIN</Text>
     </TouchableOpacity>
     <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
