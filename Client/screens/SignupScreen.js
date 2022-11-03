@@ -9,8 +9,6 @@ Signup Screen
 import React, {useState} from 'react';
 import {StatusBar} from "expo-status-bar";
 import {StyleSheet, View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
-import UserHomeScreen from './UserHomeScreen';
-import { TabNavigator } from '../navigation/AppNavigator';
 
 const SignupScreen = ({navigation}) =>{
 
@@ -150,7 +148,7 @@ return (
                     placeholder="Confirm Password"
                     placeholderTextColor="#003f5c"
                     secureTextEntry={true}
-                    onChangeText={(confirmPassword) => setConfirmPassword(password)} />
+                    onChangeText={(confirmPassword) => setConfirmPassword(confirmPassword)} />
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.forgot_button}>Already have an account?</Text>
