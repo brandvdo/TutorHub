@@ -8,7 +8,7 @@ import React, {useState} from 'react';
 import { StatusBar } from "expo-status-bar";
 import {StyleSheet, View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
 
-const UserLoginScreen = () =>(
+const UserLoginScreen = ({navigation}) =>(
     <View style={[styles.container]}>
         <Image
             source={require('../assets/TutorHub.png')}
@@ -37,6 +37,9 @@ const UserLoginScreen = () =>(
 
         <TouchableOpacity style={styles.loginBtn}>
             <Text style={styles.loginText}>LOGIN</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+            <Text style={styles.forgot_buttonUpdated}>Don't have an account? Sign up now.</Text>
         </TouchableOpacity>
     </View>
 );
@@ -79,6 +82,11 @@ const styles = StyleSheet.create({
       forgot_button: {
         height: 30,
         marginBottom: 30,
+      },
+
+      forgot_buttonUpdated: {
+        height: 30,
+        marginTop: 30,
       },
 
       loginBtn: {

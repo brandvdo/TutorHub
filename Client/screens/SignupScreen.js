@@ -8,7 +8,7 @@ import React from 'react';
 import {StatusBar} from "expo-status-bar";
 import {StyleSheet, View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
 
-const SignupScreen = () =>(
+const SignupScreen = ({navigation}) =>(
     <View style={[styles.container]}>
         <Image
             source={require('../assets/TutorHub.png')}
@@ -46,7 +46,7 @@ const SignupScreen = () =>(
                 secureTextEntry={true}
                 onChangeText={(password) => setPassword(password)} />
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
             <Text style={styles.forgot_button}>Already have an account?</Text>
         </TouchableOpacity>
 
