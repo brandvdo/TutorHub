@@ -125,8 +125,8 @@ return (
         <Text style={styles.forgot_button}>Forgot Password?</Text>
     </TouchableOpacity>
 
-    <TouchableOpacity onPress={login(email,password)} style={styles.loginBtn}>
-        <Text style={styles.loginText}>LOGIN</Text>
+    <TouchableOpacity onPress={() => login(email,password)} style={styles.loginBtn}>
+        <Text style={styles.loginText}>Login</Text>
     </TouchableOpacity>
     <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
         <Text style={styles.forgot_buttonUpdated}>Don't have an account? Sign up now.</Text>
