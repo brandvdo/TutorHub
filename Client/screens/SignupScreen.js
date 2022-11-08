@@ -10,10 +10,40 @@ import React, {useState} from 'react';
 import {StatusBar} from "expo-status-bar";
 import {StyleSheet, View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
 
+function singup(userName, userEmail, userPassword, userSchool){
+    fetch("http://70.177.34.147:3000/api/users/register", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: userEmail,
+            password: userPassword,
+            fullName: userName,
+            profileType: 0,
+            school: userSchool, 
+           
+
+        })
+    })
+
+        .then((response) => response.json())
+        .then((responseData) => {
+            console.log(
+                "POST Response",
+                "Response Body -> " + JSON.stringify(responseData)
+            )
+            //const user_Token = sessionStorage.setItem('jwtToken',JSON.stringify(responseData.token));
+           // console.log(user_Token);
+        })
+        .done();
+}
+
 const SignupScreen = ({navigation}) =>{
 
 // States for registration
-const [username, setUsername] = useState('');
+const [name, setName] = useState('');
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const [confirmPassword, setConfirmPassword] = useState('');
@@ -53,7 +83,7 @@ const [error, setError] = useState(false);
  // Handling the form submission
  const handleSubmit = (e) => {
     e.preventDefault();
-    if (username === '' || email === '' || password === '') {
+    if (name === '' || email === '' || password === '') {
       setError(true);
     } else {
       setSubmitted(true);
@@ -123,9 +153,9 @@ return (
             <View style={styles.inputView}>
                 <TextInput
                     style={styles.TextInput}
-                    placeholder="Create a Username"
+                    placeholder="Enter Name"
                     placeholderTextColor="#003f5c"
-                    onChangeText={(username) => setUsername(username)} />
+                    onChangeText={(name) => setName(name)} />
             </View>
             <View style={styles.inputView}>
                 <TextInput
@@ -142,20 +172,20 @@ return (
                     secureTextEntry={true}
                     onChangeText={(password) => setPassword(password)} />
             </View>
-            <View style={styles.inputView}>
+            {/* <View style={styles.inputView}>
                 <TextInput
                     style={styles.TextInput}
                     placeholder="Confirm Password"
                     placeholderTextColor="#003f5c"
                     secureTextEntry={true}
                     onChangeText={(confirmPassword) => setConfirmPassword(confirmPassword)} />
-            </View>
+            </View> */}
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.forgot_button}>Already have an account?</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.loginBtn} onPress={() => handleSubmit && navigation.navigate('Home')}>
-                <Text style={styles.loginText}>LOGIN</Text>
+            <TouchableOpacity style={styles.loginBtn} onPress={() => singup(name,email,password)}>
+                <Text style={styles.loginText}>Sign Up</Text>
             </TouchableOpacity>
         </View>
     );
