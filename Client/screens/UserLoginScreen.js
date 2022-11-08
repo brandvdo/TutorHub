@@ -9,6 +9,18 @@
 import React, {useState} from 'react';
 import { StatusBar } from "expo-status-bar";
 import {StyleSheet, View, Text, Image, TextInput, TouchableOpacity, Button} from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+
+async function save(key, value) {
+    await SecureStore.setItemAsync(key, value);
+}
+
+/*
+
+TODO Create error message display on view
+TODO Send user to home screen if successful login
+*/
+let errorMessage = "";
 
 function login(userEmail, userPassword){
     fetch("http://70.177.34.147:3000/api/users/login", {
@@ -26,12 +38,13 @@ function login(userEmail, userPassword){
 
         .then((response) => response.json())
         .then((responseData) => {
-            console.log(
-                "POST Response",
-                "Response Body -> " + JSON.stringify(responseData)
-            )
-            //const user_Token = sessionStorage.setItem('jwtToken',JSON.stringify(responseData.token));
-           // console.log(user_Token);
+            if(JSON.stringify(responseData.token) == null){
+                errorMessage = JSON.stringify(responseData.errors[0].msg);
+                console.log(errorMessage);
+            }else{
+                save("auth-token",JSON.stringify(responseData.token));
+                console.log(JSON.stringify(responseData));
+            }
         })
         .done();
 }
@@ -102,7 +115,7 @@ return (
     <View style={[styles.container]}>
     <Image
         source={require('../assets/TutorHub.png')}
-        style={{ alignSelf: 'center', width: 120, height: 120, marginTop: 180 }}
+        style={{ alignSelf: 'center', width: 120, height: 120, marginTop: 60 }}
     ></Image>
     <Text style={styles.headline}>Welcome to TutorHub</Text>
     <StatusBar style="auto" />
@@ -124,8 +137,7 @@ return (
     <TouchableOpacity>
         <Text style={styles.forgot_button}>Forgot Password?</Text>
     </TouchableOpacity>
-
-    <TouchableOpacity onPress={login(email,password)} style={styles.loginBtn}>
+    <TouchableOpacity onPress={() => login(email,password)} style={styles.loginBtn}>
         <Text style={styles.loginText}>LOGIN</Text>
     </TouchableOpacity>
     <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
