@@ -7,6 +7,7 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 
+
 const styles = StyleSheet.create({
     Header: {
         paddingTop: 50,
@@ -19,9 +20,7 @@ const UserProfileScreen = () =>{
         <View>
             <View style={styles.Header}/>
             <View>
-                <Text>
-                    
-                </Text>
+            
             </View>
         </View>
     );
