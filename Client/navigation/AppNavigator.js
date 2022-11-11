@@ -79,7 +79,7 @@ export function TabNavigator() {
                 )
             }}
         />
-        <Tab.Screen name="AddUser" component={ChatScreen}
+        <Tab.Screen name="ChatScreen" component={UserLoginScreen}
              options={{
                 headerShown: false,
                 tabBarIcon: ({focused}) => (

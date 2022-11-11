@@ -22,6 +22,12 @@ TODO Send user to home screen if successful login
 */
 let errorMessage = "";
 
+const UserLoginScreen = ({navigation}) =>{
+
+// States for registration
+const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
+
 function login(userEmail, userPassword){
     fetch("http://70.177.34.147:3000/api/users/login", {
         method: 'POST',
@@ -43,17 +49,11 @@ function login(userEmail, userPassword){
                 console.log(errorMessage);
             }else{
                 save("auth-token",JSON.stringify(responseData.token));
-                console.log(JSON.stringify(responseData));
+                navigation.navigate('Home')
             }
         })
         .done();
 }
-
-const UserLoginScreen = ({navigation}) =>{
-
-// States for registration
-const [email, setEmail] = useState('');
-const [password, setPassword] = useState('');
 
 const styles = StyleSheet.create({
     container:{

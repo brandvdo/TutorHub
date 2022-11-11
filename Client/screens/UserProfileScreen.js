@@ -4,8 +4,20 @@
 
 */
 
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+
+async function getValueFor(key) {
+    let result = await SecureStore.getItemAsync(key);
+    if (result) {
+      return result;
+    } else {
+      console.log("Key " + key + "not found");
+    }
+}
+
+let userToken = getValueFor("auth-token");
 
 const styles = StyleSheet.create({
     container:{
@@ -48,6 +60,11 @@ const styles = StyleSheet.create({
 });
 
 const UserProfileScreen = () =>{
+
+    const [name, setName] = useState('');
+    const [token, setToken] = useState(getValueFor(userToken));
+
+    console.log("Token: " + userToken);
     return(
         <View style={[styles.container]}>
             <View style={styles.row}>
@@ -67,7 +84,7 @@ const UserProfileScreen = () =>{
                 </Text>
             </TouchableOpacity>
             <View style={styles.row}>
-                
+                <Text></Text>
             </View>
         </View>
     );
