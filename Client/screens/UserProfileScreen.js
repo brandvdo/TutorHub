@@ -7,11 +7,11 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
+const jwtDecode = require('jwt-decode');
 let userToken = ""
 async function getToken() {
     let result = await SecureStore.getItemAsync("token");
     if (result) {
-      console.log(result)
       userToken = result;
     } else {
       console.log("Key " + key + "not found");
@@ -19,7 +19,6 @@ async function getToken() {
 }
 
 getToken();
-
 
 const styles = StyleSheet.create({
     container:{
@@ -65,7 +64,8 @@ const UserProfileScreen = () =>{
 
     const [name, setName] = useState('');
     const [token, setToken] = useState(userToken);
-
+    let decodedToken = jwtDecode(userToken);
+    console.log(decodedToken._id);
     return(
         <View style={[styles.container]}>
             <View style={styles.row}>

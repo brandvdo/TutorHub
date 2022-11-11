@@ -169,6 +169,7 @@ router.get('/getUserInfo/:id', (req,res) => {
 
 })
 
+
 router.put('/addFriend/:id',verifyToken, (req,res) => {
     if(req.params.id.length < 24) return res.status(400).send('Invalid ID');
     const decodedToken = jwtDecode(req.header('auth-token'));
