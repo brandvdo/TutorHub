@@ -7,17 +7,19 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
-
-async function getValueFor(key) {
-    let result = await SecureStore.getItemAsync(key);
+let userToken = ""
+async function getToken() {
+    let result = await SecureStore.getItemAsync("token");
     if (result) {
-      return result;
+      console.log(result)
+      userToken = result;
     } else {
       console.log("Key " + key + "not found");
     }
 }
 
-let userToken = getValueFor("auth-token");
+getToken();
+
 
 const styles = StyleSheet.create({
     container:{
@@ -62,9 +64,8 @@ const styles = StyleSheet.create({
 const UserProfileScreen = () =>{
 
     const [name, setName] = useState('');
-    const [token, setToken] = useState(getValueFor(userToken));
+    const [token, setToken] = useState(userToken);
 
-    console.log("Token: " + userToken);
     return(
         <View style={[styles.container]}>
             <View style={styles.row}>

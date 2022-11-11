@@ -48,7 +48,8 @@ function login(userEmail, userPassword){
                 errorMessage = JSON.stringify(responseData.errors[0].msg);
                 console.log(errorMessage);
             }else{
-                save("auth-token",JSON.stringify(responseData.token));
+                save("token",JSON.stringify(responseData.token));
+                console.log(JSON.stringify(responseData.token))
                 navigation.navigate('Home')
             }
         })
