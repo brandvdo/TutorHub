@@ -34,6 +34,7 @@ const UserHomeScreen = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    //TODO fix api request
     const fetchData = async () => {
         const userToken = await SecureStore.getItemAsync("token");
         console.log(userToken)

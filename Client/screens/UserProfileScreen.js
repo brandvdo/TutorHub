@@ -52,7 +52,12 @@ const UserProfileScreen = () =>{
 
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-    
+    /*
+        Take in the stored token and request the user information of the current user.
+        Note that data is an object that contains all the user information
+
+        Example: data.fullName 
+    */
     const fetchData = async () => {
         const userToken = await SecureStore.getItemAsync("token");
         const decodedToken = jwtDecode(userToken);
@@ -69,9 +74,12 @@ const UserProfileScreen = () =>{
         setLoading(false);
       };
 
+      /*
+        Used to update information
+      */
       useEffect(() => {
         fetchData();
-        const dataInterval = setInterval(() => fetchData(), 5 * 1000);
+        const dataInterval = setInterval(() => fetchData(), 10 * 1000);
         return () => clearInterval(dataInterval);
       }, []);
 

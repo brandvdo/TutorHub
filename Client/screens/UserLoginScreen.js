@@ -18,7 +18,6 @@ async function save(key, value) {
 /*
 
 TODO Create error message display on view
-TODO Send user to home screen if successful login
 */
 let errorMessage = "";
 
@@ -28,33 +27,36 @@ const UserLoginScreen = ({navigation}) =>{
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 
+//Login user
 function login(userEmail, userPassword){
     userEmail = userEmail.toLowerCase()
+    //Call API
     fetch("http://70.177.34.147:3000/api/users/login", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'auth-token': 'jwtToken'
         },
         body: JSON.stringify({
             email: userEmail,
             password: userPassword
         })
     })
-
-        .then((response) => response.json())
-        .then((responseData) => {
-            if(JSON.stringify(responseData.token) == null){
-                errorMessage = JSON.stringify(responseData.errors[0].msg);
-                console.log(errorMessage);
-            }else{
-                save("token",JSON.stringify(responseData.token));
-                console.log(JSON.stringify(responseData.token))
-                navigation.navigate('Home')
-            }
-        })
-        .done();
+    /*
+        Once we have a req see if login token exist, if not it was unsuccessful and we have an error
+    */
+    .then((response) => response.json())
+    .then((responseData) => {
+        if(JSON.stringify(responseData.token) == null){
+            errorMessage = JSON.stringify(responseData.errors[0].msg);
+            console.log(errorMessage);
+        }else{
+            save("token",JSON.stringify(responseData.token));
+            console.log(JSON.stringify(responseData.token))
+            navigation.navigate('Home')
+        }
+    })
+    .done();
 }
 
 const styles = StyleSheet.create({
