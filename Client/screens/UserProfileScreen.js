@@ -3,22 +3,10 @@
     User Profile Screen
 
 */
-
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 const jwtDecode = require('jwt-decode');
-let userToken = ""
-async function getToken() {
-    let result = await SecureStore.getItemAsync("token");
-    if (result) {
-      userToken = result;
-    } else {
-      console.log("Key " + key + "not found");
-    }
-}
-
-getToken();
 
 const styles = StyleSheet.create({
     container:{
@@ -62,10 +50,31 @@ const styles = StyleSheet.create({
 
 const UserProfileScreen = () =>{
 
-    const [name, setName] = useState('');
-    const [token, setToken] = useState(userToken);
-    let decodedToken = jwtDecode(userToken);
-    console.log(decodedToken._id);
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    
+    const fetchData = async () => {
+        const userToken = await SecureStore.getItemAsync("token");
+        const decodedToken = jwtDecode(userToken);
+        const resp = await fetch("http://70.177.34.147:3000/api/users/getUserInfo/"+decodedToken._id, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'auth-token': userToken,
+            },
+        })
+        const data = await resp.json();
+        setData(data);
+        setLoading(false);
+      };
+
+      useEffect(() => {
+        fetchData();
+        const dataInterval = setInterval(() => fetchData(), 5 * 1000);
+        return () => clearInterval(dataInterval);
+      }, []);
+
     return(
         <View style={[styles.container]}>
             <View style={styles.row}>
@@ -85,7 +94,7 @@ const UserProfileScreen = () =>{
                 </Text>
             </TouchableOpacity>
             <View style={styles.row}>
-                <Text></Text>
+                <Text>{data.fullName}</Text>
             </View>
         </View>
     );
