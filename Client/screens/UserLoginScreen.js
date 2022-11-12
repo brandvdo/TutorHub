@@ -29,6 +29,7 @@ const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 
 function login(userEmail, userPassword){
+    userEmail = userEmail.toLowerCase()
     fetch("http://70.177.34.147:3000/api/users/login", {
         method: 'POST',
         headers: {
