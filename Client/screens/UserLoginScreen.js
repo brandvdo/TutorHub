@@ -9,38 +9,55 @@
 import React, {useState} from 'react';
 import { StatusBar } from "expo-status-bar";
 import {StyleSheet, View, Text, Image, TextInput, TouchableOpacity, Button} from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 
-function login(userEmail, userPassword){
-    fetch("http://70.177.34.147:3000/api/users/login", {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'auth-token': 'jwtToken'
-        },
-        body: JSON.stringify({
-            email: userEmail,
-            password: userPassword
-        })
-    })
-
-        .then((response) => response.json())
-        .then((responseData) => {
-            console.log(
-                "POST Response",
-                "Response Body -> " + JSON.stringify(responseData)
-            )
-            //const user_Token = sessionStorage.setItem('jwtToken',JSON.stringify(responseData.token));
-           // console.log(user_Token);
-        })
-        .done();
+async function save(key, value) {
+    await SecureStore.setItemAsync(key, value);
 }
+
+/*
+
+TODO Create error message display on view
+*/
+let errorMessage = "";
 
 const UserLoginScreen = ({navigation}) =>{
 
 // States for registration
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
+
+//Login user
+function login(userEmail, userPassword){
+    userEmail = userEmail.toLowerCase()
+    //Call API
+    fetch("http://70.177.34.147:3000/api/users/login", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: userEmail,
+            password: userPassword
+        })
+    })
+    /*
+        Once we have a req see if login token exist, if not it was unsuccessful and we have an error
+    */
+    .then((response) => response.json())
+    .then((responseData) => {
+        if(JSON.stringify(responseData.token) == null){
+            errorMessage = JSON.stringify(responseData.errors[0].msg);
+            console.log(errorMessage);
+        }else{
+            save("token",JSON.stringify(responseData.token));
+            console.log(JSON.stringify(responseData.token))
+            navigation.navigate('Home')
+        }
+    })
+    .done();
+}
 
 const styles = StyleSheet.create({
     container:{
@@ -102,7 +119,7 @@ return (
     <View style={[styles.container]}>
     <Image
         source={require('../assets/TutorHub.png')}
-        style={{ alignSelf: 'center', width: 120, height: 120, marginTop: 180 }}
+        style={{ alignSelf: 'center', width: 120, height: 120, marginTop: 60 }}
     ></Image>
     <Text style={styles.headline}>Welcome to TutorHub</Text>
     <StatusBar style="auto" />
@@ -124,9 +141,8 @@ return (
     <TouchableOpacity>
         <Text style={styles.forgot_button}>Forgot Password?</Text>
     </TouchableOpacity>
-
-    <TouchableOpacity onPress={() => login(email,password && navigation.navigate('Home'))} style={styles.loginBtn}>
-        <Text style={styles.loginText}>Login</Text>
+    <TouchableOpacity onPress={() => login(email,password)} style={styles.loginBtn}>
+        <Text style={styles.loginText}>LOGIN</Text>
     </TouchableOpacity>
     <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
         <Text style={styles.forgot_buttonUpdated}>Don't have an account? Sign up now.</Text>

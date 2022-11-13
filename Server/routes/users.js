@@ -62,9 +62,9 @@ router.post('/register',registerValidate, async (req, res) => {
     if(!errors.isEmpty()){
         return res.status(422).json({errors: errors.array()});
     }
-
+    let userEmail = req.body.email.toLowerCase();
     //Check if user exist
-    const userExist = await User.findOne({email: req.body.email})
+    const userExist = await User.findOne({email: userEmail})
     if(userExist) return res.status(400).send('An account is already registered with this email: ' + req.body.email);
 
     //Hash password
@@ -80,7 +80,7 @@ router.post('/register',registerValidate, async (req, res) => {
     const user = new User({
         fullName: req.body.fullName,
         password: hashPassword,
-        email: req.body.email,
+        email: userEmail,
         balance: 0,
         validated: false,
         profileURL: "",
@@ -96,7 +96,7 @@ router.post('/register',registerValidate, async (req, res) => {
 
     var mailOptions = {
         from: "tutorhubverify@gmail.com",
-        to: req.body.email,
+        to: userEmail,
         text: 'This is some text',
         subject: "Tutor Hub Verification Email",
         html: `<button type="button" href="http://70.177.34.147/verify/">Verify Here</button>`,
@@ -168,6 +168,7 @@ router.get('/getUserInfo/:id', (req,res) => {
         .catch(err => console.group(err))
 
 })
+
 
 router.put('/addFriend/:id',verifyToken, (req,res) => {
     if(req.params.id.length < 24) return res.status(400).send('Invalid ID');
