@@ -20,7 +20,7 @@ const UserProfileScreen = () =>{
         <View>
             <View style={styles.Header}/>
             <View>
-            
+        
             </View>
         </View>
     );
