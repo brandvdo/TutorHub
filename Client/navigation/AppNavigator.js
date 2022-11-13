@@ -16,7 +16,7 @@ import UserProfileScreen from '../screens/UserProfileScreen';
 import ChatScreen from '../screens/ChatScreen';
 import SignupScreen from '../screens/SignupScreen';
 import UserLoginScreen from '../screens/UserLoginScreen';
-import editUserProfileScreen from '../screens/editUserProfileScreen';
+import EditUserProfileScreen from '../screens/EditUserProfileScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -171,7 +171,7 @@ const AppNavigator = () => {
                             )
                         }}
                     />
-                     <Stack.Screen name="editUserProfile" component={editUserProfileScreen}
+                     <Stack.Screen name="EditUserProfile" component={EditUserProfileScreen}
                         options={{
                             headerShown: false,
                             tabBarIcon: ({focused}) => (
