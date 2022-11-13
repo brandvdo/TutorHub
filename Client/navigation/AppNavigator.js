@@ -16,6 +16,7 @@ import UserProfileScreen from '../screens/UserProfileScreen';
 import ChatScreen from '../screens/ChatScreen';
 import SignupScreen from '../screens/SignupScreen';
 import UserLoginScreen from '../screens/UserLoginScreen';
+import editUserProfileScreen from '../screens/editUserProfileScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -79,7 +80,7 @@ export function TabNavigator() {
                 )
             }}
         />
-        <Tab.Screen name="ChatScreen" component={UserLoginScreen}
+        <Tab.Screen name="ChatScreen" component={ChatScreen}
              options={{
                 headerShown: false,
                 tabBarIcon: ({focused}) => (
@@ -165,6 +166,27 @@ const AppNavigator = () => {
                                     <Text
                                         style={{color: focused ? '#FFFFFF' : '#000000', fontsize: 12}}>
                                         Signup
+                                    </Text>
+                                </View>
+                            )
+                        }}
+                    />
+                     <Stack.Screen name="editUserProfile" component={editUserProfileScreen}
+                        options={{
+                            headerShown: false,
+                            tabBarIcon: ({focused}) => (
+                                <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+                                    <Image
+                                        source={require('../assets/user.png')}
+                                        resizeMode='contain'
+                                        style={{
+                                            width: 25,
+                                            height: 25,
+                                            tintColor: focused ? '#FFFFFF' : '#000000', fontsize: 12}}
+                                    />
+                                    <Text
+                                        style={{color: focused ? '#FFFFFF' : '#000000', fontsize: 12}}>
+                                        Edit profile
                                     </Text>
                                 </View>
                             )

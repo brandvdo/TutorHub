@@ -1,5 +1,7 @@
 /*
 
+    Author: Logan & Tyler
+
     User Profile Screen
 
 */
@@ -11,8 +13,13 @@ const jwtDecode = require('jwt-decode');
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor: '#05998c',
         padding: 10,
+    },
+    Header:{
+        paddingBottom: 10,
+        backgroundColor: '#05998c',
+        borderBottomLeftRadius: 50,
+        borderBottomRightRadius: 50,
     },
     image:{
         alignSelf: 'flex-start',
@@ -22,25 +29,46 @@ const styles = StyleSheet.create({
         marginTop: 40,
     },
     profilePic:{
-        alignSelf: 'flex-end',
-        marginLeft: 60,
+        marginTop: 50,
         width: 120,
         height: 120,
+        borderRadius: '50%',
 
     },
     row:{
         flexDirection: 'row',
         flexWrap: 'wrap',
+        alignSelf: 'center',
     },
     button:{
         paddingHorizontal: 20,
         paddingVertical: 8,
         borderRadius: 30,
         backgroundColor: "#e0e0e0",
-        alignSelf: "flex-end",
-        marginRight: 45,
         marginTop: 10,
-        textAlign: "center",
+        alignSelf: 'center',
+    },
+    buttonBio:{
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 30,
+        backgroundColor: "#e0e0e0",
+        marginTop: 10,
+        alignSelf: 'center',
+    },
+    nameStyle:{
+        fontWeight: 'bold',
+        fontSize: '25px',
+        color: "#e0e0e0",
+        marginTop: 10,
+        alignSelf: 'center',
+    },
+    box:{
+        paddingHorizontal: 40,
+        paddingVertical: 20,
+        marginTop: 10,
+        backgroundColor: "#e0e0e0",
+        alignSelf: 'center',
     },
     buttonLabel:{
         fontSize: 12,
@@ -48,7 +76,7 @@ const styles = StyleSheet.create({
     }
 });
 
-const UserProfileScreen = () =>{
+const UserProfileScreen = ({navigation}) =>{
 
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -79,30 +107,32 @@ const UserProfileScreen = () =>{
       */
       useEffect(() => {
         fetchData();
-        const dataInterval = setInterval(() => fetchData(), 10 * 1000);
-        return () => clearInterval(dataInterval);
+          const dataInterval = setInterval(() => fetchData(), 10 * 1000);
+          return () => clearInterval(dataInterval);
       }, []);
 
-    return(
-        <View style={[styles.container]}>
-            <View style={styles.row}>
-            <Image 
-                source={require('../assets/TutorHub.png')}
-                style={[styles.image]}>
-            </Image>
-            <Image 
-                source={require('../assets/images/user-profile-icon-free-vector.webp')}
-                style={[styles.profilePic]}>
-            </Image>
+    return (
+        <View>
+            <View style={[styles.Header]}>
+                <View>
+                    <View style={styles.row}>
+                        <Image
+                            source={require('../assets/images/user-profile-icon-free-vector.webp')}
+                            style={[styles.profilePic]}>
+                        </Image>
+                    </View>
+                </View>
+                <View>
+                    <Text style={styles.nameStyle}>{data.fullName}</Text>
+                </View>
+                <View style={styles.buttonBio}>
+                    <TouchableOpacity onPress={() => navigation.navigate('editUserProfile')}>
+                        <Text>Edit profile</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-            <TouchableOpacity 
-                style={[styles.button]}>
-
-                <Text style={[styles.buttonLabel]}> Choose your profile pic                   
-                </Text>
-            </TouchableOpacity>
-            <View style={styles.row}>
-                <Text>{data.fullName}</Text>
+            <View>
+                <Text></Text>
             </View>
         </View>
     );
