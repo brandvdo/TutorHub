@@ -111,43 +111,43 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#c3f7e3",
-        marginTop: 50
+        marginTop: 0
       },
 });
 
 return (
     <View style={[styles.container]}>
-    <Image
-        source={require('../assets/TutorHub.png')}
-        style={{ alignSelf: 'center', width: 120, height: 120, marginTop: 60 }}
-    ></Image>
-    <Text style={styles.headline}>Welcome to TutorHub</Text>
-    <StatusBar style="auto" />
-    <View style={styles.inputView}>
-        <TextInput
-            style={styles.TextInput}
-            placeholder="Enter Email"
-            placeholderTextColor="#003f5c"
-            onChangeText={(email) => setEmail(email)} />
+        <Image
+            source={require('../assets/TutorHub.png')}
+            style={{ alignSelf: 'center', width: 120, height: 120, marginTop: 180 }}
+        ></Image>
+        <Text style={styles.headline}>Welcome to TutorHub</Text>
+        <StatusBar style="auto" />
+        <View style={styles.inputView}>
+            <TextInput
+                style={styles.TextInput}
+                placeholder="Enter Email"
+                placeholderTextColor="#003f5c"
+                onChangeText={(email) => setEmail(email)} />
+        </View>
+        <View style={styles.inputView}>
+            <TextInput
+                style={styles.TextInput}
+                placeholder="Enter Password"
+                placeholderTextColor="#003f5c"
+                secureTextEntry={true}
+                onChangeText={(password) => setPassword(password)} />
+        </View>
+        <TouchableOpacity>
+            <Text style={styles.forgot_button}>Forgot Password?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => login(email,password)} style={styles.loginBtn}>
+            <Text style={styles.loginText}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+            <Text style={styles.forgot_buttonUpdated}>New user? Sign up now.</Text>
+        </TouchableOpacity>
     </View>
-    <View style={styles.inputView}>
-        <TextInput
-            style={styles.TextInput}
-            placeholder="Enter Password"
-            placeholderTextColor="#003f5c"
-            secureTextEntry={true}
-            onChangeText={(password) => setPassword(password)} />
-    </View>
-    <TouchableOpacity>
-        <Text style={styles.forgot_button}>Forgot Password?</Text>
-    </TouchableOpacity>
-    <TouchableOpacity onPress={() => login(email,password)} style={styles.loginBtn}>
-        <Text style={styles.loginText}>LOGIN</Text>
-    </TouchableOpacity>
-    <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-        <Text style={styles.forgot_buttonUpdated}>Don't have an account? Sign up now.</Text>
-    </TouchableOpacity>
-</View>
     );
 }
 
