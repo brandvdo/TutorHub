@@ -24,6 +24,7 @@ router.get('/newsFeed/messages/:id', async (req,res) =>{
 
     user = await User.findById(req.params.id);
     friendsList = user.friendsList;
+    friendsList.push(req.params.id);
     for(let i =0; i<friendsList.length;i++){
         friendsPost.push(await UserPost.find({userID: friendsList[i]}));
     }
