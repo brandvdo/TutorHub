@@ -75,11 +75,11 @@ router.get('/getMessage/:id', verifyToken, (req, res) =>{
 router.get('/getMessages/:id', verifyToken, (req, res) =>{
     if(req.params.id.length < 24) return res.status(400).send('Invalid ID');
     let friendsList = [];
+    friendsList.push(req.params.id)
     User.findById(req.params.id)
         .then(user => {
-            friendsList = user.friendsList;
+            friendsList.push(user.friendsList);
         })
-    friendsList.push(req.params.id);
     UserPost.find({userID: {$in : friendsList}})
         .then(post => {
             res.send(post);
