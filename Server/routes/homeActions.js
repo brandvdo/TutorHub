@@ -16,13 +16,13 @@ const UserPost = require('../models/UserPost');
 
 //Gives array of user's friends messages
 //TODO add other messages from tutors near by
-router.get('/newsFeed/messages',verifyToken, async (req,res) =>{
-    let decodedToken = jwtDecode(req.header('auth-token'));
+router.get('/newsFeed/messages/:id',verifyToken, async (req,res) =>{
+    if(req.params.id.length < 24) return res.status(400).send('Invalid ID');
     let friendsPost = [];
     let friendsList = [];
     let user;
 
-    user = await User.findById(decodedToken._id);
+    user = await User.findById(req.params.id);
     friendsList = user.friendsList;
     for(let i =0; i<friendsList.length;i++){
         friendsPost.push(await UserPost.find({userID: friendsList[i]}));
