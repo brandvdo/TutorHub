@@ -6,7 +6,7 @@
 
 */
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 const jwtDecode = require('jwt-decode');
 
@@ -83,8 +83,24 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         marginBottom: 15
-    }
+    },
+    flatListStyle:{
+        width: 400,
+        top: 10,
+        height: 490,
+        borderRadius: 10,
+        marginLeft: 15,
+        marginRight: 15,
+    },
 });
+
+
+const Post = ({message, userID, tags}) => (
+    <View>
+        <Text>Message: {message}</Text>
+        <Text>Tags: {tags}</Text>
+    </View>
+);
 
 const UserProfileScreen = ({navigation}) =>{
 
@@ -96,6 +112,12 @@ const UserProfileScreen = ({navigation}) =>{
 
         Example: data.fullName 
     */
+    //Render post item
+    const renderItem = ({item}) => <Post 
+        message={item.message}
+        tags={item.tags}
+        />;
+        
     const fetchData = async () => {
         const userToken = await SecureStore.getItemAsync("token");
         const decodedToken = jwtDecode(userToken);
@@ -119,6 +141,33 @@ const UserProfileScreen = ({navigation}) =>{
         fetchData();
           const dataInterval = setInterval(() => fetchData(), 10 * 1000);
           return () => clearInterval(dataInterval);
+      }, []);
+      
+
+    const [theData, setTheData] = useState([]);
+      const fetchUserInfo = async () => {
+        const userToken = await SecureStore.getItemAsync("token");
+        const decodedToken = jwtDecode(userToken);
+        const resp = await fetch("http://70.177.34.147:3000/api/home/newsFeed/messages/"+decodedToken._id, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'auth-token': userToken,
+            },
+        })
+        const theData = await resp.json();
+        setTheData(theData[0]);
+        setLoading(false);
+      };
+
+      /*
+        Used to update information
+      */
+      useEffect(() => {
+        fetchUserInfo();
+        const dataInterval = setInterval(() => fetchUserInfo(), 10 * 1000);
+        return () => clearInterval(dataInterval);
       }, []);
 
     return (
@@ -156,10 +205,12 @@ const UserProfileScreen = ({navigation}) =>{
                     </View>
                 </View>
             </View>
-                <View>
-                    <Text style={styles.mainFeed}>
-                        {data.message}
-                    </Text>
+                <View style={styles.flatListStyle}>
+                    <FlatList
+                            data={theData}
+                            keyExtractor={item => item._id}
+                            renderItem={renderItem}
+                        />
                 </View>
         </View>
     );

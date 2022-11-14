@@ -3,8 +3,8 @@
 This is for testing only remove later
 
 */
-import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {StyleSheet, View, Text, FlatList} from 'react-native';
 
 const styles = StyleSheet.create({
     Header: {
@@ -18,9 +18,7 @@ const ChatScreen = () =>{
         <View>
             <View style={styles.Header}/>
             <View>
-                <Text>
-                   
-                </Text>
+
             </View>
         </View>
     );

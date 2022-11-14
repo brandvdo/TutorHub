@@ -28,9 +28,19 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         borderRadius: '50%',
-
+    },
+    flatListStyle:{
+        width: 400,
+        top: 10,
+        height: 650,
+        borderRadius: 10,
+        marginLeft: 15,
+        marginRight: 15,
+    },
+    itemStyle:{
+       backgroundColor: '#05998c',
+       borderBottomColor: 'blue'
     }
-    
 });
 
 /*
@@ -94,12 +104,8 @@ const UserHomeScreen = () => {
     return (
         <View>
             <View style={styles.homeHeader}>
-                <SearchBar
-                    
-                    
-                />
+                <SearchBar/>
             </View>
-            
                 <TouchableOpacity
                 style={{
                     alignItems: 'center',
@@ -116,25 +122,15 @@ const UserHomeScreen = () => {
                 >
                     <Text style={{ color: "white" }}>Post</Text>
                 </TouchableOpacity>
-            <View>
+            <View style={styles.flatListStyle}>
                 <FlatList
-                style={{
-                    width: 400,
-                    top: 10,
-                    height: 650,
-                    borderRadius: 10,
-                    marginLeft: 15,
-                    marginRight: 15,
-                }}
                         data={data}
                         keyExtractor={item => item._id}
                         renderItem={renderItem}
-                        
                     />
             </View>
         </View>
     );
-
 }
 
 export default UserHomeScreen;

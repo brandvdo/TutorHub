@@ -126,9 +126,9 @@ const EditUserProfileScreen = ({navigation}) =>{
                 </TouchableOpacity>
             </View>
             <View style={styles.buttonBio}>
-                        <TouchableOpacity onPress={() => navigation.navigate('UserProfile')}>
-                            <Text>Back to profile</Text>
-                        </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('UserProfile')}>
+                    <Text>Back to profile</Text>
+                </TouchableOpacity>
             </View>
         </View>
     </View>
