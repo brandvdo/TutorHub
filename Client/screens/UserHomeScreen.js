@@ -1,15 +1,14 @@
 /*
 
-  Author: Tyler
+  Author: Tyler & Brandon
 
   This is the main screen with chat feed 
 
 */
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text, Function } from "react-native";
+import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text, Image,TouchableOpacity, FlatList} from "react-native";
 import SearchBar from './features/SearchBar/SearchBar';
-import MainFeed from './mainFeed/MainFeed';
 import * as SecureStore from 'expo-secure-store';
 const jwtDecode = require('jwt-decode');
 
@@ -23,11 +22,29 @@ const styles = StyleSheet.create({
             this._paddingTop = value;
         },
         backgroundColor: '#05998c',
+    },
+    profilePic:{
+        marginTop: 20,
+        width: 30,
+        height: 30,
+        borderRadius: '50%',
+
     }
+    
 });
 
-const Item = ({message, userID, tags}) => (
+/*
+
+    TODO Create post item CSS
+
+*/
+
+const Post = ({message, userID, tags}) => (
     <View>
+        <Image
+            source={require('../assets/images/user-profile-icon-free-vector.webp')}
+            style={[styles.profilePic]}>
+        </Image>
         <Text>UserID: {userID}</Text>
         <Text>Message: {message}</Text>
         <Text>Tags: {tags}</Text>
@@ -42,7 +59,8 @@ const UserHomeScreen = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const renderItem = ({item}) => <Item 
+    //Render post item
+    const renderItem = ({item}) => <Post 
         message={item.message}
         userID={item.userID}
         tags={item.tags}
@@ -77,19 +95,11 @@ const UserHomeScreen = () => {
         <View>
             <View style={styles.homeHeader}>
                 <SearchBar
-                    searchPhrase={searchPhrase}
-                    setSearchPhrase={setSearchPhrase}
-                    clicked={clicked}
-                    setClicked={setClicked}
+                    
                     
                 />
             </View>
-            <View>
-                <FlatList
-                    data={data}
-                    keyExtractor={item => item._id}
-                    renderItem={renderItem}
-                />
+            
                 <TouchableOpacity
                 style={{
                     alignItems: 'center',
@@ -103,10 +113,15 @@ const UserHomeScreen = () => {
                     borderRadius: 100,
                 }}
                 onPress={() => { '' }}
-            >
-                <Text style={{ color: "white" }}>Post</Text>
-            </TouchableOpacity>
-            </View>
+                >
+                    <Text style={{ color: "white" }}>Post</Text>
+                </TouchableOpacity>
+            
+            <FlatList
+                    data={data}
+                    keyExtractor={item => item._id}
+                    renderItem={renderItem}
+                />
         </View>
     );
 

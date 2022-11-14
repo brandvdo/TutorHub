@@ -10,7 +10,10 @@ import React, {useState} from 'react';
 import {StatusBar} from "expo-status-bar";
 import {StyleSheet, View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
 
-function singup(userName, userEmail, userPassword, userSchool){
+
+const SignupScreen = ({navigation}) =>{
+
+  function singup(userName, userEmail, userPassword, userSchool){
     fetch("http://70.177.34.147:3000/api/users/register", {
         method: 'POST',
         headers: {
@@ -22,8 +25,9 @@ function singup(userName, userEmail, userPassword, userSchool){
             password: userPassword,
             fullName: userName,
             profileType: 0,
-            school: userSchool, 
-           
+            school: "LSU",
+            tutorSubjects: [],
+            studySubjects: [],
 
         })
     })
@@ -34,13 +38,10 @@ function singup(userName, userEmail, userPassword, userSchool){
                 "POST Response",
                 "Response Body -> " + JSON.stringify(responseData)
             )
-            //const user_Token = sessionStorage.setItem('jwtToken',JSON.stringify(responseData.token));
-           // console.log(user_Token);
+            navigation.navigate('Login')
         })
         .done();
 }
-
-const SignupScreen = ({navigation}) =>{
 
 // States for registration
 const [name, setName] = useState('');
