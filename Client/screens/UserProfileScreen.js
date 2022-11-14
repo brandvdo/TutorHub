@@ -214,7 +214,6 @@ const UserProfileScreen = ({navigation}) =>{
                 </View>
         </View>
     );
-
 }
 
 export default UserProfileScreen;
