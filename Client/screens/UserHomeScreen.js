@@ -49,13 +49,13 @@ const styles = StyleSheet.create({
 
 */
 
-const Post = ({message, userID, tags}) => (
+const Post = ({message, userName, tags}) => (
     <View>
         <Image
             source={require('../assets/images/user-profile-icon-free-vector.webp')}
             style={[styles.profilePic]}>
         </Image>
-        <Text>UserID: {userID}</Text>
+        <Text>Name: {userName}</Text>
         <Text>Message: {message}</Text>
         <Text>Tags: {tags}</Text>
     </View>
@@ -72,7 +72,7 @@ const UserHomeScreen = () => {
     //Render post item
     const renderItem = ({item}) => <Post 
         message={item.message}
-        userID={item.userID}
+        userName={item.userName}
         tags={item.tags}
         />;
 
@@ -88,7 +88,8 @@ const UserHomeScreen = () => {
             },
         })
         const data = await resp.json();
-        setData(data[0]);
+        console.log(data)
+        setData(data);
         setLoading(false);
       };
 
