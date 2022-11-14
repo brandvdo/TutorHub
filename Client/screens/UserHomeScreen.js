@@ -106,7 +106,7 @@ const UserHomeScreen = () => {
                     justifyContent: 'center',
                     width: 70,
                     position: 'absolute',
-                    top: 590,
+                    top: 710,
                     right: 20,
                     height: 70,
                     backgroundColor: '#05998c',
@@ -121,6 +121,8 @@ const UserHomeScreen = () => {
                     data={data}
                     keyExtractor={item => item._id}
                     renderItem={renderItem}
+                    marginLeft={15}
+                    marginRight={15}
                 />
         </View>
     );
