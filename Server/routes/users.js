@@ -250,7 +250,6 @@ server.get("/search", async (request, response) => {
     TODO: Add validation for user information to remove invalid entries
 
 */
-å
 router.put('/:id', (req, res) => {
     const userID = req.params.id;
 
