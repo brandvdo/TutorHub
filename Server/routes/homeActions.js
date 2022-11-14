@@ -16,7 +16,7 @@ const UserPost = require('../models/UserPost');
 
 //Gives array of user's friends messages
 //TODO add other messages from tutors near by
-router.get('/newsFeed/messages/:id',verifyToken, async (req,res) =>{
+router.get('/newsFeed/messages/:id', async (req,res) =>{
     if(req.params.id.length < 24) return res.status(400).send('Invalid ID');
     let friendsPost = [];
     let friendsList = [];
