@@ -16,6 +16,7 @@ require('dotenv').config();
 
 const router = express.Router();
 const UserPost = require('../models/UserPost');
+const User = require('../models/User');
 
 const postValidate = [
     check('message')
@@ -73,11 +74,17 @@ router.get('/getMessage/:id', verifyToken, (req, res) =>{
 
 router.get('/getMessages/:id', verifyToken, (req, res) =>{
     if(req.params.id.length < 24) return res.status(400).send('Invalid ID');
-    UserPost.find({userID: req.params.id})
-    .then(post => {
-        res.send(post);
-    })
-    .catch(err => res.status(400).send('ID not found'));
+    let friendsList = [];
+    User.findById(req.params.id)
+        .then(user => {
+            friendsList = user.friendsList;
+        })
+
+    UserPost.find({userID: {$in : friendsList}})
+        .then(post => {
+            res.send(post);
+        })
+        .catch(err => res.status(400).send('ID not found'));
 })
 
 module.exports = router;
