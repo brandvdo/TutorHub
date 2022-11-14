@@ -55,6 +55,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#e0e0e0",
         marginTop: 10,
         alignSelf: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
     },
     nameStyle:{
         fontWeight: 'bold',
@@ -110,23 +112,6 @@ const UserProfileScreen = ({navigation}) =>{
         setLoading(false);
       };
 
-      const fetchUserMessages = async () => {
-        const userToken = await SecureStore.getItemAsync("token");
-        const decodedToken = jwtDecode(userToken);
-        const resp = await fetch("http://70.177.34.147:3000/api/userpost/getMessages/"+decodedToken._id, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'auth-token': userToken,
-            },
-        })
-        const data = await resp.json();
-        console.log("Message: " + data[0][0]._id)
-        setData(data);
-        setLoading(false);
-      };
-
       /*
         Used to update information
       */
@@ -136,14 +121,8 @@ const UserProfileScreen = ({navigation}) =>{
           return () => clearInterval(dataInterval);
       }, []);
 
-      useEffect(() => {
-        fetchUserMessages();
-          const dataInterval = setInterval(() => fetchUserMessages(), 10 * 1000);
-          return () => clearInterval(dataInterval);
-      }, []);
-
     return (
-        <View>
+        <View style={styles.space}>
             <View style={[styles.Header]}>
                 <View>
                     <View style={styles.row}>
@@ -156,22 +135,32 @@ const UserProfileScreen = ({navigation}) =>{
                 <View>
                     <Text style={styles.nameStyle}>{data.fullName}</Text>
                 </View>
-                <View style={styles.buttonBio}>
-                    <TouchableOpacity onPress={() => navigation.navigate('ChatScreen')}>
-                        <Text>Message</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.buttonBio}>
-                    <TouchableOpacity onPress={() => navigation.navigate('EditUserProfile')}>
-                        <Text>Edit profile</Text>
-                    </TouchableOpacity>
+                <View>
+                    <View style={styles.row}>
+                        <View style={styles.buttonBio}>
+                            <TouchableOpacity onPress={() => navigation.navigate('ChatScreen')}>
+                                <Text> Message </Text>
+                            </TouchableOpacity> 
+                        </View>
+                        <Text>{'\t'}</Text>
+                        <View style={styles.buttonBio}>
+                            <TouchableOpacity onPress={() => navigation.navigate('')}>
+                                <Text>Add Friend</Text>
+                            </TouchableOpacity> 
+                        </View>
+                    </View>
+                    <View style={styles.buttonBio}>
+                        <TouchableOpacity onPress={() => navigation.navigate('EditUserProfile')}>
+                            <Text>Edit profile</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
-            <View>
-                <Text style={styles.mainFeed}>
-                    {data.message}
-                </Text>
-            </View>
+                <View>
+                    <Text style={styles.mainFeed}>
+                        {data.message}
+                    </Text>
+                </View>
         </View>
     );
 
