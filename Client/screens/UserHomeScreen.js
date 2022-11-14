@@ -111,15 +111,15 @@ const UserHomeScreen = () => {
                     justifyContent: 'center',
                     width: 70,
                     position: 'absolute',
-                    top: 730,
+                    top: 54,
                     right: 20,
-                    height: 70,
-                    backgroundColor: '#05998c',
+                    height: 50,
+                    backgroundColor: '#e0e0e0',
                     borderRadius: 100,
                 }}
                 onPress={() => { '' }}
                 >
-                    <Text style={{ color: "white" }}>Post</Text>
+                    <Text style={{ color: "#05998c",  fontWeight: 'bold' }}>Post</Text>
                 </TouchableOpacity>
             <View style={styles.flatListStyle}>
                 <FlatList

@@ -95,10 +95,12 @@ const styles = StyleSheet.create({
 });
 
 
-const Post = ({message, userID, tags}) => (
+const Post = ({message, tags}) => (
     <View>
+        <View style={{borderBottomColor: "rgb(5, 153, 140)", borderBottomWidth: 4, marginLeft: 5, marginRight: 5, paddingBottom: 5}}>
         <Text>Message: {message}</Text>
         <Text>Tags: {tags}</Text>
+        </View>
     </View>
 );
 
