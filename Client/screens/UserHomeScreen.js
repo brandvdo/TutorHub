@@ -7,7 +7,7 @@
 */
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text, Function } from "react-native";
+import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text, Function, TouchableOpacity} from "react-native";
 import SearchBar from './features/SearchBar/SearchBar';
 import MainFeed from './mainFeed/MainFeed';
 import * as SecureStore from 'expo-secure-store';
@@ -72,11 +72,26 @@ const UserHomeScreen = () => {
                     setSearchPhrase={setSearchPhrase}
                     clicked={clicked}
                     setClicked={setClicked}
-                    
                 />
             </View>
             <View>
                 <MainFeed/>
+                <TouchableOpacity
+                style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 70,
+                    position: 'absolute',
+                    top: 590,
+                    right: 20,
+                    height: 70,
+                    backgroundColor: '#05998c',
+                    borderRadius: 100,
+                }}
+                onPress={() => { '' }}
+            >
+                <Text style={{ color: "white" }}>Post</Text>
+            </TouchableOpacity>
             </View>
         </View>
     );
