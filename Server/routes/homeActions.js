@@ -28,7 +28,7 @@ router.get('/newsFeed/messages/:id', async (req,res) =>{
     for(let i =0; i<friendsList.length;i++){
         friendsPost.push(await UserPost.find({userID: friendsList[i]}));
     }
-    res.send(friendsPost);
+    res.send(friendsPost.flat());
 })
 
 module.exports = router;
