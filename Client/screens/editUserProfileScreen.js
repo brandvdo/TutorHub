@@ -49,11 +49,6 @@ const styles = StyleSheet.create({
         color: "#e0e0e0",
         alignSelf: 'left',
     },
-    line:{
-        textDecorationLine: 'underline',
-        textDecorationStyle: "solid",
-        textDecorationColor: "#e0e0e0",
-    },
     buttonBio:{
         paddingHorizontal: 10,
         paddingVertical: 5,
