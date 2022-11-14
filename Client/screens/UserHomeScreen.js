@@ -37,10 +37,6 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
     },
-    itemStyle:{
-       backgroundColor: '#05998c',
-       borderBottomColor: 'blue'
-    }
 });
 
 /*
@@ -51,6 +47,7 @@ const styles = StyleSheet.create({
 
 const Post = ({message, userName, tags}) => (
     <View>
+        <View style={{borderBottomColor: "rgb(5, 153, 140)", borderBottomWidth: 4, marginLeft: 5, marginRight: 5, paddingBottom: 5}}>
         <Image
             source={require('../assets/images/user-profile-icon-free-vector.webp')}
             style={[styles.profilePic]}>
@@ -58,6 +55,7 @@ const Post = ({message, userName, tags}) => (
         <Text>Name: {userName}</Text>
         <Text>Message: {message}</Text>
         <Text>Tags: {tags}</Text>
+        </View>
     </View>
 );
 
