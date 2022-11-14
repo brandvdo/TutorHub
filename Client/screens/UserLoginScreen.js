@@ -49,10 +49,8 @@ function login(userEmail, userPassword){
     .then((responseData) => {
         if(JSON.stringify(responseData.token) == null){
             errorMessage = JSON.stringify(responseData.errors[0].msg);
-            console.log(errorMessage);
         }else{
             save("token",JSON.stringify(responseData.token));
-            console.log(JSON.stringify(responseData.token))
             navigation.navigate('Home')
         }
     })
