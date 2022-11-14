@@ -79,7 +79,7 @@ router.get('/getMessages/:id', verifyToken, (req, res) =>{
         .then(user => {
             friendsList = user.friendsList;
         })
-
+    friendsList.push(req.params.id);
     UserPost.find({userID: {$in : friendsList}})
         .then(post => {
             res.send(post);
