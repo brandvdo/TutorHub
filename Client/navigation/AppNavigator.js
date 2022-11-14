@@ -16,7 +16,7 @@ import UserProfileScreen from '../screens/UserProfileScreen';
 import ChatScreen from '../screens/ChatScreen';
 import SignupScreen from '../screens/SignupScreen';
 import UserLoginScreen from '../screens/UserLoginScreen';
-import EditUserProfileScreen from '../screens/EditUserProfileScreen';
+import EditUserProfileScreen from '../screens/editUserProfileScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();

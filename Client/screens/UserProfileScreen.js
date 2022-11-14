@@ -73,6 +73,14 @@ const styles = StyleSheet.create({
     buttonLabel:{
         fontSize: 12,
         color: "black",
+    },
+    mainFeed:{
+        fontSize: 20,
+        color: "black",
+        marginTop: 15,
+        marginLeft: 10,
+        marginRight: 10,
+        marginBottom: 15
     }
 });
 
@@ -102,12 +110,35 @@ const UserProfileScreen = ({navigation}) =>{
         setLoading(false);
       };
 
+      const fetchUserMessages = async () => {
+        const userToken = await SecureStore.getItemAsync("token");
+        const decodedToken = jwtDecode(userToken);
+        const resp = await fetch("http://70.177.34.147:3000/api/userpost/getMessages/"+decodedToken._id, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'auth-token': userToken,
+            },
+        })
+        const data = await resp.json();
+        console.log("Message: " + data[0][0]._id)
+        setData(data);
+        setLoading(false);
+      };
+
       /*
         Used to update information
       */
       useEffect(() => {
         fetchData();
           const dataInterval = setInterval(() => fetchData(), 10 * 1000);
+          return () => clearInterval(dataInterval);
+      }, []);
+
+      useEffect(() => {
+        fetchUserMessages();
+          const dataInterval = setInterval(() => fetchUserMessages(), 10 * 1000);
           return () => clearInterval(dataInterval);
       }, []);
 
@@ -132,7 +163,9 @@ const UserProfileScreen = ({navigation}) =>{
                 </View>
             </View>
             <View>
-                <Text></Text>
+                <Text style={styles.mainFeed}>
+                    {data.userPost}
+                </Text>
             </View>
         </View>
     );

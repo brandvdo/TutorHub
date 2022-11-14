@@ -47,7 +47,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: '20px',
         color: "#e0e0e0",
-        alignSelf: 'center',
+        alignSelf: 'left',
+    },
+    line:{
         textDecorationLine: 'underline',
         textDecorationStyle: "solid",
         textDecorationColor: "#e0e0e0",
@@ -58,10 +60,11 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         backgroundColor: "#e0e0e0",
         marginTop: 10,
+        marginBottom: 10,
         alignSelf: 'center',
     },
     box:{
-        marginTop: 20,
+        marginTop: 10,
         alignSelf: 'left',
     }
 });
@@ -96,7 +99,7 @@ const EditUserProfileScreen = ({navigation}) =>{
 
     return(
         <View style={[styles.container]}>
-        <View>
+        <View style={{borderBottomColor: "rgb(224, 224, 224)", borderBottomWidth: 4, marginLeft: 5, marginRight: 5}}>
             <View>
                 <View style={styles.row}>
                     <Image
@@ -111,19 +114,20 @@ const EditUserProfileScreen = ({navigation}) =>{
                     </TouchableOpacity>
             </View>
         </View>
-        <View style={styles.box}>
-            <TouchableOpacity>
-                <Text style={styles.nameStyle}>username: {data.fullName}</Text>
-            </TouchableOpacity>
-        </View>
-        <View style={styles.box}>
-            <TouchableOpacity>
-                <Text style={styles.nameStyle}>email: {data.email}</Text>
-            </TouchableOpacity>
+        <View>
+            <View style={styles.box}>
+                <TouchableOpacity>
+                    <Text style={styles.nameStyle}>Name: {data.fullName} {'\n'}</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.box}>
+                <TouchableOpacity>
+                    <Text style={styles.nameStyle}>Email: {data.email} {'\n'}</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     </View>
     );
-
 }
 
 export default EditUserProfileScreen;
