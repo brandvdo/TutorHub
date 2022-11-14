@@ -1,6 +1,6 @@
 /*
 
-    Author: Tyler
+    Author: Tyler & Troy
 
     Edit User Profile Screen
 
@@ -123,6 +123,11 @@ const EditUserProfileScreen = ({navigation}) =>{
             <View style={styles.box}>
                 <TouchableOpacity>
                     <Text style={styles.nameStyle}>Email: {data.email} {'\n'}</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.buttonBio}>
+                <TouchableOpacity onPress={() => navigation.navigate('UserProfile')}>
+                    <Text>Back to profile</Text>
                 </TouchableOpacity>
             </View>
         </View>
