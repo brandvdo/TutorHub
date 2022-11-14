@@ -125,6 +125,11 @@ const EditUserProfileScreen = ({navigation}) =>{
                     <Text style={styles.nameStyle}>Email: {data.email} {'\n'}</Text>
                 </TouchableOpacity>
             </View>
+            <View style={styles.buttonBio}>
+                        <TouchableOpacity onPress={() => navigation.navigate('UserProfile')}>
+                            <Text>Back to profile</Text>
+                        </TouchableOpacity>
+            </View>
         </View>
     </View>
     );

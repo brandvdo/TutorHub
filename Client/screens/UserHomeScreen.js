@@ -106,7 +106,7 @@ const UserHomeScreen = () => {
                     justifyContent: 'center',
                     width: 70,
                     position: 'absolute',
-                    top: 710,
+                    top: 730,
                     right: 20,
                     height: 70,
                     backgroundColor: '#05998c',
@@ -116,14 +116,22 @@ const UserHomeScreen = () => {
                 >
                     <Text style={{ color: "white" }}>Post</Text>
                 </TouchableOpacity>
-            
-            <FlatList
-                    data={data}
-                    keyExtractor={item => item._id}
-                    renderItem={renderItem}
-                    marginLeft={15}
-                    marginRight={15}
-                />
+            <View>
+                <FlatList
+                style={{
+                    width: 400,
+                    top: 10,
+                    height: 650,
+                    borderRadius: 10,
+                    marginLeft: 15,
+                    marginRight: 15,
+                }}
+                        data={data}
+                        keyExtractor={item => item._id}
+                        renderItem={renderItem}
+                        
+                    />
+            </View>
         </View>
     );
 
