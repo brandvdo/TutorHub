@@ -7,7 +7,7 @@
 */
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text, Function } from "react-native";
+import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text, Function, FlatList } from "react-native";
 import SearchBar from './features/SearchBar/SearchBar';
 import MainFeed from './mainFeed/MainFeed';
 import * as SecureStore from 'expo-secure-store';
@@ -26,6 +26,14 @@ const styles = StyleSheet.create({
     }
 });
 
+const Item = ({message, userID, tags}) => (
+    <View>
+        <Text>UserID: {userID}</Text>
+        <Text>Message: {message}</Text>
+        <Text>Tags: {tags}</Text>
+    </View>
+);
+
 const UserHomeScreen = () => {
 
     const [searchPhrase, setSearchPhrase] = useState("");
@@ -33,11 +41,13 @@ const UserHomeScreen = () => {
 
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-/*
 
-    Getting invalid json error?
+    const renderItem = ({item}) => <Item 
+        message={item.message}
+        userID={item.userID}
+        tags={item.tags}
+        />;
 
-*/
     const fetchUserInfo = async () => {
         const userToken = await SecureStore.getItemAsync("token");
         const decodedToken = jwtDecode(userToken);
@@ -50,8 +60,7 @@ const UserHomeScreen = () => {
             },
         })
         const data = await resp.json();
-        console.log("Data " + data[0][0]._id)
-        setData(data);
+        setData(data[0]);
         setLoading(false);
       };
 
@@ -72,11 +81,14 @@ const UserHomeScreen = () => {
                     setSearchPhrase={setSearchPhrase}
                     clicked={clicked}
                     setClicked={setClicked}
-                    
                 />
             </View>
             <View>
-                <MainFeed/>
+                <FlatList
+                    data={data}
+                    keyExtractor={item => item._id}
+                    renderItem={renderItem}
+                />
             </View>
         </View>
     );
