@@ -157,6 +157,11 @@ const UserProfileScreen = ({navigation}) =>{
                     <Text style={styles.nameStyle}>{data.fullName}</Text>
                 </View>
                 <View style={styles.buttonBio}>
+                    <TouchableOpacity onPress={() => navigation.navigate('ChatScreen')}>
+                        <Text>Message</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.buttonBio}>
                     <TouchableOpacity onPress={() => navigation.navigate('EditUserProfile')}>
                         <Text>Edit profile</Text>
                     </TouchableOpacity>
@@ -164,7 +169,7 @@ const UserProfileScreen = ({navigation}) =>{
             </View>
             <View>
                 <Text style={styles.mainFeed}>
-                    {data.userPost}
+                    {data.message}
                 </Text>
             </View>
         </View>
