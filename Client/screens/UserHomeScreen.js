@@ -86,7 +86,6 @@ const UserHomeScreen = () => {
             },
         })
         const data = await resp.json();
-        console.log(data)
         setData(data);
         setLoading(false);
       };
