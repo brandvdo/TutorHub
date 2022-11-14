@@ -94,6 +94,23 @@ const UserProfileScreen = ({navigation}) =>{
 
         Example: data.fullName 
     */
+
+    const Post = ({message, userID, tags}) => (
+        <View>
+            <Text>Message: {message}</Text>
+            <Text>Tags: {tags}</Text>
+        </View>
+    );
+
+    const Friends = ({message, userID, tags}) => (
+        <View>
+            <Text>Message: {message}</Text>
+            <Text>Tags: {tags}</Text>
+        </View>
+    );
+
+
+
     const fetchData = async () => {
         const userToken = await SecureStore.getItemAsync("token");
         const decodedToken = jwtDecode(userToken);
