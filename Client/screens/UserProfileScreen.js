@@ -6,7 +6,7 @@
 
 */
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 const jwtDecode = require('jwt-decode');
 
@@ -55,6 +55,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#e0e0e0",
         marginTop: 10,
         alignSelf: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
     },
     nameStyle:{
         fontWeight: 'bold',
@@ -81,8 +83,24 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         marginBottom: 15
-    }
+    },
+    flatListStyle:{
+        width: 400,
+        top: 10,
+        height: 490,
+        borderRadius: 10,
+        marginLeft: 15,
+        marginRight: 15,
+    },
 });
+
+
+const Post = ({message, userID, tags}) => (
+    <View>
+        <Text>Message: {message}</Text>
+        <Text>Tags: {tags}</Text>
+    </View>
+);
 
 const UserProfileScreen = ({navigation}) =>{
 
@@ -94,23 +112,12 @@ const UserProfileScreen = ({navigation}) =>{
 
         Example: data.fullName 
     */
-
-    const Post = ({message, userID, tags}) => (
-        <View>
-            <Text>Message: {message}</Text>
-            <Text>Tags: {tags}</Text>
-        </View>
-    );
-
-    const Friends = ({message, userID, tags}) => (
-        <View>
-            <Text>Message: {message}</Text>
-            <Text>Tags: {tags}</Text>
-        </View>
-    );
-
-
-
+    //Render post item
+    const renderItem = ({item}) => <Post 
+        message={item.message}
+        tags={item.tags}
+        />;
+        
     const fetchData = async () => {
         const userToken = await SecureStore.getItemAsync("token");
         const decodedToken = jwtDecode(userToken);
@@ -127,23 +134,6 @@ const UserProfileScreen = ({navigation}) =>{
         setLoading(false);
       };
 
-      const fetchUserMessages = async () => {
-        const userToken = await SecureStore.getItemAsync("token");
-        const decodedToken = jwtDecode(userToken);
-        const resp = await fetch("http://70.177.34.147:3000/api/userpost/getMessages/"+decodedToken._id, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'auth-token': userToken,
-            },
-        })
-        const data = await resp.json();
-        console.log("Message: " + data[0][0]._id)
-        setData(data);
-        setLoading(false);
-      };
-
       /*
         Used to update information
       */
@@ -152,15 +142,36 @@ const UserProfileScreen = ({navigation}) =>{
           const dataInterval = setInterval(() => fetchData(), 10 * 1000);
           return () => clearInterval(dataInterval);
       }, []);
+      
 
+    const [theData, setTheData] = useState([]);
+      const fetchUserInfo = async () => {
+        const userToken = await SecureStore.getItemAsync("token");
+        const decodedToken = jwtDecode(userToken);
+        const resp = await fetch("http://70.177.34.147:3000/api/home/newsFeed/messages/"+decodedToken._id, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'auth-token': userToken,
+            },
+        })
+        const theData = await resp.json();
+        setTheData(theData[0]);
+        setLoading(false);
+      };
+
+      /*
+        Used to update information
+      */
       useEffect(() => {
-        fetchUserMessages();
-          const dataInterval = setInterval(() => fetchUserMessages(), 10 * 1000);
-          return () => clearInterval(dataInterval);
+        fetchUserInfo();
+        const dataInterval = setInterval(() => fetchUserInfo(), 10 * 1000);
+        return () => clearInterval(dataInterval);
       }, []);
 
     return (
-        <View>
+        <View style={styles.space}>
             <View style={[styles.Header]}>
                 <View>
                     <View style={styles.row}>
@@ -173,19 +184,37 @@ const UserProfileScreen = ({navigation}) =>{
                 <View>
                     <Text style={styles.nameStyle}>{data.fullName}</Text>
                 </View>
-                <View style={styles.buttonBio}>
-                    <TouchableOpacity onPress={() => navigation.navigate('EditUserProfile')}>
-                        <Text>Edit profile</Text>
-                    </TouchableOpacity>
+                <View>
+                    <View style={styles.row}>
+                        <View style={styles.buttonBio}>
+                            <TouchableOpacity onPress={() => navigation.navigate('ChatScreen')}>
+                                <Text> Message </Text>
+                            </TouchableOpacity> 
+                        </View>
+                        <Text>{'\t'}</Text>
+                        <View style={styles.buttonBio}>
+                            <TouchableOpacity onPress={() => navigation.navigate('')}>
+                                <Text>Add Friend</Text>
+                            </TouchableOpacity> 
+                        </View>
+                    </View>
+                    <View style={styles.buttonBio}>
+                        <TouchableOpacity onPress={() => navigation.navigate('EditUserProfile')}>
+                            <Text>Edit profile</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
-            <View>
-                <Text style={styles.mainFeed}>
-                    {data.userPost}
-                </Text>
-            </View>
+                <View style={styles.flatListStyle}>
+                    <FlatList
+                            data={theData}
+                            keyExtractor={item => item._id}
+                            renderItem={renderItem}
+                        />
+                </View>
         </View>
     );
+
 }
 
 export default UserProfileScreen;
