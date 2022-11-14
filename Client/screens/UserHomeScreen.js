@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     flatListStyle:{
         width: 400,
         top: 10,
-        height: 650,
+        height: 680,
         borderRadius: 10,
         marginLeft: 15,
         marginRight: 15,
