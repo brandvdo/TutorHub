@@ -190,19 +190,19 @@ const UserProfileScreen = ({navigation}) =>{
                     <View style={styles.row}>
                         <View style={styles.buttonBio}>
                             <TouchableOpacity onPress={() => navigation.navigate('ChatScreen')}>
-                                <Text> Message </Text>
+                                <Text style={{fontWeight: 'bold'}}> Message </Text>
                             </TouchableOpacity> 
                         </View>
                         <Text>{'\t'}</Text>
                         <View style={styles.buttonBio}>
                             <TouchableOpacity onPress={() => navigation.navigate('')}>
-                                <Text>Add Friend</Text>
+                                <Text style={{fontWeight: 'bold'}}>Add Friend</Text>
                             </TouchableOpacity> 
                         </View>
                     </View>
                     <View style={styles.buttonBio}>
                         <TouchableOpacity onPress={() => navigation.navigate('EditUserProfile')}>
-                            <Text>Edit profile</Text>
+                            <Text style={{fontWeight: 'bold'}}>Edit profile</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

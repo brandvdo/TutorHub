@@ -119,7 +119,7 @@ const UserHomeScreen = () => {
                 }}
                 onPress={() => { '' }}
                 >
-                    <Text style={{ color: "#05998c",  fontWeight: 'bold' }}>Post</Text>
+                    <Text style={{fontWeight: 'bold' }}>Post</Text>
                 </TouchableOpacity>
             <View style={styles.flatListStyle}>
                 <FlatList
