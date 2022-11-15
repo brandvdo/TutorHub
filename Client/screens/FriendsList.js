@@ -24,22 +24,21 @@ const styles = StyleSheet.create({
     },
 });
 
-const ChatScreen = ({navigation}) =>{
+const FriendsList = ({navigation}) =>{
     return(
         <View>
             <View style={styles.Header}>
-            <View style={styles.buttonBio}>
-                <TouchableOpacity onPress={() => navigation.navigate('FriendsList')}>
-                    <Text style={{fontWeight: 'bold'}}>Friend's List</Text>
-                </TouchableOpacity>
-            </View>
+                <View style={styles.buttonBio}>
+                    <TouchableOpacity onPress={() => navigation.navigate('ChatScreen')}>
+                        <Text style={{fontWeight: 'bold'}}>Messages</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
             <View>
-
             </View>
         </View>
     );
 
 }
 
-export default ChatScreen;
+export default FriendsList;
