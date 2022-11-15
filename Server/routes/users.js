@@ -190,7 +190,7 @@ router.put('/addFriend/:id',verifyToken, (req,res) => {
 
 })
 //Not working
-router.get('/search', async (req, res) => {
+router.post('/search', async (req, res) => {
     try{
         let result = await User.aggregate([
             {
