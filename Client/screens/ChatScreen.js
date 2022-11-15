@@ -22,21 +22,57 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         alignSelf: 'center',
     },
+    nameStyle:{
+        fontWeight: 'bold',
+        fontSize: '20px',
+        alignSelf: 'left',
+        alignSelf: 'center',
+        top: 10
+    },
+    flatListStyle:{
+        width: 400,
+        top: 20,
+        height: 640,
+        borderRadius: 10,
+        marginLeft: 15,
+        marginRight: 15,
+        backgroundColor: '#e0e0e0'
+       
+    },
 });
 
 const ChatScreen = ({navigation}) =>{
     return(
         <View>
             <View style={styles.Header}>
+            <TouchableOpacity
+                style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 70,
+                    position: 'absolute',
+                    top: 60,
+                    right: 20,
+                    height: 40,
+                    backgroundColor: '#e0e0e0',
+                    borderRadius: 100,
+                }}
+                onPress={() => navigation.navigate('FriendsList')}
+                > 
+                <Text style={{fontWeight: 'bold' }}>Chat</Text>
+                </TouchableOpacity>
             <View style={styles.buttonBio}>
                 <TouchableOpacity onPress={() => navigation.navigate('FriendsList')}>
                     <Text style={{fontWeight: 'bold'}}>View Friend's List</Text>
                 </TouchableOpacity>
             </View>
             </View>
-            <View>
-
+            <View >
+            <Text style={styles.nameStyle}>Messages</Text>
             </View>
+            <View style={styles.flatListStyle}>
+                    
+                </View>
         </View>
     );
 

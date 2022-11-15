@@ -58,10 +58,27 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
     },
+    buttonBio2:{
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 30,
+        backgroundColor: "#e0e0e0",
+        marginTop: 60,
+        alignSelf: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+    },
     nameStyle:{
         fontWeight: 'bold',
         fontSize: '25px',
         color: "#e0e0e0",
+        marginTop: 10,
+        alignSelf: 'center',
+    },
+    nameStyle2:{
+        fontWeight: 'bold',
+        fontSize: '15px',
+        color: "black",
         marginTop: 10,
         alignSelf: 'center',
     },
@@ -86,11 +103,13 @@ const styles = StyleSheet.create({
     },
     flatListStyle:{
         width: 400,
-        top: 10,
-        height: 490,
+        top: 20,
+        height: 400,
         borderRadius: 10,
         marginLeft: 15,
         marginRight: 15,
+        backgroundColor: '#e0e0e0'
+       
     },
 });
 
@@ -98,8 +117,8 @@ const styles = StyleSheet.create({
 const Post = ({message, tags}) => (
     <View>
         <View style={{borderBottomColor: "rgb(5, 153, 140)", borderBottomWidth: 4, marginLeft: 5, marginRight: 5, paddingBottom: 5}}>
-        <Text>Message: {message}</Text>
-        <Text>Tags: {tags}</Text>
+        <Text style={ {fontSize: 16}}>{message}</Text>
+        <Text style={ {fontSize: 12}}>{tags}</Text>
         </View>
     </View>
 );
@@ -114,12 +133,7 @@ const UserProfileScreen = ({navigation}) =>{
 
         Example: data.fullName 
     */
-    //Render post item
-    const renderItem = ({item}) => <Post 
-        message={item.message}
-        tags={item.tags}
-        />;
-        
+
     const fetchData = async () => {
         const userToken = await SecureStore.getItemAsync("token");
         const decodedToken = jwtDecode(userToken);
@@ -147,7 +161,15 @@ const UserProfileScreen = ({navigation}) =>{
       
 
     const [theData, setTheData] = useState([]);
-      const fetchUserInfo = async () => {
+    const [theLoading, setTheLoading] = useState(true);
+
+    //Render post item
+    const renderItem = ({item}) => <Post 
+    message={item.message}
+    tags={item.tags}
+    />;
+
+    const fetchUserInfo = async () => {
         const userToken = await SecureStore.getItemAsync("token");
         const decodedToken = jwtDecode(userToken);
         const resp = await fetch("http://70.177.34.147:3000/api/home/newsFeed/messages/"+decodedToken._id, {
@@ -159,19 +181,18 @@ const UserProfileScreen = ({navigation}) =>{
             },
         })
         const theData = await resp.json();
-        setTheData(theData[0]);
-        setLoading(false);
+        setTheData(theData);
+        setTheLoading(false);
       };
 
       /*
         Used to update information
       */
-      useEffect(() => {
+        useEffect(() => {
         fetchUserInfo();
         const dataInterval = setInterval(() => fetchUserInfo(), 10 * 1000);
         return () => clearInterval(dataInterval);
       }, []);
-
     return (
         <View style={styles.space}>
             <View style={[styles.Header]}>
@@ -214,9 +235,21 @@ const UserProfileScreen = ({navigation}) =>{
                             renderItem={renderItem}
                         />
                 </View>
+                <View style={styles.row}>
+                        <View style={styles.buttonBio2}>
+                            <TouchableOpacity onPress={() => navigation.navigate('')}>
+                            <Text style={styles.nameStyle2}>Subjects Can Tutor {data.tutorSubjects}{'\n'}</Text>
+                            </TouchableOpacity> 
+                        </View>
+                        <Text>{'\t'}</Text>
+                        <View style={styles.buttonBio2}>
+                            <TouchableOpacity onPress={() => navigation.navigate('')}>
+                            <Text style={styles.nameStyle2}>Subjects Need Tutor {data.studySubjects}{'\n'}</Text>
+                            </TouchableOpacity> 
+                        </View>
+                    </View>
         </View>
     );
-
 }
 
 export default UserProfileScreen;

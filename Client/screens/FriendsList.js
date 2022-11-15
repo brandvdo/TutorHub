@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
     },
     flatListStyle:{
         width: 400,
-        top: 10,
-        height: 680,
+        top: 30,
+        height: 720,
         borderRadius: 10,
         marginLeft: 15,
         marginRight: 15,
@@ -37,6 +37,17 @@ const styles = StyleSheet.create({
         fontSize: '20px',
         alignSelf: 'left',
         alignSelf: 'center',
+        top: 10
+    },
+    flatListStyle:{
+        width: 400,
+        top: 20,
+        height: 700,
+        borderRadius: 10,
+        marginLeft: 15,
+        marginRight: 15,
+        backgroundColor: '#e0e0e0'
+       
     },
 });
 
@@ -55,13 +66,16 @@ const FriendsList = ({navigation}) =>{
 
     //Render post item
     const renderItem = ({item}) => <Post 
-        friends={item.friends}
+        friends={item}
         />;
 
-    const fetchUserInfo = async () => {
+    const fetchUserInfo = async (id) => {
         const userToken = await SecureStore.getItemAsync("token");
         const decodedToken = jwtDecode(userToken);
-        const resp = await fetch("http://70.177.34.147:3000/api/home/newsFeed/messages/"+decodedToken._id, {
+        if(id == null){
+            id = decodedToken._id;
+        }
+        const resp = await fetch("http://70.177.34.147:3000/api/users/getUserInfo/"+id, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -70,7 +84,7 @@ const FriendsList = ({navigation}) =>{
             },
         })
         const data = await resp.json();
-        console.log(data)
+        console.log(data.friendsList)
         setData(data);
         setLoading(false);
       };
@@ -94,13 +108,15 @@ const FriendsList = ({navigation}) =>{
                 </View>
             </View>
             <View>
-            <View style={styles.flatListStyle}>
+            <View>
             <Text style={styles.nameStyle}>Friend's List</Text>
+            <View style={styles.flatListStyle}>
                 <FlatList
-                        data={data}
+                        data={data.friendsList}
                         keyExtractor={item => item._id}
                         renderItem={renderItem}
                     />
+                </View>
             </View>
             </View>
         </View>

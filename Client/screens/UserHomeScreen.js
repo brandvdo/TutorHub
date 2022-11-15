@@ -7,7 +7,7 @@
 */
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text, Image,TouchableOpacity, FlatList} from "react-native";
+import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text, Image,TouchableOpacity, FlatList, List} from "react-native";
 import SearchBar from './features/SearchBar/SearchBar';
 import * as SecureStore from 'expo-secure-store';
 const jwtDecode = require('jwt-decode');
@@ -31,11 +31,12 @@ const styles = StyleSheet.create({
     },
     flatListStyle:{
         width: 400,
-        top: 10,
-        height: 680,
+        top: 20,
+        height: 660,
         borderRadius: 10,
         marginLeft: 15,
         marginRight: 15,
+        backgroundColor: '#e0e0e0' 
     },
 });
 
@@ -52,9 +53,9 @@ const Post = ({message, userName, tags}) => (
             source={require('../assets/images/user-profile-icon-free-vector.webp')}
             style={[styles.profilePic]}>
         </Image>
-        <Text>Name: {userName}</Text>
-        <Text>Message: {message}</Text>
-        <Text>Tags: {tags}</Text>
+        <Text style={ {fontSize: 14}}>{userName}</Text>
+        <Text style={ {fontSize: 16}}>{message}</Text>
+        <Text style={ {fontSize: 12}}>{tags}</Text>
         </View>
     </View>
 );
@@ -63,9 +64,29 @@ const UserHomeScreen = ({navigation}) => {
 
     const [searchPhrase, setSearchPhrase] = useState("");
     const [clicked, setClicked] = useState(false);
+    const [fakeData, setFakeData] = useState();
 
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const getData = async () => {
+          const apiResponse = await fetch(
+            "http://70.177.34.147:3000/api/users/search",{
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                   fullName: searchPhrase
+                })
+            })
+          const data = await apiResponse.json();
+          setFakeData(data);
+        };
+        getData();
+      }, []);
 
     //Render post item
     const renderItem = ({item}) => <Post 
@@ -102,7 +123,13 @@ const UserHomeScreen = ({navigation}) => {
     return (
         <View>
             <View style={styles.homeHeader}>
-                <SearchBar/>
+            <SearchBar
+        searchPhrase={searchPhrase}
+        setSearchPhrase={setSearchPhrase}
+        clicked={clicked}
+        setClicked={setClicked}
+      />
+
             </View>
                 <TouchableOpacity
                 style={{
