@@ -1,33 +1,28 @@
 /*
 
-  Author: Tyler & Brandon
+Author: Tyler
 
-  This is the main screen with chat feed 
+This is for testing only remove later
 
 */
-
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text, Image,TouchableOpacity, FlatList} from "react-native";
-import SearchBar from './features/SearchBar/SearchBar';
+import {StyleSheet, View, Text, FlatList, TouchableOpacity} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 const jwtDecode = require('jwt-decode');
 
 const styles = StyleSheet.create({
-    homeHeader: {
-        _paddingTop: 40,
-        get paddingTop() {
-            return this._paddingTop;
-        },
-        set paddingTop(value) {
-            this._paddingTop = value;
-        },
+    Header: {
+        paddingTop: 50,
         backgroundColor: '#05998c',
     },
-    profilePic:{
-        marginTop: 20,
-        width: 30,
-        height: 30,
-        borderRadius: '50%',
+    buttonBio:{
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        borderRadius: 30,
+        backgroundColor: "#e0e0e0",
+        marginTop: 10,
+        marginBottom: 10,
+        alignSelf: 'center',
     },
     flatListStyle:{
         width: 400,
@@ -37,41 +32,30 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
     },
+    nameStyle:{
+        fontWeight: 'bold',
+        fontSize: '20px',
+        alignSelf: 'left',
+        alignSelf: 'center',
+    },
 });
 
-/*
-
-    TODO Create post item CSS
-
-*/
-
-const Post = ({message, userName, tags}) => (
+const Post = ({friends}) => (
     <View>
         <View style={{borderBottomColor: "rgb(5, 153, 140)", borderBottomWidth: 4, marginLeft: 5, marginRight: 5, paddingBottom: 5}}>
-        <Image
-            source={require('../assets/images/user-profile-icon-free-vector.webp')}
-            style={[styles.profilePic]}>
-        </Image>
-        <Text>Name: {userName}</Text>
-        <Text>Message: {message}</Text>
-        <Text>Tags: {tags}</Text>
+            <Text>{friends}</Text>
         </View>
     </View>
 );
 
-const UserHomeScreen = ({navigation}) => {
-
-    const [searchPhrase, setSearchPhrase] = useState("");
-    const [clicked, setClicked] = useState(false);
+const FriendsList = ({navigation}) =>{
 
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
     //Render post item
     const renderItem = ({item}) => <Post 
-        message={item.message}
-        userName={item.userName}
-        tags={item.tags}
+        friends={item.friends}
         />;
 
     const fetchUserInfo = async () => {
@@ -86,6 +70,7 @@ const UserHomeScreen = ({navigation}) => {
             },
         })
         const data = await resp.json();
+        console.log(data)
         setData(data);
         setLoading(false);
       };
@@ -99,36 +84,28 @@ const UserHomeScreen = ({navigation}) => {
         return () => clearInterval(dataInterval);
       }, []);
 
-    return (
+    return(
         <View>
-            <View style={styles.homeHeader}>
-                <SearchBar/>
+            <View style={styles.Header}>
+                <View style={styles.buttonBio}>
+                    <TouchableOpacity onPress={() => navigation.navigate('ChatScreen')}>
+                        <Text style={{fontWeight: 'bold'}}>Back To Chat</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-                <TouchableOpacity
-                style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: 70,
-                    position: 'absolute',
-                    top: 54,
-                    right: 20,
-                    height: 50,
-                    backgroundColor: '#e0e0e0',
-                    borderRadius: 100,
-                }}
-                onPress={() => navigation.navigate('PostScreen')}
-                >
-                    <Text style={{fontWeight: 'bold' }}>Post</Text>
-                </TouchableOpacity>
+            <View>
             <View style={styles.flatListStyle}>
+            <Text style={styles.nameStyle}>Friend's List</Text>
                 <FlatList
                         data={data}
                         keyExtractor={item => item._id}
                         renderItem={renderItem}
                     />
             </View>
+            </View>
         </View>
     );
+
 }
 
-export default UserHomeScreen;
+export default FriendsList;

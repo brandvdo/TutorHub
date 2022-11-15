@@ -49,11 +49,6 @@ const styles = StyleSheet.create({
         color: "#e0e0e0",
         alignSelf: 'left',
     },
-    line:{
-        textDecorationLine: 'underline',
-        textDecorationStyle: "solid",
-        textDecorationColor: "#e0e0e0",
-    },
     buttonBio:{
         paddingHorizontal: 10,
         paddingVertical: 5,
@@ -110,7 +105,7 @@ const EditUserProfileScreen = ({navigation}) =>{
             </View>
             <View style={styles.buttonBio}>
                     <TouchableOpacity>
-                        <Text>Change profile picture</Text>
+                        <Text style={{fontWeight: 'bold'}}>Change Profile Picture</Text>
                     </TouchableOpacity>
             </View>
         </View>
@@ -123,6 +118,11 @@ const EditUserProfileScreen = ({navigation}) =>{
             <View style={styles.box}>
                 <TouchableOpacity>
                     <Text style={styles.nameStyle}>Email: {data.email} {'\n'}</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.buttonBio}>
+                <TouchableOpacity onPress={() => navigation.navigate('UserProfile')}>
+                    <Text style={{fontWeight: 'bold'}}>Back To Profile</Text>
                 </TouchableOpacity>
             </View>
         </View>

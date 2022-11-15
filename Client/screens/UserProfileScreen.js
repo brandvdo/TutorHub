@@ -6,7 +6,7 @@
 
 */
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 const jwtDecode = require('jwt-decode');
 
@@ -83,8 +83,26 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         marginBottom: 15
-    }
+    },
+    flatListStyle:{
+        width: 400,
+        top: 10,
+        height: 490,
+        borderRadius: 10,
+        marginLeft: 15,
+        marginRight: 15,
+    },
 });
+
+
+const Post = ({message, tags}) => (
+    <View>
+        <View style={{borderBottomColor: "rgb(5, 153, 140)", borderBottomWidth: 4, marginLeft: 5, marginRight: 5, paddingBottom: 5}}>
+        <Text>Message: {message}</Text>
+        <Text>Tags: {tags}</Text>
+        </View>
+    </View>
+);
 
 const UserProfileScreen = ({navigation}) =>{
 
@@ -96,6 +114,12 @@ const UserProfileScreen = ({navigation}) =>{
 
         Example: data.fullName 
     */
+    //Render post item
+    const renderItem = ({item}) => <Post 
+        message={item.message}
+        tags={item.tags}
+        />;
+        
     const fetchData = async () => {
         const userToken = await SecureStore.getItemAsync("token");
         const decodedToken = jwtDecode(userToken);
@@ -120,8 +144,6 @@ const UserProfileScreen = ({navigation}) =>{
           const dataInterval = setInterval(() => fetchData(), 10 * 1000);
           return () => clearInterval(dataInterval);
       }, []);
-<<<<<<< Updated upstream
-=======
       
 
     const [theData, setTheData] = useState([]);
@@ -144,13 +166,11 @@ const UserProfileScreen = ({navigation}) =>{
       /*
         Used to update information
       */
-     
       useEffect(() => {
         fetchUserInfo();
         const dataInterval = setInterval(() => fetchUserInfo(), 10 * 1000);
         return () => clearInterval(dataInterval);
       }, []);
->>>>>>> Stashed changes
 
     return (
         <View style={styles.space}>
@@ -170,27 +190,29 @@ const UserProfileScreen = ({navigation}) =>{
                     <View style={styles.row}>
                         <View style={styles.buttonBio}>
                             <TouchableOpacity onPress={() => navigation.navigate('ChatScreen')}>
-                                <Text> Message </Text>
+                                <Text style={{fontWeight: 'bold'}}> Message </Text>
                             </TouchableOpacity> 
                         </View>
                         <Text>{'\t'}</Text>
                         <View style={styles.buttonBio}>
                             <TouchableOpacity onPress={() => navigation.navigate('')}>
-                                <Text>Add Friend</Text>
+                                <Text style={{fontWeight: 'bold'}}>Add Friend</Text>
                             </TouchableOpacity> 
                         </View>
                     </View>
                     <View style={styles.buttonBio}>
                         <TouchableOpacity onPress={() => navigation.navigate('EditUserProfile')}>
-                            <Text>Edit profile</Text>
+                            <Text style={{fontWeight: 'bold'}}>Edit Profile</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </View>
-                <View>
-                    <Text style={styles.mainFeed}>
-                        {data.message}
-                    </Text>
+                <View style={styles.flatListStyle}>
+                    <FlatList
+                            data={theData}
+                            keyExtractor={item => item._id}
+                            renderItem={renderItem}
+                        />
                 </View>
         </View>
     );

@@ -13,7 +13,6 @@ const userPostSchema = new mongoose.Schema({
   userName: {type:String, required: true},
   message: {type:String, required: true},
   tags: [String],
-  price: {type:Number},
 })
 
 module.exports = mongoose.model('UserPost',userPostSchema);

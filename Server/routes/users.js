@@ -192,18 +192,25 @@ router.put('/addFriend/:id',verifyToken, (req,res) => {
 //Not working
 router.get('/search', async (req, res) => {
     try{
-        let result = await User.aggregate([{
-            "$search": {
-                "autocomplete":{
-                    "query": `${req.query.query}`,
+        let result = await User.aggregate([
+            {
+                $search: {
+                  "autocomplete": {
                     "path": "fullName",
-                    "fuzzy": {
-                        "maxEdits": 2,
-                        "prefixLength": 3
-                    }
+                    "query": "off"
+                  }
                 }
-            }
-        }])
+              },
+              {
+                $limit: 10
+              },
+              {
+                $project: {
+                  "_id": 0,
+                  "fullName": 1
+                }
+              }
+        ])
         res.send(result);
     }catch(err){
         res.status(500).send({message: err.message});
