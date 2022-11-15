@@ -32,12 +32,17 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
     },
+    nameStyle:{
+        fontWeight: 'bold',
+        fontSize: '15px',
+        alignSelf: 'left',
+        alignSelf: 'center',
+    },
 });
 
 const Post = ({friends}) => (
     <View>
         <View style={{borderBottomColor: "rgb(5, 153, 140)", borderBottomWidth: 4, marginLeft: 5, marginRight: 5, paddingBottom: 5}}>
-        <Text>Friends: {friends}</Text>
         </View>
     </View>
 );
@@ -88,6 +93,7 @@ const FriendsList = ({navigation}) =>{
             </View>
             <View>
             <View style={styles.flatListStyle}>
+            <Text style={styles.nameStyle}>Friend's List</Text>
                 <FlatList
                         data={data}
                         keyExtractor={item => item._id}
