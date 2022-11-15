@@ -147,6 +147,7 @@ const UserProfileScreen = ({navigation}) =>{
       
 
     const [theData, setTheData] = useState([]);
+    const [theLoading, setTheLoading] = useState(true);
       const fetchUserInfo = async () => {
         const userToken = await SecureStore.getItemAsync("token");
         const decodedToken = jwtDecode(userToken);
@@ -159,8 +160,9 @@ const UserProfileScreen = ({navigation}) =>{
             },
         })
         const theData = await resp.json();
+        console.log(theData.message)
         setTheData(theData[0]);
-        setLoading(false);
+        setTheLoading(false);
       };
 
       /*
@@ -209,7 +211,7 @@ const UserProfileScreen = ({navigation}) =>{
             </View>
                 <View style={styles.flatListStyle}>
                     <FlatList
-                            data={theData}
+                            data={theData.message}
                             keyExtractor={item => item._id}
                             renderItem={renderItem}
                         />

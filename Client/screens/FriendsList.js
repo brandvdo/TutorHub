@@ -55,13 +55,16 @@ const FriendsList = ({navigation}) =>{
 
     //Render post item
     const renderItem = ({item}) => <Post 
-        friends={item.friends}
+        friends={item}
         />;
 
-    const fetchUserInfo = async () => {
+    const fetchUserInfo = async (id) => {
         const userToken = await SecureStore.getItemAsync("token");
         const decodedToken = jwtDecode(userToken);
-        const resp = await fetch("http://70.177.34.147:3000/api/home/newsFeed/messages/"+decodedToken._id, {
+        if(id == null){
+            id = decodedToken._id;
+        }
+        const resp = await fetch("http://70.177.34.147:3000/api/users/getUserInfo/"+id, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -70,7 +73,7 @@ const FriendsList = ({navigation}) =>{
             },
         })
         const data = await resp.json();
-        console.log(data)
+        console.log(data.friendsList)
         setData(data);
         setLoading(false);
       };
@@ -97,7 +100,7 @@ const FriendsList = ({navigation}) =>{
             <View style={styles.flatListStyle}>
             <Text style={styles.nameStyle}>Friend's List</Text>
                 <FlatList
-                        data={data}
+                        data={data.friendsList}
                         keyExtractor={item => item._id}
                         renderItem={renderItem}
                     />
