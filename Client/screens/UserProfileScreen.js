@@ -120,6 +120,37 @@ const UserProfileScreen = ({navigation}) =>{
           const dataInterval = setInterval(() => fetchData(), 10 * 1000);
           return () => clearInterval(dataInterval);
       }, []);
+<<<<<<< Updated upstream
+=======
+      
+
+    const [theData, setTheData] = useState([]);
+      const fetchUserInfo = async () => {
+        const userToken = await SecureStore.getItemAsync("token");
+        const decodedToken = jwtDecode(userToken);
+        const resp = await fetch("http://70.177.34.147:3000/api/home/newsFeed/messages/"+decodedToken._id, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'auth-token': userToken,
+            },
+        })
+        const theData = await resp.json();
+        setTheData(theData[0]);
+        setLoading(false);
+      };
+
+      /*
+        Used to update information
+      */
+     
+      useEffect(() => {
+        fetchUserInfo();
+        const dataInterval = setInterval(() => fetchUserInfo(), 10 * 1000);
+        return () => clearInterval(dataInterval);
+      }, []);
+>>>>>>> Stashed changes
 
     return (
         <View style={styles.space}>
