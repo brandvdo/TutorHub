@@ -195,18 +195,21 @@ router.get('/search', async (req, res) => {
         let result = await User.aggregate([
             {
                 $search: {
+                  index: 'searchName',
                   "autocomplete": {
                     "path": "fullName",
-                    "query": "off"
+                    "query": req.body.fullName,
+                    "fuzzy": {
+                      "maxEdits": 1,
+                      "prefixLength": 1,
+                      "maxExpansions": 256
+                    }
                   }
                 }
               },
               {
-                $limit: 10
-              },
-              {
                 $project: {
-                  "_id": 0,
+                  "_id": 1,
                   "fullName": 1
                 }
               }
@@ -217,46 +220,6 @@ router.get('/search', async (req, res) => {
     }
 })
 
-/*
-server.get("/search", async (request, response) => {
-    try {
-        let result = await collection.aggregate([
-            {
-                "$search": {
-                    "autocomplete": {
-                        "query": `${request.query.query}`,
-                        "path": "name",
-                        "fuzzy": {
-                            "maxEdits": 2,
-                            "prefixLength": 3
-                        }
-                    }
-                }
-            }
-        ]).toArray();
-        response.send(result);
-    } catch (e) {
-        response.status(500).send({ message: e.message });
-    }
-});
-*/
-
-//TODO
-/*
-
-    Create resend email verification
-    Create successful verification route
-
-*/
-
-/*
-
-    /api/users/id
-
-    This is the put request to change user information
-    TODO: Add validation for user information to remove invalid entries
-
-*/
 router.put('/:id', (req, res) => {
     const userID = req.params.id;
 

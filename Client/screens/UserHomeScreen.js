@@ -7,7 +7,7 @@
 */
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text, Image,TouchableOpacity, FlatList} from "react-native";
+import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text, Image,TouchableOpacity, FlatList, List} from "react-native";
 import SearchBar from './features/SearchBar/SearchBar';
 import * as SecureStore from 'expo-secure-store';
 const jwtDecode = require('jwt-decode');
@@ -63,9 +63,29 @@ const UserHomeScreen = ({navigation}) => {
 
     const [searchPhrase, setSearchPhrase] = useState("");
     const [clicked, setClicked] = useState(false);
+    const [fakeData, setFakeData] = useState();
 
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const getData = async () => {
+          const apiResponse = await fetch(
+            "http://70.177.34.147:3000/api/users/search",{
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                   fullName: searchPhrase
+                })
+            })
+          const data = await apiResponse.json();
+          setFakeData(data);
+        };
+        getData();
+      }, []);
 
     //Render post item
     const renderItem = ({item}) => <Post 
@@ -102,7 +122,19 @@ const UserHomeScreen = ({navigation}) => {
     return (
         <View>
             <View style={styles.homeHeader}>
-                <SearchBar/>
+            <SearchBar
+        searchPhrase={searchPhrase}
+        setSearchPhrase={setSearchPhrase}
+        clicked={clicked}
+        setClicked={setClicked}
+      />
+
+          <List
+            searchPhrase={searchPhrase}
+            data={fakeData}
+            setClicked={setClicked}
+          />
+
             </View>
                 <TouchableOpacity
                 style={{
