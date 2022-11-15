@@ -120,6 +120,16 @@ const EditUserProfileScreen = ({navigation}) =>{
                     <Text style={styles.nameStyle}>Email: {data.email} {'\n'}</Text>
                 </TouchableOpacity>
             </View>
+            <View style={styles.box}>
+                <TouchableOpacity>
+                    <Text style={styles.nameStyle}>Subjects you need help in: {data.studySubjects}{'\n'}</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.box}>
+                <TouchableOpacity>
+                    <Text style={styles.nameStyle}>Subjects interested to Tutor: {data.tutorSubjects}{'\n'}</Text>
+                </TouchableOpacity>
+            </View>
             <View style={styles.buttonBio}>
                 <TouchableOpacity onPress={() => navigation.navigate('UserProfile')}>
                     <Text style={{fontWeight: 'bold'}}>Back To Profile</Text>
