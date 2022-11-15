@@ -106,7 +106,6 @@ const UserHomeScreen = () => {
             },
         })
         const data = await resp.json();
-        console.log(data)
         setData(data);
         setLoading(false);
       };
@@ -129,12 +128,6 @@ const UserHomeScreen = () => {
         clicked={clicked}
         setClicked={setClicked}
       />
-
-          <List
-            searchPhrase={searchPhrase}
-            data={fakeData}
-            setClicked={setClicked}
-          />
 
             </View>
                 <TouchableOpacity
