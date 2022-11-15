@@ -24,22 +24,21 @@ const styles = StyleSheet.create({
     },
 });
 
-const ChatScreen = ({navigation}) =>{
+const PostScreen = ({navigation}) =>{
     return(
         <View>
             <View style={styles.Header}>
             <View style={styles.buttonBio}>
-                <TouchableOpacity onPress={() => navigation.navigate('FriendsList')}>
-                    <Text style={{fontWeight: 'bold'}}>View Friend's List</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                    <Text style={{fontWeight: 'bold'}}>Back To Home</Text>
                 </TouchableOpacity>
             </View>
             </View>
             <View>
-
             </View>
         </View>
     );
 
 }
 
-export default ChatScreen;
+export default PostScreen;
