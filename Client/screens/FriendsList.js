@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     },
     nameStyle:{
         fontWeight: 'bold',
-        fontSize: '15px',
+        fontSize: '20px',
         alignSelf: 'left',
         alignSelf: 'center',
     },
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
 const Post = ({friends}) => (
     <View>
         <View style={{borderBottomColor: "rgb(5, 153, 140)", borderBottomWidth: 4, marginLeft: 5, marginRight: 5, paddingBottom: 5}}>
+            <Text>{friends}</Text>
         </View>
     </View>
 );
@@ -50,6 +51,7 @@ const Post = ({friends}) => (
 const FriendsList = ({navigation}) =>{
 
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     //Render post item
     const renderItem = ({item}) => <Post 
@@ -87,7 +89,7 @@ const FriendsList = ({navigation}) =>{
             <View style={styles.Header}>
                 <View style={styles.buttonBio}>
                     <TouchableOpacity onPress={() => navigation.navigate('ChatScreen')}>
-                        <Text style={{fontWeight: 'bold'}}>Messages</Text>
+                        <Text style={{fontWeight: 'bold'}}>Back To Chat</Text>
                     </TouchableOpacity>
                 </View>
             </View>

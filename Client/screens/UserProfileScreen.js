@@ -202,7 +202,7 @@ const UserProfileScreen = ({navigation}) =>{
                     </View>
                     <View style={styles.buttonBio}>
                         <TouchableOpacity onPress={() => navigation.navigate('EditUserProfile')}>
-                            <Text style={{fontWeight: 'bold'}}>Edit profile</Text>
+                            <Text style={{fontWeight: 'bold'}}>Edit Profile</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
