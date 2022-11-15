@@ -39,6 +39,16 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         top: 10
     },
+    flatListStyle:{
+        width: 400,
+        top: 20,
+        height: 700,
+        borderRadius: 10,
+        marginLeft: 15,
+        marginRight: 15,
+        backgroundColor: '#e0e0e0'
+       
+    },
 });
 
 const Post = ({friends}) => (
