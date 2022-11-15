@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setCLicked }) => {
+const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setClicked }) => {
   return (
     <View style={styles.container}>
       <View
@@ -66,7 +66,9 @@ const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setCLicked }) => {
           style={styles.input}
           placeholder="Search"
           value={searchPhrase}
-          onChangeText={setSearchPhrase}
+          onChangeText={()=>{
+            setSearchPhrase
+          }}
           onFocus={() => {
             setClicked(true);
           }}

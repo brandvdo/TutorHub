@@ -18,7 +18,7 @@ import {
 const styles = StyleSheet.create({
     list__container: {
         margin: 10,
-        height: "85%",
+        height: "10%",
         width: "100%",
     },
     item: {
@@ -35,28 +35,23 @@ const styles = StyleSheet.create({
 });
 
 // definition of the Item, which will be rendered in the FlatList
-const Item = ({ name, details }) => (
+const Item = ({ name }) => (
     <View style={styles.item}>
         <Text style={styles.title}>{name}</Text>
-        <Text style={styles.details}>{details}</Text>
     </View>
 );
 
 // the filter
-const List = ({ searchPhrase, setCLicked, data }) => {
+const List = ({ searchPhrase, setClicked, data }) => {
     const renderItem = ({ item }) => {
         // when no input, show all
         if (searchPhrase === "") {
-            return <Item name={item.name} details={item.details} />;
+            return <Item name={item.fullName}/>;
         }
         // filter of the name
-        if (item.name.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))) {
-            return <Item name={item.name} details={item.details} />;
-        }
-        // filter of the description
-        if (item.details.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))) {
-            return <Item name={item.name} details={item.details} />;
-        }
+        if (item.fullName.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))) {
+            return <Item name={item.fullName} />;
+        } 
     };
 
     return (
@@ -69,7 +64,7 @@ const List = ({ searchPhrase, setCLicked, data }) => {
                 <FlatList
                     data={data}
                     renderItem={renderItem}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item) => item._id}
                 />
             </View>
         </SafeAreaView>
