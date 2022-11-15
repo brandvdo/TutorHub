@@ -17,6 +17,7 @@ import ChatScreen from '../screens/ChatScreen';
 import SignupScreen from '../screens/SignupScreen';
 import UserLoginScreen from '../screens/UserLoginScreen';
 import EditUserProfileScreen from '../screens/editUserProfileScreen';
+import FriendsList from '../screens/FriendsList';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -192,6 +193,27 @@ const AppNavigator = () => {
                             )
                         }}
                     />
+                    <Stack.Screen name="FriendsList" component={FriendsList}
+                                options={{
+                                    headerShown: false,
+                                    tabBarIcon: ({focused}) => (
+                                        <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+                                            <Image
+                                                source={require('../assets/user.png')}
+                                                resizeMode='contain'
+                                                style={{
+                                                    width: 25,
+                                                    height: 25,
+                                                    tintColor: focused ? '#FFFFFF' : '#000000', fontsize: 12}}
+                                            />
+                                            <Text
+                                                style={{color: focused ? '#FFFFFF' : '#000000', fontsize: 12}}>
+                                                Friend's List
+                                            </Text>
+                                        </View>
+                                    )
+                                }}
+                            />
              <Tab.Screen name="Home" component={TabNavigator}
             options={{
                 headerShown: false,
