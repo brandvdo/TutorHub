@@ -129,12 +129,6 @@ const UserHomeScreen = ({navigation}) => {
         setClicked={setClicked}
       />
 
-          <List
-            searchPhrase={searchPhrase}
-            data={fakeData}
-            setClicked={setClicked}
-          />
-
             </View>
                 <TouchableOpacity
                 style={{
