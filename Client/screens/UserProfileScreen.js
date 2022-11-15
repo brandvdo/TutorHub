@@ -160,7 +160,7 @@ const UserProfileScreen = ({navigation}) =>{
             },
         })
         const theData = await resp.json();
-        console.log(theData.message)
+        // console.log(theData.message)
         setTheData(theData[0]);
         setTheLoading(false);
       };

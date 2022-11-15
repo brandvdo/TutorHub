@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
     },
     flatListStyle:{
         width: 400,
-        top: 10,
-        height: 680,
+        top: 30,
+        height: 720,
         borderRadius: 10,
         marginLeft: 15,
         marginRight: 15,
@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
         fontSize: '20px',
         alignSelf: 'left',
         alignSelf: 'center',
+        top: 10
     },
 });
 
@@ -97,13 +98,15 @@ const FriendsList = ({navigation}) =>{
                 </View>
             </View>
             <View>
-            <View style={styles.flatListStyle}>
+            <View>
             <Text style={styles.nameStyle}>Friend's List</Text>
+            <View style={styles.flatListStyle}>
                 <FlatList
                         data={data.friendsList}
                         keyExtractor={item => item._id}
                         renderItem={renderItem}
                     />
+                </View>
             </View>
             </View>
         </View>
