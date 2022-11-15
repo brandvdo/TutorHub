@@ -192,64 +192,46 @@ router.put('/addFriend/:id',verifyToken, (req,res) => {
 //Not working
 router.get('/search', async (req, res) => {
     try{
-        let result = await User.aggregate([{
-            "$search": {
-                "autocomplete":{
-                    "query": `${req.query.query}`,
+        let result = await User.aggregate([
+            {
+                $search: {
+                  index: 'searchName',
+                  "autocomplete": {
                     "path": "fullName",
+                    "query": req.body.fullName,
                     "fuzzy": {
-                        "maxEdits": 2,
-                        "prefixLength": 3
+                      "maxEdits": 1,
+                      "prefixLength": 1,
+                      "maxExpansions": 256
                     }
+                  }
                 }
-            }
-        }])
+              },
+              {
+                $project: {
+                  "_id": 1,
+                  "fullName": 1
+                }
+              }
+        ])
         res.send(result);
     }catch(err){
         res.status(500).send({message: err.message});
     }
 })
 
-/*
-server.get("/search", async (request, response) => {
-    try {
-        let result = await collection.aggregate([
-            {
-                "$search": {
-                    "autocomplete": {
-                        "query": `${request.query.query}`,
-                        "path": "name",
-                        "fuzzy": {
-                            "maxEdits": 2,
-                            "prefixLength": 3
-                        }
-                    }
-                }
-            }
-        ]).toArray();
-        response.send(result);
-    } catch (e) {
-        response.status(500).send({ message: e.message });
-    }
+router.put('/:id', (req, res) => {
+    const userID = req.params.id;
+
+    User.findById(userID)
+        .then(user => {
+            //Add edit function and validation
+        })
+        .then(result => {
+            res.send(result)
+        })
+        .catch(err => console.log(err))
 });
-*/
-
-//TODO
-/*
-
-    Create resend email verification
-    Create successful verification route
-
-*/
-
-/*
-
-    /api/users/id
-
-    This is the put request to change user information
-    TODO: Add validation for user information to remove invalid entries
-
-*/
 
 module.exports = router;
 
