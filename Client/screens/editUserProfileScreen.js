@@ -117,7 +117,27 @@ const EditUserProfileScreen = ({navigation}) =>{
             </View>
             <View style={styles.box}>
                 <TouchableOpacity>
+                    <Text style={styles.nameStyle}>ProfileType: {data.profileType} {'\n'}</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.box}>
+                <TouchableOpacity>
                     <Text style={styles.nameStyle}>Email: {data.email} {'\n'}</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.box}>
+                <TouchableOpacity>
+                    <Text style={styles.nameStyle}>Subjects you need help in: {data.studySubjects}{'\n'}</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.box}>
+                <TouchableOpacity>
+                    <Text style={styles.nameStyle}>Friends: {data.friendsList}{'\n'}</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.box}>
+                <TouchableOpacity>
+                    <Text style={styles.nameStyle}>Subjects interested to Tutor: {data.tutorSubjects}{'\n'}</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.buttonBio}>
