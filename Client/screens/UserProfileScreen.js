@@ -86,8 +86,8 @@ const styles = StyleSheet.create({
     },
     flatListStyle:{
         width: 400,
-        top: 10,
-        height: 490,
+        top: 20,
+        height: 480,
         borderRadius: 10,
         marginLeft: 15,
         marginRight: 15,
@@ -114,12 +114,7 @@ const UserProfileScreen = ({navigation}) =>{
 
         Example: data.fullName 
     */
-    //Render post item
-    const renderItem = ({item}) => <Post 
-        message={item.message}
-        tags={item.tags}
-        />;
-        
+
     const fetchData = async () => {
         const userToken = await SecureStore.getItemAsync("token");
         const decodedToken = jwtDecode(userToken);
@@ -148,7 +143,14 @@ const UserProfileScreen = ({navigation}) =>{
 
     const [theData, setTheData] = useState([]);
     const [theLoading, setTheLoading] = useState(true);
-      const fetchUserInfo = async () => {
+
+    //Render post item
+    const renderItem = ({item}) => <Post 
+    message={item.message}
+    tags={item.tags}
+    />;
+
+    const fetchUserInfo = async () => {
         const userToken = await SecureStore.getItemAsync("token");
         const decodedToken = jwtDecode(userToken);
         const resp = await fetch("http://70.177.34.147:3000/api/home/newsFeed/messages/"+decodedToken._id, {
@@ -160,20 +162,18 @@ const UserProfileScreen = ({navigation}) =>{
             },
         })
         const theData = await resp.json();
-        // console.log(theData.message)
-        setTheData(theData[0]);
+        setTheData(theData);
         setTheLoading(false);
       };
 
       /*
         Used to update information
       */
-      useEffect(() => {
+        useEffect(() => {
         fetchUserInfo();
         const dataInterval = setInterval(() => fetchUserInfo(), 10 * 1000);
         return () => clearInterval(dataInterval);
       }, []);
-
     return (
         <View style={styles.space}>
             <View style={[styles.Header]}>
@@ -211,7 +211,7 @@ const UserProfileScreen = ({navigation}) =>{
             </View>
                 <View style={styles.flatListStyle}>
                     <FlatList
-                            data={theData.message}
+                            data={theData}
                             keyExtractor={item => item._id}
                             renderItem={renderItem}
                         />
