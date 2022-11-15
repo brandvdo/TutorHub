@@ -192,18 +192,25 @@ router.put('/addFriend/:id',verifyToken, (req,res) => {
 //Not working
 router.get('/search', async (req, res) => {
     try{
-        let result = await User.aggregate([{
-            "$search": {
-                "autocomplete":{
-                    "query": `${req.query.query}`,
+        let result = await User.aggregate([
+            {
+                $search: {
+                  "autocomplete": {
                     "path": "fullName",
-                    "fuzzy": {
-                        "maxEdits": 2,
-                        "prefixLength": 3
-                    }
+                    "query": "off"
+                  }
                 }
-            }
-        }])
+              },
+              {
+                $limit: 10
+              },
+              {
+                $project: {
+                  "_id": 0,
+                  "fullName": 1
+                }
+              }
+        ])
         res.send(result);
     }catch(err){
         res.status(500).send({message: err.message});
@@ -250,6 +257,18 @@ server.get("/search", async (request, response) => {
     TODO: Add validation for user information to remove invalid entries
 
 */
+router.put('/:id', (req, res) => {
+    const userID = req.params.id;
+
+    User.findById(userID)
+        .then(user => {
+            //Add edit function and validation
+        })
+        .then(result => {
+            res.send(result)
+        })
+        .catch(err => console.log(err))
+});
 
 module.exports = router;
 
