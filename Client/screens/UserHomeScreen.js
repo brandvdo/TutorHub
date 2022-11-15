@@ -59,7 +59,7 @@ const Post = ({message, userName, tags}) => (
     </View>
 );
 
-const UserHomeScreen = () => {
+const UserHomeScreen = ({navigation}) => {
 
     const [searchPhrase, setSearchPhrase] = useState("");
     const [clicked, setClicked] = useState(false);
@@ -116,7 +116,7 @@ const UserHomeScreen = () => {
                     backgroundColor: '#e0e0e0',
                     borderRadius: 100,
                 }}
-                onPress={() => { '' }}
+                onPress={() => navigation.navigate('PostScreen')}
                 >
                     <Text style={{fontWeight: 'bold' }}>Post</Text>
                 </TouchableOpacity>
