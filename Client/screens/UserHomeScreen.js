@@ -10,6 +10,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text, Image,TouchableOpacity, FlatList, List} from "react-native";
 import SearchBar from './features/SearchBar/SearchBar';
 import * as SecureStore from 'expo-secure-store';
+import UserLoginScreen from './UserLoginScreen';
 const jwtDecode = require('jwt-decode');
 
 const styles = StyleSheet.create({
@@ -143,7 +144,7 @@ const UserHomeScreen = ({navigation}) => {
                     backgroundColor: '#e0e0e0',
                     borderRadius: 100,
                 }}
-                onPress={() => navigation.navigate('PostScreen')}
+                onPress={() => ''}
                 >
                     <Text style={{fontWeight: 'bold' }}>Post</Text>
                 </TouchableOpacity>
