@@ -120,17 +120,15 @@ const EditUserProfileScreen = ({navigation}) =>{
         <View style={{borderBottomColor: "rgb(224, 224, 224)", borderBottomWidth: 4, marginLeft: 5, marginRight: 5}}>
             <View>
                 <View style={styles.row}>
-                    <TouchableOpacity onPress={pickImage}>
-                    {image && <Image source={{ uri: image }} style={[styles.profilePic]} />}
                     <Image
                         source={require('../assets/images/user-profile-icon-free-vector.webp')}
                         style={[styles.profilePic]}>
                     </Image>
-                    </TouchableOpacity>
                 </View>
             </View>
             <View style={styles.buttonBio}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={pickImage}>
+                    {image && <Image source={{ uri: image }} style={[styles.profilePic]} />}
                         <Text style={{fontWeight: 'bold'}}>Change Profile Picture</Text>
                     </TouchableOpacity>
             </View>
