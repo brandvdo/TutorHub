@@ -34,10 +34,6 @@ const SignupScreen = ({navigation}) =>{
 
         .then((response) => response.json())
         .then((responseData) => {
-            console.log(
-                "POST Response",
-                "Response Body -> " + JSON.stringify(responseData)
-            )
             navigation.navigate('Login')
         })
         .done();

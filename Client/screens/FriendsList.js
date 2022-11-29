@@ -67,18 +67,10 @@ const FriendsList = ({navigation}) =>{
             },
         })
         const data = await resp.json();
-        console.log(data)
+
         setData(data);
         setLoading(false);
       };
-
-      const Post = ({friends}) => (
-        <View>
-            <View style={{borderBottomColor: "rgb(5, 153, 140)", borderBottomWidth: 4, paddingBottom: 5, paddingTop: 10, paddingLeft: 5, paddingRight: 5}}>
-                <Text style={{fontSize: 17}}>{friends[0]}</Text>
-            </View>
-        </View>
-    );
 
       /*
         Used to update information
@@ -88,6 +80,21 @@ const FriendsList = ({navigation}) =>{
         const dataInterval = setInterval(() => fetchUserInfo(), 10 * 1000);
         return () => clearInterval(dataInterval);
       }, []);
+
+      function goToProfile(id){
+        SecureStore.setItemAsync("profileID",id);
+        navigation.navigate('UserProfile')
+      }
+
+      const Post = ({friends}) => (
+        <View>
+            <TouchableOpacity onPress={() => goToProfile(friends[1])}>
+                <View style={{borderBottomColor: "rgb(5, 153, 140)", borderBottomWidth: 4, paddingBottom: 5, paddingTop: 10, paddingLeft: 5, paddingRight: 5}}>
+                    <Text style={{fontSize: 17}}>{friends[0]}</Text>
+                </View>
+            </TouchableOpacity>
+        </View>
+    );
 
     return(
         <View>
@@ -102,14 +109,11 @@ const FriendsList = ({navigation}) =>{
             <View>
             <Text style={styles.nameStyle}>Friend's List</Text>
             <View style={styles.flatListStyle}>
-                <TouchableOpacity onPress={() => navigation.navigate(friends[1])}>
-                    <FlatList
-                            horizontal={true}
-                            data={data}
-                            keyExtractor={item => item._id}
-                            renderItem={renderItem}
-                        />
-                </TouchableOpacity>
+                <FlatList
+                        data={data}
+                        keyExtractor={item => item._id}
+                        renderItem={renderItem}
+                />
                 </View>
             </View>
             </View>

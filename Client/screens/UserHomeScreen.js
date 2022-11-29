@@ -63,7 +63,7 @@ const Post = ({message, userName, tags}) => (
 );
 
 const UserHomeScreen = ({navigation}) => {
-
+    SecureStore.deleteItemAsync("profileID")
     const [searchPhrase, setSearchPhrase] = useState("");
     const [clicked, setClicked] = useState(false);
     const [fakeData, setFakeData] = useState();
@@ -86,7 +86,6 @@ const UserHomeScreen = ({navigation}) => {
         })
         const data = await apiResponse.json();
         setFakeData(data);
-        console.log(data)
     };
 
 

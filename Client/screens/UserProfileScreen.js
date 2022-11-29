@@ -160,7 +160,7 @@ const UserProfileScreen = ({navigation}) =>{
       */
       useEffect(() => {
         fetchData();
-          const dataInterval = setInterval(() => fetchData(), 10 * 1000);
+          const dataInterval = setInterval(() => fetchData(), 10 * 500);
           return () => clearInterval(dataInterval);
       }, []);
       
@@ -176,8 +176,15 @@ const UserProfileScreen = ({navigation}) =>{
 
     const fetchUserInfo = async () => {
         const userToken = await SecureStore.getItemAsync("token");
+        let profileID = await SecureStore.getItemAsync("profileID");
         const decodedToken = jwtDecode(userToken);
-        const resp = await fetch("http://70.177.34.147:3000/api/home/newsFeed/messages/"+decodedToken._id, {
+
+        if(profileID == null)
+            profileID = decodedToken._id;
+            
+        console.log(profileID)
+
+        const resp = await fetch("http://70.177.34.147:3000/api/home/newsFeed/messages/"+profileID, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -195,8 +202,7 @@ const UserProfileScreen = ({navigation}) =>{
       */
         useEffect(() => {
         fetchUserInfo();
-        const dataInterval = setInterval(() => fetchUserInfo(), 10 * 1000);
-        return () => clearInterval(dataInterval);
+        fetchData();
       }, []);
     return (
         <View style={styles.space}>

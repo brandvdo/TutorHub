@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
 });
 
 const ChatScreen = ({navigation}) =>{
+    
     return(
         <View>
             <View style={styles.Header}>
