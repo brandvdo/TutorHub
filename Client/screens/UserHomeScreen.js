@@ -7,8 +7,9 @@
 */
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text, Image,TouchableOpacity, FlatList, List} from "react-native";
+import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text, Image,TouchableOpacity, FlatList} from "react-native";
 import SearchBar from './features/SearchBar/SearchBar';
+import List from './features/SearchBar/List';
 import * as SecureStore from 'expo-secure-store';
 import UserLoginScreen from './UserLoginScreen';
 const jwtDecode = require('jwt-decode');
@@ -70,24 +71,24 @@ const UserHomeScreen = ({navigation}) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const getData = async () => {
-          const apiResponse = await fetch(
-            "http://70.177.34.147:3000/api/users/search",{
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                   fullName: searchPhrase
-                })
+
+    const getSearchData = async () => {
+        const apiResponse = await fetch(
+        "http://70.177.34.147:3000/api/users/search",{
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                fullName: searchPhrase
             })
-          const data = await apiResponse.json();
-          setFakeData(data);
-        };
-        getData();
-      }, []);
+        })
+        const data = await apiResponse.json();
+        setFakeData(data);
+        console.log(data)
+    };
+
 
     //Render post item
     const renderItem = ({item}) => <Post 
@@ -117,6 +118,7 @@ const UserHomeScreen = ({navigation}) => {
       */
       useEffect(() => {
         fetchUserInfo();
+        getSearchData();
         const dataInterval = setInterval(() => fetchUserInfo(), 10 * 1000);
         return () => clearInterval(dataInterval);
       }, []);
@@ -129,7 +131,7 @@ const UserHomeScreen = ({navigation}) => {
         setSearchPhrase={setSearchPhrase}
         clicked={clicked}
         setClicked={setClicked}
-      />
+            />
 
             </View>
                 <TouchableOpacity

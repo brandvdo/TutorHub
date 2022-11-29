@@ -46,8 +46,7 @@ router.post('/newPost',postValidate,verifyToken, async (req, res) => {
         userID: decodedToken._id,
         userName: decodedToken.fullName,
         message: req.body.message,
-        tags: req.body.tags,
-        price: price,
+        tags: req.body.tags
     })
 
     try{
