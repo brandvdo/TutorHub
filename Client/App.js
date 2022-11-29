@@ -8,8 +8,11 @@
 import React from 'react';
 import AppNavigator from './navigation/AppNavigator'
 import { NavigationContainer } from '@react-navigation/native';
+import { LogBox } from 'react-native';
 
 const App = () => {
+  LogBox.ignoreLogs(['Warning: ...']); 
+  LogBox.ignoreAllLogs();
   return (
     <NavigationContainer>
       <AppNavigator/>

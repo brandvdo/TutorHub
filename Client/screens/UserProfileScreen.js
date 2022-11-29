@@ -218,6 +218,20 @@ const UserProfileScreen = ({navigation}) =>{
         SecureStore.deleteItemAsync("profileID")
         navigation.navigate('Home');
       }
+
+      async function addFriend(){
+        if(profileID != decodedToken._id){
+            const resp = await fetch("http://70.177.34.147:3000/api/user/addFriend/"+profileID, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'auth-token': userToken,
+            },
+        })
+        const theData = await resp.json();
+        }
+      }
     return (
         <View style={styles.space}>
             <View style={[styles.Header]}>
@@ -246,7 +260,7 @@ const UserProfileScreen = ({navigation}) =>{
                         </View>
                         <Text>{'\t'}</Text>
                         <View style={styles.buttonBio}>
-                            <TouchableOpacity onPress={() => navigation.navigate('')}>
+                            <TouchableOpacity onPress={() => addFriend()}>
                                 <Text style={{fontWeight: 'bold'}}>Add Friend</Text>
                             </TouchableOpacity> 
                         </View>
