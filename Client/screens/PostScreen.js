@@ -6,35 +6,77 @@ This is for testing only remove later
 
 */
 import React, { useState, useEffect } from 'react';
-import {StyleSheet, View, Text, FlatList, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, FlatList, TouchableOpacity, TextInput} from 'react-native';
 
 const styles = StyleSheet.create({
     Header: {
         paddingTop: 50,
         backgroundColor: '#05998c',
     },
-    buttonBio:{
+    buttonCancel:{
         paddingHorizontal: 10,
         paddingVertical: 10,
         borderRadius: 30,
         backgroundColor: "#e0e0e0",
         marginTop: 10,
         marginBottom: 10,
-        alignSelf: 'center',
+        alignSelf: 'left',
+        marginLeft: 5,
+        height: 40,
+        width: 75,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    flatListStyle:{
+        width: 400,
+        top: 20,
+        height: 300,
+        borderRadius: 10,
+        marginLeft: 15,
+        marginRight: 15,
+        backgroundColor: '#e0e0e0'
     },
 });
 
 const PostScreen = ({navigation}) =>{
+
+    const [makepost, setMakePost] = useState('');
+    const [clicked, setClicked] = useState(false);
+
     return(
         <View>
             <View style={styles.Header}>
-            <View style={styles.buttonBio}>
+            <View style={styles.buttonCancel}>
                 <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-                    <Text style={{fontWeight: 'bold'}}>Back To Home</Text>
+                    <Text style={{fontWeight: 'bold'}}>Cancel</Text>
                 </TouchableOpacity>
             </View>
+            <TouchableOpacity
+                style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 70,
+                    position: 'absolute',
+                    top: 60,
+                    right: 20,
+                    height: 40,
+                    backgroundColor: '#e0e0e0',
+                    borderRadius: 30,
+                }}
+                onPress={() => ''}
+                >
+                    <Text style={{fontWeight: 'bold' }}>Post</Text>
+                </TouchableOpacity>
             </View>
             <View>
+            <View style={styles.flatListStyle}>
+                <TextInput
+                    autoFocus
+                    style={{fontSize: 20, marginLeft: 5, paddingTop: 5}}
+                    placeholder="What do you need help with?"
+                    placeholderTextColor="#111111"
+                    onChangeText={(makepost) => setMakePost(makepost)} />
+            </View>
             </View>
         </View>
     );

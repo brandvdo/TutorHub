@@ -24,14 +24,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         alignSelf: 'center',
     },
-    flatListStyle:{
-        width: 400,
-        top: 30,
-        height: 720,
-        borderRadius: 10,
-        marginLeft: 15,
-        marginRight: 15,
-    },
     nameStyle:{
         fontWeight: 'bold',
         fontSize: '20px',
@@ -47,17 +39,8 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         backgroundColor: '#e0e0e0'
-       
     },
 });
-
-const Post = ({friends}) => (
-    <View>
-        <View style={{borderBottomColor: "rgb(5, 153, 140)", borderBottomWidth: 4, marginLeft: 5, marginRight: 5, paddingBottom: 5}}>
-            <Text>{friends}</Text>
-        </View>
-    </View>
-);
 
 const FriendsList = ({navigation}) =>{
 
@@ -85,9 +68,17 @@ const FriendsList = ({navigation}) =>{
         })
         const data = await resp.json();
         console.log(data.friendsList)
-        setData(data);
+        setData(data.FriendsList);
         setLoading(false);
       };
+
+      const Post = ({friends}) => (
+        <View>
+            <View style={{borderBottomColor: "rgb(5, 153, 140)", borderBottomWidth: 4, paddingBottom: 5, paddingTop: 5, paddingLeft: 1, paddingRight: 1}}>
+                <Text style={{fontSize: 17}}>{friends.id_}</Text>
+            </View>
+        </View>
+    );
 
       /*
         Used to update information
@@ -111,11 +102,14 @@ const FriendsList = ({navigation}) =>{
             <View>
             <Text style={styles.nameStyle}>Friend's List</Text>
             <View style={styles.flatListStyle}>
-                <FlatList
-                        data={data.friendsList}
-                        keyExtractor={item => item._id}
-                        renderItem={renderItem}
-                    />
+                <TouchableOpacity>
+                    <FlatList
+                            horizontal={true}
+                            data={data}
+                            keyExtractor={item => item._id}
+                            renderItem={renderItem}
+                        />
+                </TouchableOpacity>
                 </View>
             </View>
             </View>

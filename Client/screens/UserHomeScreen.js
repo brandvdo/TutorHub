@@ -144,7 +144,7 @@ const UserHomeScreen = ({navigation}) => {
                     backgroundColor: '#e0e0e0',
                     borderRadius: 100,
                 }}
-                onPress={() => ''}
+                onPress={() => navigation.navigate('PostScreen')}
                 >
                     <Text style={{fontWeight: 'bold' }}>Post</Text>
                 </TouchableOpacity>
