@@ -28,23 +28,22 @@ const postValidate = [
 
 //Allows user's to create a new post
 //      /api/userpost/newPost
-router.post('/newPost',postValidate,verifyToken, async (req, res) => {
-    
+router.post('/newPost/:id',postValidate, async (req, res) => {
+    if(req.params.id.length < 24) return res.status(400).send('Invalid ID');
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(422).json({errors: errors.array()});
     }
 
-    const decodedToken = jwtDecode(req.header('auth-token'));
-
     let price = 0;
     if(!req.body.price == null)
         price = req.body.price;
     
+    let fullName = User.findById(req.params.id).fullName;
 
     const newPost = new UserPost({
-        userID: decodedToken._id,
-        userName: decodedToken.fullName,
+        userID: req.params.id,
+        userName: fullName,
         message: req.body.message,
         tags: req.body.tags
     })
