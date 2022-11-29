@@ -136,8 +136,13 @@ const UserProfileScreen = ({navigation}) =>{
 
     const fetchData = async () => {
         const userToken = await SecureStore.getItemAsync("token");
+        let profileID = await SecureStore.getItemAsync("profileID");
         const decodedToken = jwtDecode(userToken);
-        const resp = await fetch("http://70.177.34.147:3000/api/users/getUserInfo/"+decodedToken._id, {
+
+        if(profileID == null)
+            profileID = decodedToken._id;
+       
+        const resp = await fetch("http://70.177.34.147:3000/api/users/getUserInfo/"+profileID, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
