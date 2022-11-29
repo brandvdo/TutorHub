@@ -63,7 +63,7 @@ const Post = ({message, userName, tags}) => (
 );
 
 const UserHomeScreen = ({navigation}) => {
-    SecureStore.deleteItemAsync("profileID")
+
     const [searchPhrase, setSearchPhrase] = useState("");
     const [clicked, setClicked] = useState(false);
     const [fakeData, setFakeData] = useState();
@@ -153,6 +153,7 @@ const UserHomeScreen = ({navigation}) => {
                 <FlatList
                         data={data}
                         keyExtractor={item => item._id}
+                        inverted = {true}
                         renderItem={renderItem}
                     />
             </View>

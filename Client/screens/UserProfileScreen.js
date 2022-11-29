@@ -213,12 +213,17 @@ const UserProfileScreen = ({navigation}) =>{
         fetchUserInfo();
         fetchData();
       }, []);
+
+      function goBack(){
+        SecureStore.deleteItemAsync("profileID")
+        navigation.navigate('Home');
+      }
     return (
         <View style={styles.space}>
             <View style={[styles.Header]}>
                 <View>
                     <View style={styles.buttonBack}>
-                        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                        <TouchableOpacity onPress={() => goBack()}>
                             <Text style={{fontWeight: 'bold'}}> Back To Home </Text>
                         </TouchableOpacity> 
                     </View>
@@ -257,6 +262,7 @@ const UserProfileScreen = ({navigation}) =>{
                     <FlatList
                             data={theData}
                             keyExtractor={item => item._id}
+                            inverted = {true}
                             renderItem={renderItem}
                         />
                 </View>
