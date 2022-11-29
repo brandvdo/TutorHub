@@ -169,6 +169,24 @@ router.get('/getUserInfo/:id', (req,res) => {
 
 })
 
+router.get('/getUserFriendsList/:id', async (req,res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(422).json({errors: errors.array()});
+    }
+    if(req.params.id.length < 24) return res.status(400).send('Invalid ID');
+    let friendsList = new Array();
+    let friendsIDs = [];
+    user = await User.findById(req.params.id);
+    friendsIDs = user.friendsList;
+
+    for(let i = 0; i < friendsIDs.length;i++){
+        friend = await User.findById(friendsIDs[i]);
+        friendsList[i] = Array(friend.fullName, friend._id);
+    }
+
+    res.send(friendsList)
+})
 
 router.put('/addFriend/:id',verifyToken, (req,res) => {
     if(req.params.id.length < 24) return res.status(400).send('Invalid ID');
