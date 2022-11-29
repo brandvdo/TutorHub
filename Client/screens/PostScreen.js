@@ -7,6 +7,8 @@ This is for testing only remove later
 */
 import React, { useState, useEffect } from 'react';
 import {StyleSheet, View, Text, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+const jwtDecode = require('jwt-decode');
 
 const styles = StyleSheet.create({
     Header: {
@@ -49,6 +51,35 @@ const styles = StyleSheet.create({
 
 const PostScreen = ({navigation}) =>{
 
+    async function post(message, tags){
+        let tag = [];
+        tag.push(tags);
+        const userToken = await SecureStore.getItemAsync("token");
+        const decodedToken = jwtDecode(userToken);
+        //console.log("Token: " + decodedToken._id + " Name: " + decodedToken.fullName + " Message: " + message + " Tags: " + tags);
+        fetch("http://70.177.34.147:3000/api/userpost/newPost/"+decodedToken._id, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: message,
+                tags: tag
+            })
+        })
+        .then((response) => response.json())
+        .then((responseData) => {
+            console.log(JSON.stringify(responseData));
+            navigation.navigate('Home');
+        })
+        .done();
+        /*
+            Once we have a req see if login token exist, if not it was unsuccessful and we have an error
+        */
+        
+    }
+
     const [makePost, setMakePost] = useState('');
     const [addTag, setAddTag] = useState('');
     const [clicked, setClicked] = useState(false);
@@ -73,7 +104,7 @@ const PostScreen = ({navigation}) =>{
                     backgroundColor: '#e0e0e0',
                     borderRadius: 30,
                 }}
-                onPress={() => ''}
+                onPress={() => post(makePost,addTag)}
                 >
                     <Text style={{fontWeight: 'bold' }}>Post</Text>
                 </TouchableOpacity>
