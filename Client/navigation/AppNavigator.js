@@ -257,6 +257,27 @@ const AppNavigator = () => {
                 )
             }}
         />
+         <Tab.Screen name="UserProfile" component={UserProfileScreen}
+             options={{
+                headerShown: false,
+                tabBarIcon: ({focused}) => (
+                    <View style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
+                        <Image
+                            source={require('../assets/user.png')}
+                            resizeMode='contain'
+                            style={{
+                                width: 25,
+                                height: 25,
+                                tintColor: focused ? '#FFFFFF' : '#000000', fontsize: 12}}
+                        />
+                        <Text
+                            style={{color: focused ? '#FFFFFF' : '#000000', fontsize: 12}}>
+                            Profile
+                        </Text>
+                    </View>
+                )
+            }}
+        />
         </Stack.Navigator>
     );
 }

@@ -58,6 +58,15 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
     },
+    buttonBack:{
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 30,
+        backgroundColor: "#e0e0e0",
+        top: 60,
+        left: 10,
+        alignSelf: 'left',
+    },
     buttonBio2:{
         paddingHorizontal: 10,
         paddingVertical: 5,
@@ -104,7 +113,7 @@ const styles = StyleSheet.create({
     flatListStyle:{
         width: 400,
         top: 20,
-        height: 400,
+        height: 380,
         borderRadius: 10,
         marginLeft: 15,
         marginRight: 15,
@@ -208,6 +217,11 @@ const UserProfileScreen = ({navigation}) =>{
         <View style={styles.space}>
             <View style={[styles.Header]}>
                 <View>
+                    <View style={styles.buttonBack}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                            <Text style={{fontWeight: 'bold'}}> Back To Home </Text>
+                        </TouchableOpacity> 
+                    </View>
                     <View style={styles.row}>
                         <Image
                             source={require('../assets/images/user-profile-icon-free-vector.webp')}
