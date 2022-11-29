@@ -30,7 +30,16 @@ const styles = StyleSheet.create({
     flatListStyle:{
         width: 400,
         top: 20,
-        height: 300,
+        height: 200,
+        borderRadius: 10,
+        marginLeft: 15,
+        marginRight: 15,
+        backgroundColor: '#e0e0e0'
+    },
+    flatListStyle2:{
+        width: 400,
+        top: 30,
+        height: 50,
         borderRadius: 10,
         marginLeft: 15,
         marginRight: 15,
@@ -40,7 +49,8 @@ const styles = StyleSheet.create({
 
 const PostScreen = ({navigation}) =>{
 
-    const [makepost, setMakePost] = useState('');
+    const [makePost, setMakePost] = useState('');
+    const [addTag, setAddTag] = useState('');
     const [clicked, setClicked] = useState(false);
 
     return(
@@ -75,7 +85,14 @@ const PostScreen = ({navigation}) =>{
                     style={{fontSize: 20, marginLeft: 5, paddingTop: 5}}
                     placeholder="What do you need help with?"
                     placeholderTextColor="#111111"
-                    onChangeText={(makepost) => setMakePost(makepost)} />
+                    onChangeText={(makePost) => setMakePost(makePost)} />
+            </View>
+            <View style={styles.flatListStyle2}>
+                <TextInput
+                    style={{fontSize: 20, marginLeft: 5, paddingTop: 5}}
+                    placeholder="Add subject tag"
+                    placeholderTextColor="#111111"
+                    onChangeText={(addTag) => setAddTag(addTag)} />
             </View>
             </View>
         </View>
