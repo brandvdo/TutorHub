@@ -58,7 +58,7 @@ const FriendsList = ({navigation}) =>{
         if(id == null){
             id = decodedToken._id;
         }
-        const resp = await fetch("http://70.177.34.147:3000/api/users/getUserInfo/"+id, {
+        const resp = await fetch("http://70.177.34.147:3000/api/users/getUserFriendsList/"+id, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -67,15 +67,15 @@ const FriendsList = ({navigation}) =>{
             },
         })
         const data = await resp.json();
-        console.log(data.friendsList)
-        setData(data.FriendsList);
+        console.log(data)
+        setData(data);
         setLoading(false);
       };
 
       const Post = ({friends}) => (
         <View>
-            <View style={{borderBottomColor: "rgb(5, 153, 140)", borderBottomWidth: 4, paddingBottom: 5, paddingTop: 5, paddingLeft: 1, paddingRight: 1}}>
-                <Text style={{fontSize: 17}}>{friends.id_}</Text>
+            <View style={{borderBottomColor: "rgb(5, 153, 140)", borderBottomWidth: 4, paddingBottom: 5, paddingTop: 10, paddingLeft: 5, paddingRight: 5}}>
+                <Text style={{fontSize: 17}}>{friends[0]}</Text>
             </View>
         </View>
     );
@@ -102,7 +102,7 @@ const FriendsList = ({navigation}) =>{
             <View>
             <Text style={styles.nameStyle}>Friend's List</Text>
             <View style={styles.flatListStyle}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate(friends[1])}>
                     <FlatList
                             horizontal={true}
                             data={data}
