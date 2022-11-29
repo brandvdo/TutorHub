@@ -16,6 +16,7 @@ require('dotenv').config();
 
 const router = express.Router();
 const UserPost = require('../models/UserPost');
+const User = require('../models/User');
 
 const postValidate = [
     check('message')
@@ -39,18 +40,18 @@ router.post('/newPost/:id',postValidate, async (req, res) => {
     if(!req.body.price == null)
         price = req.body.price;
     
-    let fullName = User.findById(req.params.id).fullName;
-
+    let user = await User.findById(req.params.id);
+    console.log(user.fullName);
     const newPost = new UserPost({
         userID: req.params.id,
-        userName: fullName,
+        userName: user.fullName,
         message: req.body.message,
         tags: req.body.tags
     })
 
     try{
         const savedPost = await newPost.save();
-        res.send({postID: savedPost._id, userID: savedPost.userID, message: savedPost.message, tags: savedPost.tags, price: savedPost.price});
+        res.send({postID: savedPost._id, userID: savedPost.userID, message: savedPost.message, tags: savedPost.tags});
     }catch (error){
         res.status(400).send(error);
     }
