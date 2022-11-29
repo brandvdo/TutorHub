@@ -82,6 +82,7 @@ const PostScreen = ({navigation}) =>{
             <View style={styles.flatListStyle}>
                 <TextInput
                     autoFocus
+                    multiline
                     style={{fontSize: 20, marginLeft: 5, paddingTop: 5}}
                     placeholder="What do you need help with?"
                     placeholderTextColor="#111111"
