@@ -11,6 +11,7 @@ import { StyleSheet, View, SafeAreaView, ActivityIndicator, Text, Image,Touchabl
 import SearchBar from './features/SearchBar/SearchBar';
 import List from './features/SearchBar/List';
 import * as SecureStore from 'expo-secure-store';
+import UserLoginScreen from './UserLoginScreen';
 const jwtDecode = require('jwt-decode');
 
 const styles = StyleSheet.create({
@@ -32,11 +33,12 @@ const styles = StyleSheet.create({
     },
     flatListStyle:{
         width: 400,
-        top: 10,
-        height: 650,
+        top: 20,
+        height: 660,
         borderRadius: 10,
         marginLeft: 15,
         marginRight: 15,
+        backgroundColor: '#e0e0e0' 
     },
 });
 
@@ -53,14 +55,14 @@ const Post = ({message, userName, tags}) => (
             source={require('../assets/images/user-profile-icon-free-vector.webp')}
             style={[styles.profilePic]}>
         </Image>
-        <Text>Name: {userName}</Text>
-        <Text>Message: {message}</Text>
-        <Text>Tags: {tags}</Text>
+        <Text style={ {fontSize: 14}}>{userName}</Text>
+        <Text style={ {fontSize: 16}}>{message}</Text>
+        <Text style={ {fontSize: 12}}>{tags}</Text>
         </View>
     </View>
 );
 
-const UserHomeScreen = () => {
+const UserHomeScreen = ({navigation}) => {
 
     const [searchPhrase, setSearchPhrase] = useState("");
     const [clicked, setClicked] = useState(false);
@@ -138,15 +140,15 @@ const UserHomeScreen = () => {
                     justifyContent: 'center',
                     width: 70,
                     position: 'absolute',
-                    top: 730,
+                    top: 54,
                     right: 20,
-                    height: 70,
-                    backgroundColor: '#05998c',
+                    height: 50,
+                    backgroundColor: '#e0e0e0',
                     borderRadius: 100,
                 }}
-                onPress={() => { '' }}
+                onPress={() => ''}
                 >
-                    <Text style={{ color: "white" }}>Post</Text>
+                    <Text style={{fontWeight: 'bold' }}>Post</Text>
                 </TouchableOpacity>
             <View style={styles.flatListStyle}>
                 <FlatList

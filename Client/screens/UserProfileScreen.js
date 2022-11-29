@@ -6,7 +6,7 @@
 
 */
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 const jwtDecode = require('jwt-decode');
 
@@ -55,11 +55,30 @@ const styles = StyleSheet.create({
         backgroundColor: "#e0e0e0",
         marginTop: 10,
         alignSelf: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+    },
+    buttonBio2:{
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 30,
+        backgroundColor: "#e0e0e0",
+        marginTop: 60,
+        alignSelf: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
     },
     nameStyle:{
         fontWeight: 'bold',
         fontSize: '25px',
         color: "#e0e0e0",
+        marginTop: 10,
+        alignSelf: 'center',
+    },
+    nameStyle2:{
+        fontWeight: 'bold',
+        fontSize: '15px',
+        color: "black",
         marginTop: 10,
         alignSelf: 'center',
     },
@@ -81,8 +100,28 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         marginBottom: 15
-    }
+    },
+    flatListStyle:{
+        width: 400,
+        top: 20,
+        height: 400,
+        borderRadius: 10,
+        marginLeft: 15,
+        marginRight: 15,
+        backgroundColor: '#e0e0e0'
+       
+    },
 });
+
+
+const Post = ({message, tags}) => (
+    <View>
+        <View style={{borderBottomColor: "rgb(5, 153, 140)", borderBottomWidth: 4, marginLeft: 5, marginRight: 5, paddingBottom: 5}}>
+        <Text style={ {fontSize: 16}}>{message}</Text>
+        <Text style={ {fontSize: 12}}>{tags}</Text>
+        </View>
+    </View>
+);
 
 const UserProfileScreen = ({navigation}) =>{
 
@@ -94,22 +133,6 @@ const UserProfileScreen = ({navigation}) =>{
 
         Example: data.fullName 
     */
-
-    const Post = ({message, userID, tags}) => (
-        <View>
-            <Text>Message: {message}</Text>
-            <Text>Tags: {tags}</Text>
-        </View>
-    );
-
-    const Friends = ({message, userID, tags}) => (
-        <View>
-            <Text>Message: {message}</Text>
-            <Text>Tags: {tags}</Text>
-        </View>
-    );
-
-
 
     const fetchData = async () => {
         const userToken = await SecureStore.getItemAsync("token");
@@ -127,23 +150,6 @@ const UserProfileScreen = ({navigation}) =>{
         setLoading(false);
       };
 
-      const fetchUserMessages = async () => {
-        const userToken = await SecureStore.getItemAsync("token");
-        const decodedToken = jwtDecode(userToken);
-        const resp = await fetch("http://70.177.34.147:3000/api/userpost/getMessages/"+decodedToken._id, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'auth-token': userToken,
-            },
-        })
-        const data = await resp.json();
-        console.log("Message: " + data[0][0]._id)
-        setData(data);
-        setLoading(false);
-      };
-
       /*
         Used to update information
       */
@@ -152,15 +158,43 @@ const UserProfileScreen = ({navigation}) =>{
           const dataInterval = setInterval(() => fetchData(), 10 * 1000);
           return () => clearInterval(dataInterval);
       }, []);
+      
 
-      useEffect(() => {
-        fetchUserMessages();
-          const dataInterval = setInterval(() => fetchUserMessages(), 10 * 1000);
-          return () => clearInterval(dataInterval);
+    const [theData, setTheData] = useState([]);
+    const [theLoading, setTheLoading] = useState(true);
+
+    //Render post item
+    const renderItem = ({item}) => <Post 
+    message={item.message}
+    tags={item.tags}
+    />;
+
+    const fetchUserInfo = async () => {
+        const userToken = await SecureStore.getItemAsync("token");
+        const decodedToken = jwtDecode(userToken);
+        const resp = await fetch("http://70.177.34.147:3000/api/home/newsFeed/messages/"+decodedToken._id, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'auth-token': userToken,
+            },
+        })
+        const theData = await resp.json();
+        setTheData(theData);
+        setTheLoading(false);
+      };
+
+      /*
+        Used to update information
+      */
+        useEffect(() => {
+        fetchUserInfo();
+        const dataInterval = setInterval(() => fetchUserInfo(), 10 * 1000);
+        return () => clearInterval(dataInterval);
       }, []);
-
     return (
-        <View>
+        <View style={styles.space}>
             <View style={[styles.Header]}>
                 <View>
                     <View style={styles.row}>
@@ -173,17 +207,47 @@ const UserProfileScreen = ({navigation}) =>{
                 <View>
                     <Text style={styles.nameStyle}>{data.fullName}</Text>
                 </View>
-                <View style={styles.buttonBio}>
-                    <TouchableOpacity onPress={() => navigation.navigate('EditUserProfile')}>
-                        <Text>Edit profile</Text>
-                    </TouchableOpacity>
+                <View>
+                    <View style={styles.row}>
+                        <View style={styles.buttonBio}>
+                            <TouchableOpacity onPress={() => navigation.navigate('ChatScreen')}>
+                                <Text style={{fontWeight: 'bold'}}> Message </Text>
+                            </TouchableOpacity> 
+                        </View>
+                        <Text>{'\t'}</Text>
+                        <View style={styles.buttonBio}>
+                            <TouchableOpacity onPress={() => navigation.navigate('')}>
+                                <Text style={{fontWeight: 'bold'}}>Add Friend</Text>
+                            </TouchableOpacity> 
+                        </View>
+                    </View>
+                    <View style={styles.buttonBio}>
+                        <TouchableOpacity onPress={() => navigation.navigate('EditUserProfile')}>
+                            <Text style={{fontWeight: 'bold'}}>Edit Profile</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
-            <View>
-                <Text style={styles.mainFeed}>
-                    {data.userPost}
-                </Text>
-            </View>
+                <View style={styles.flatListStyle}>
+                    <FlatList
+                            data={theData}
+                            keyExtractor={item => item._id}
+                            renderItem={renderItem}
+                        />
+                </View>
+                <View style={styles.row}>
+                        <View style={styles.buttonBio2}>
+                            <TouchableOpacity onPress={() => navigation.navigate('')}>
+                            <Text style={styles.nameStyle2}>Subjects Can Tutor {data.tutorSubjects}{'\n'}</Text>
+                            </TouchableOpacity> 
+                        </View>
+                        <Text>{'\t'}</Text>
+                        <View style={styles.buttonBio2}>
+                            <TouchableOpacity onPress={() => navigation.navigate('')}>
+                            <Text style={styles.nameStyle2}>Subjects Need Tutor {data.studySubjects}{'\n'}</Text>
+                            </TouchableOpacity> 
+                        </View>
+                    </View>
         </View>
     );
 }

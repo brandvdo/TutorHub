@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     flexDirection: "row",
-    width: "90%",
+    width: "75%",
 
   },
   searchBar__unclicked: {

@@ -8,7 +8,12 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import * as SecureStore from 'expo-secure-store';  
+import { ThemeProvider } from '@react-navigation/native';
+import * as ImagePicker from 'expo-image-picker';
+
 const jwtDecode = require('jwt-decode');
+
+
 
 const styles = StyleSheet.create({
     container:{
@@ -61,7 +66,7 @@ const styles = StyleSheet.create({
     box:{
         marginTop: 10,
         alignSelf: 'left',
-    }
+    },
 });
 
 const EditUserProfileScreen = ({navigation}) =>{
@@ -92,6 +97,24 @@ const EditUserProfileScreen = ({navigation}) =>{
           return () => clearInterval(dataInterval);
       }, []);
 
+      const [image, setImage] = useState(null);
+
+      const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+    
+        console.log(result);
+    
+        if (!result.canceled) {
+          setImage(result.assets[0].uri);
+        }
+      };
+          
     return(
         <View style={[styles.container]}>
         <View style={{borderBottomColor: "rgb(224, 224, 224)", borderBottomWidth: 4, marginLeft: 5, marginRight: 5}}>
@@ -104,9 +127,15 @@ const EditUserProfileScreen = ({navigation}) =>{
                 </View>
             </View>
             <View style={styles.buttonBio}>
-                    <TouchableOpacity>
-                        <Text>Change profile picture</Text>
+                    <TouchableOpacity onPress={pickImage}>
+                    {image && <Image source={{ uri: image }} style={[styles.profilePic]} />}
+                        <Text style={{fontWeight: 'bold'}}>Change Profile Picture</Text>
                     </TouchableOpacity>
+            </View>
+            <View style={styles.buttonBio}>
+                <TouchableOpacity onPress={() =>navigation.navigate('Login')}>
+                    <Text style={{fontWeight: 'bold'}}>Sign Out</Text>
+                </TouchableOpacity>
             </View>
         </View>
         <View>
@@ -120,14 +149,25 @@ const EditUserProfileScreen = ({navigation}) =>{
                     <Text style={styles.nameStyle}>Email: {data.email} {'\n'}</Text>
                 </TouchableOpacity>
             </View>
+            <View style={styles.box}>
+                <TouchableOpacity>
+                    <Text style={styles.nameStyle}>Subjects you need help in: {data.studySubjects}{'\n'}</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.box}>
+                <TouchableOpacity>
+                    <Text style={styles.nameStyle}>Subjects interested to Tutor: {data.tutorSubjects}{'\n'}</Text>
+                </TouchableOpacity>
+            </View>
             <View style={styles.buttonBio}>
                 <TouchableOpacity onPress={() => navigation.navigate('UserProfile')}>
-                    <Text>Back to profile</Text>
+                    <Text style={{fontWeight: 'bold'}}>Back To Profile</Text>
                 </TouchableOpacity>
             </View>
         </View>
     </View>
     );
+
 }
 
 export default EditUserProfileScreen;

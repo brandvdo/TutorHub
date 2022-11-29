@@ -14,6 +14,7 @@ const jwt = require("jsonwebtoken");
 const authRoutes = require('./routes/users');
 const postRoutes = require('./routes/post');
 const homePageRoutes = require('./routes/homeActions');
+//const chatRoutes = require('./routes/chat');
 const verifyToken = require('./routes/verifyToken');
 
 const app = express()
@@ -36,6 +37,7 @@ app.get('/api/users/profile', verifyToken, (req,res) =>{
 app.use('/api/users', authRoutes);
 app.use('/api/userpost', postRoutes);
 app.use('/api/home', homePageRoutes);
+//app.use('/api/chat', chatRoutes);
 
 
 //Setting the port of the server
